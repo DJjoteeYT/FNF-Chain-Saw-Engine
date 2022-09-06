@@ -13,7 +13,6 @@ class HealthIcon extends FlxSprite
 
 	public var char:String;
 	public var isPlayer:Bool = false;
-	public var isOldIcon:Bool = false;
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
