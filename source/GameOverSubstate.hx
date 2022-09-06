@@ -49,6 +49,14 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
+		if (FlxG.sound.music.playing)
+			Conductor.songPosition = FlxG.sound.music.time;
+
+		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
+			FlxG.camera.follow(camFollow, LOCKON, 0.01);
+		else if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
+			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
+
 		if (controls.ACCEPT)
 			endBullshit();
 		else if (controls.BACK)
@@ -60,15 +68,6 @@ class GameOverSubstate extends MusicBeatSubstate
 			else
 				MusicBeatState.switchState(new FreeplayState());
 		}
-
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
-			FlxG.camera.follow(camFollow, LOCKON, 0.01);
-
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
-
-		if (FlxG.sound.music.playing)
-			Conductor.songPosition = FlxG.sound.music.time;
 	}
 
 	var isEnding:Bool = false;
