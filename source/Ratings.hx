@@ -4,20 +4,18 @@ class Ratings
 {
 	public static function GenerateLetterRank(accuracy:Float) // generate a letter ranking
 	{
-		var ranking:String = "N/A";
-		if (FlxG.save.data.botplay)
-			ranking = "BotPlay";
+		var ranking:String = "[N/A]";
 
 		if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
-			ranking = "(MFC)";
+			ranking = "[MFC]";
 		else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
-			ranking = "(GFC)";
-		else if (PlayState.misses == 0) // Regular FC
-			ranking = "(FC)";
-		else if (PlayState.misses < 10) // Single Digit Combo Breaks
-			ranking = "(SDCB)";
+			ranking = "[GFC]";
+		else if (PlayState.misses == 0)
+			ranking = "[FC]";
+		else if (PlayState.misses < 10)
+			ranking = "[SDCB]";
 		else
-			ranking = "(Clear)";
+			ranking = "[Clear]";
 
 		// WIFE TIME :)))) (based on Wife3)
 
@@ -42,8 +40,7 @@ class Ratings
 
 		for (i in 0...wifeConditions.length)
 		{
-			var b = wifeConditions[i];
-			if (b)
+			if (wifeConditions[i])
 			{
 				switch (i)
 				{
@@ -86,55 +83,44 @@ class Ratings
 
 		if (accuracy == 0)
 			ranking = "N/A";
-		else if (FlxG.save.data.botplay)
-			ranking = "BotPlay";
 
 		return ranking;
 	}
 
-	public static function CalculateRating(noteDiff:Float, ?customSafeZone:Float):String // Generate a judgement through some timing shit
+	public static final timingWindows = [166.0, 135.0, 90.0, 45.0];
+
+	public static function CalculateRating(noteDiff:Float)
 	{
-		var customTimeScale = Conductor.timeScale;
+		var diff = Math.abs(noteDiff); /*/ (PlayState.songMultiplier >= 1 ? PlayState.songMultiplier : 1); */ // 1.7 thing
+		for (index in 0...timingWindows.length) // based on 4 timing windows, will break with anything else
+		{
+			var time = timingWindows[index] * Conductor.timeScale;
+			var nextTime = index + 1 > timingWindows.length - 1 ? 0 : timingWindows[index + 1];
+			if (diff < time && diff >= nextTime * Conductor.timeScale)
+			{
+				switch (index)
+				{
+					case 0: // shit
+						return "shit";
+					case 1: // bad
+						return "bad";
+					case 2: // good
+						return "good";
+					case 3: // sick
+						return "sick";
+				}
+			}
+		}
 
-		if (customSafeZone != null)
-			customTimeScale = customSafeZone / 166;
-
-		if (FlxG.save.data.botplay)
-			return "good"; // FUNNY
-
-		if (noteDiff > 166 * customTimeScale) // so god damn early its a miss
-			return "miss";
-		if (noteDiff > 135 * customTimeScale) // way early
-			return "shit";
-		else if (noteDiff > 90 * customTimeScale) // early
-			return "bad";
-		else if (noteDiff > 45 * customTimeScale) // your kinda there
-			return "good";
-		else if (noteDiff < -45 * customTimeScale) // little late
-			return "good";
-		else if (noteDiff < -90 * customTimeScale) // late
-			return "bad";
-		else if (noteDiff < -135 * customTimeScale) // late as fuck
-			return "shit";
-		else if (noteDiff < -166 * customTimeScale) // so god damn late its a miss
-			return "miss";
 		return "sick";
 	}
 
 	public static function CalculateRanking(score:Int, scoreDef:Int, nps:Int, maxNPS:Int, accuracy:Float):String
 	{
-		return (FlxG.save.data.npsDisplay ? "NPS: " + nps + " (Max " + maxNPS + ")" + (!FlxG.save.data.botplay ? " | " : "") : "")
-			+ (!FlxG.save.data.botplay ? // NPS Toggle
-				"Score:"
+		return (FlxG.save.data.npsDisplay ? "NPS: " + nps + " (Max " + maxNPS + ")" + " | " : "") +  "Score: "
 				+ (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score)
-				+ // Score
-				" | Combo Breaks:"
-				+ PlayState.misses
-				+ // Misses/Combo Breaks
-				" | Accuracy:"
-				+ (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %")
-				+ // Accuracy
-				" | "
-				+ GenerateLetterRank(accuracy) : ""); // Letter Rank
+				+ " | Combo Breaks: " + PlayState.misses
+				+ " | Accuracy: " + HelperFunctions.truncateFloat(accuracy, 2) + " %"
+				+ " | Rank: " + GenerateLetterRank(accuracy); // Letter Rank
 	}
 }

@@ -490,13 +490,8 @@ class PlayState extends MusicBeatState
 				bgGirls = new BackgroundGirls(-100, 190);
 				bgGirls.scrollFactor.set(0.9, 0.9);
 
-				if (SONG.song.toLowerCase() == 'roses')
-				{
-					if (FlxG.save.data.distractions)
-					{
-						bgGirls.getScared();
-					}
-				}
+				if (SONG.song.toLowerCase() == 'roses' && FlxG.save.data.distractions)
+					bgGirls.getScared();
 
 				bgGirls.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
 				bgGirls.updateHitbox();
@@ -630,9 +625,7 @@ class PlayState extends MusicBeatState
 		FlxG.camera.follow(camFollow, LOCKON, 0.25);
 		FlxG.camera.zoom = defaultCamZoom;
 		FlxG.camera.focusOn(camFollow.getPosition());
-
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
-
 		FlxG.fixedTimestep = false;
 
 		if (FlxG.save.data.songPosition)
@@ -648,9 +641,11 @@ class PlayState extends MusicBeatState
 			songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
 			add(songPosBar);
 
-			var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20, FlxG.save.data.downscroll ? songPosBG.y - 3 : songPosBG.y, 0, SONG.song, 16);
-			songName.setFormat(Paths.font("funkin.otf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			var songName = new FlxText(0, FlxG.save.data.downscroll ? songPosBG.y - 3 : songPosBG.y, 0, SONG.song, 16);
+			songName.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			songName.scrollFactor.set();
+			songName.borderSize = 1.25;
+			songName.screenCenter(X);
 			add(songName);
 			songName.cameras = [camHUD];
 		}
@@ -666,15 +661,17 @@ class PlayState extends MusicBeatState
 		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 
-		scoreTxt = new FlxText(FlxG.width / 2 - 235, healthBarBG.y + 45, 0, "", 20);
-		scoreTxt.setFormat(Paths.font("funkin.otf"), 22, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt = new FlxText(0, healthBarBG.y + 45, 0, "", 20);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1.25;
 		scoreTxt.screenCenter(X);
 		add(scoreTxt);
 
 		botPlayState = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "BOTPLAY", 20);
-		botPlayState.setFormat(Paths.font("funkin.otf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botPlayState.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botPlayState.scrollFactor.set();
+		botPlayState.borderSize = 1.25;
 		botPlayState.screenCenter(X);
 		if (FlxG.save.data.botplay)
 			add(botPlayState);
@@ -989,9 +986,11 @@ class PlayState extends MusicBeatState
 			songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
 			add(songPosBar);
 
-			var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20, FlxG.save.data.downscroll ? songPosBG.y - 3 : songPosBG.y, 0, SONG.song, 16);
-			songName.setFormat(Paths.font("funkin.otf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			var songName = new FlxText(0, FlxG.save.data.downscroll ? songPosBG.y - 3 : songPosBG.y, 0, SONG.song, 16);
+			songName.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			songName.scrollFactor.set();
+			songName.borderSize = 1.25;
+			songName.screenCenter(X);
 			add(songName);
 
 			songPosBG.cameras = [camHUD];
@@ -2067,10 +2066,6 @@ class PlayState extends MusicBeatState
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
 
-			var msTiming = HelperFunctions.truncateFloat(noteDiff, 3);
-			if (FlxG.save.data.botplay)
-				msTiming = 0;
-
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 			comboSpr.screenCenter();
 			comboSpr.x = rating.x;
@@ -2316,7 +2311,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || FlxG.save.data.botplay))
+		if (boyfriend.holdTimer > Conductor.stepCrochet * boyfriend.singDuration * 0.001 && (!holdArray.contains(true) || FlxG.save.data.botplay))
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
@@ -2457,9 +2452,7 @@ class PlayState extends MusicBeatState
 			playerStrums.forEach(function(spr:FlxSprite)
 			{
 				if (Math.abs(note.noteData) == spr.ID)
-				{
 					spr.animation.play('confirm', true);
-				}
 			});
 
 			note.wasGoodHit = true;
