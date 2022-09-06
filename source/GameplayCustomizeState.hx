@@ -148,12 +148,6 @@ class GameplayCustomizeState extends MusicBeatState
 		FlxG.camera.zoom = FlxMath.lerp(0.9, FlxG.camera.zoom, 0.95);
 		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
 
-		if (FlxG.mouse.overlaps(sick) && FlxG.mouse.pressed)
-		{
-			sick.x = FlxG.mouse.x - sick.width / 2;
-			sick.y = FlxG.mouse.y - sick.height;
-		}
-
 		for (i in playerStrums)
 			i.y = strumLine.y;
 		for (i in strumLineNotes)
@@ -165,6 +159,11 @@ class GameplayCustomizeState extends MusicBeatState
 			FlxG.save.data.changedHitY = sick.y;
 			FlxG.save.data.changedHit = true;
 		}
+		else if (FlxG.mouse.overlaps(sick) && FlxG.mouse.pressed)
+		{
+			sick.x = FlxG.mouse.x - sick.width / 2;
+			sick.y = FlxG.mouse.y - sick.height;
+		}
 
 		if (FlxG.keys.justPressed.R)
 		{
@@ -174,8 +173,7 @@ class GameplayCustomizeState extends MusicBeatState
 			FlxG.save.data.changedHitY = sick.y;
 			FlxG.save.data.changedHit = false;
 		}
-
-		if (controls.BACK)
+		else if (controls.BACK)
 		{
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
