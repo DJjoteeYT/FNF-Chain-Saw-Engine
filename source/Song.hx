@@ -35,12 +35,17 @@ class Song
 {
 	public static function loadJson(jsonInput:String, ?folder:String):SwagSong
 	{
-		return parseJson(Assets.getText(Paths.json('data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim());
+		return parseJson(Paths.json('data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase()).trim());
 	}
 
-	public static function parseJson(rawJson:String):SwagSong
+	private static function parseJson(path:String):SwagSong
 	{
-		var swagShit:SwagSong = cast Json.parse(rawJson).song;
+		var rawJson:String = null;
+
+		if(Assets.exists(path))
+			rawJson = Assets.getText(path);
+
+		var swagShit:SwagSong = Json.parse(rawJson).song;
 		swagShit.validScore = true;
 		return swagShit;
 	}
