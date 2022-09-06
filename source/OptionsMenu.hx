@@ -134,7 +134,7 @@ class OptionsMenu extends MusicBeatState
 
 			if (controls.UP_P)
 				changeSelection(-1);
-			if (controls.DOWN_P)
+			else if (controls.DOWN_P)
 				changeSelection(1);
 
 			if (isCat)
@@ -145,7 +145,7 @@ class OptionsMenu extends MusicBeatState
 					{
 						if (FlxG.keys.pressed.RIGHT)
 							currentSelectedCat.getOptions()[curSelected].right();
-						if (FlxG.keys.pressed.LEFT)
+						else if (FlxG.keys.pressed.LEFT)
 							currentSelectedCat.getOptions()[curSelected].left();
 
 						FlxG.save.flush();
@@ -154,7 +154,7 @@ class OptionsMenu extends MusicBeatState
 					{
 						if (FlxG.keys.justPressed.RIGHT)
 							currentSelectedCat.getOptions()[curSelected].right();
-						if (FlxG.keys.justPressed.LEFT)
+						else if (FlxG.keys.justPressed.LEFT)
 							currentSelectedCat.getOptions()[curSelected].left();
 
 						FlxG.save.flush();
@@ -219,8 +219,7 @@ class OptionsMenu extends MusicBeatState
 				FlxG.save.data.offset = 0;
 				FlxG.save.flush();
 			}
-
-			if (controls.ACCEPT)
+			else if (controls.ACCEPT)
 			{
 				if (isCat)
 				{
