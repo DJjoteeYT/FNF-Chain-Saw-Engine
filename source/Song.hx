@@ -34,11 +34,9 @@ typedef SwagSection =
 class Song
 {
 	public static function loadJson(jsonInput:String, ?folder:String):SwagSong
-	{
-		return parseJson(Paths.json('data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase()).trim());
-	}
+		return parseJson(Paths.json('songs/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase()).trim());
 
-	private static function parseJson(path:String):SwagSong
+	public static function parseJson(path:String):SwagSong
 	{
 		var rawJson:String = null;
 

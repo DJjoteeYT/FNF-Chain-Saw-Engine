@@ -109,9 +109,9 @@ class Character extends FlxSprite
 		dance();
 	}
 
-	private static function parseJson(path:String):SwagCharacter
+	public static function parseJson(path:String):SwagCharacter
 	{
-		var rawJson:String = '';
+		var rawJson:String = null;
 
 		if(Assets.exists(path))
 			rawJson = Assets.getText(path);

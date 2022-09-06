@@ -1,35 +1,35 @@
 {
 	"songs":[
-		[
-			"Senpai",
-			"senpai",
-			[
+		{
+			"name": "Senpai",
+			"character": "senpai",
+			"colors": [
 				255,
 				120,
 				191
 			]
-		],
-		[
-			"Roses",
-			"senpai-angry",
-			[
+		},
+		{
+			"name": "Roses",
+			"character": "senpai-angry",
+			"colors": [
 				255,
 				120,
 				191
 			]
-		],
-		[
-			"Thorns",
-			"spirit",
-			[
+		},
+		{
+			"name": "Thorns",
+			"character": "spirit",
+			"colors": [
 				255,
 				120,
 				191
 			]
-		]
+		}
 	],
 	"locked":false,
-	"weekCharacters":[
+	"weekcharacters":[
 		"senpai",
 		"bf",
 		"gf"

@@ -1,35 +1,35 @@
 {
 	"songs":[
-		[
-			"Pico",
-			"pico",
-			[
+		{
+			"name": "Pico",
+			"character": "pico",
+			"colors": [
 				148,
 				22,
 				83
 			]
-		],
-		[
-			"Philly",
-			"pico",
-			[
+		},
+		{
+			"name": "Philly",
+			"character": "pico",
+			"colors": [
 				148,
 				22,
 				83
 			]
-		],
-		[
-			"Blammed",
-			"pico",
-			[
+		},
+		{
+			"name": "Blammed",
+			"character": "pico",
+			"colors": [
 				148,
 				22,
 				83
 			]
-		]
+		}
 	],
 	"locked":false,
-	"weekCharacters":[
+	"weekcharacters":[
 		"pico",
 		"bf",
 		"gf"

@@ -1,35 +1,35 @@
 {
 	"songs":[
-		[
-			"Cocoa",
-			"parents-christmas",
-			[
+		{
+			"name": "Cocoa",
+			"character": "parents-christmas",
+			"colors": [
 				160,
 				209,
 				255
 			]
-		],
-		[
-			"Eggnog",
-			"parents-christmas",
-			[
+		},
+		{
+			"name": "Eggnog",
+			"character": "parents-christmas",
+			"colors": [
 				160,
 				209,
 				255
 			]
-		],
-		[
-			"Winter Horrorland",
-			"monster-christmas",
-			[
+		},
+		{
+			"name": "Winter Horrorland",
+			"character": "monster-christmas",
+			"colors": [
 				160,
 				209,
 				255
 			]
-		]
+		}
 	],
 	"locked":false,
-	"weekCharacters":[
+	"weekcharacters":[
 		"mom",
 		"bf",
 		"gf"

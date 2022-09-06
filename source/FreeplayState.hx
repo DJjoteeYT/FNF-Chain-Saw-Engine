@@ -10,7 +10,6 @@ import openfl.utils.Assets;
 #if desktop
 import Discord.DiscordClient;
 #end
-import Week.SwagWeek;
 
 using StringTools;
 
@@ -39,14 +38,13 @@ class FreeplayState extends MusicBeatState
 
 		for (i in 0...Week.weeksList.length)
 		{
-			var week:SwagWeek = Week.currentLoadedWeeks.get(Week.weeksList[i]);
-			for (song in week.songs)
+			for (song in Week.currentLoadedWeeks.get(Week.weeksList[i]).songs)
 			{
-				var colors:Array<Int> = song[2];
+				var colors:Array<Int> = song.colors;
 				if(colors == null || colors.length < 3)
 					colors = [146, 113, 253];
 
-				songs.push(new SongMetadata(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2])));
+				songs.push(new SongMetadata(song.name, i, song.character, FlxColor.fromRGB(colors[0], colors[1], colors[2])));
 			}
 		}
 
@@ -55,11 +53,8 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Freeplay Menu", null);
 		#end
 
-		if (FlxG.sound.music != null)
-		{
-			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
-		}
+		if (FlxG.sound.music != null && !FlxG.sound.music.playing)
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 		persistentUpdate = persistentDraw = true;
 
@@ -102,8 +97,6 @@ class FreeplayState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		super.update(elapsed);
-
 		if (FlxG.sound.music.volume < 0.7)
 			FlxG.sound.music.volume += 0.5 * elapsed;
 
@@ -115,12 +108,12 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.UP_P)
 			changeSelection(-1);
-		else if (controls.DOWN_P)
+		if (controls.DOWN_P)
 			changeSelection(1);
 
 		if (controls.LEFT_P)
 			changeDiff(-1);
-		else if (controls.RIGHT_P)
+		if (controls.RIGHT_P)
 			changeDiff(1);
 
 		if (controls.ACCEPT)
@@ -133,6 +126,8 @@ class FreeplayState extends MusicBeatState
 		}
 		else if (controls.BACK)
 			MusicBeatState.switchState(new MainMenuState());
+
+		super.update(elapsed);
 	}
 
 	private function changeDiff(change:Int = 0)

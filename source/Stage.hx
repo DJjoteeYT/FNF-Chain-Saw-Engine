@@ -5,6 +5,7 @@ import haxe.Json;
 
 typedef SwagStage =
 {
+	var suffix:String;
 	var zoom:Float;
 	var girlfriend:Array<Float>;
 	var dad:Array<Float>;
@@ -17,11 +18,9 @@ typedef SwagStage =
 class Stage
 {
 	public static function loadJson(file:String):SwagStage
-	{
 		return parseJson(Paths.json('stages/' + file));
-	}
 
-	private static function parseJson(path:String):SwagStage
+	public static function parseJson(path:String):SwagStage
 	{
 		var rawJson:String = '';
 

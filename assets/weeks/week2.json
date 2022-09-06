@@ -1,35 +1,35 @@
 {
 	"songs":[
-		[
-			"Spookeez",
-			"spooky",
-			[
+		{
+			"name": "Spookeez",
+			"character": "spooky",
+			"colors": [
 				34,
 				51,
 				68
 			]
-		],
-		[
-			"South",
-			"spooky",
-			[
+		},
+		{
+			"name": "South",
+			"character": "spooky",
+			"colors": [
 				34,
 				51,
 				68
 			]
-		],
-		[
-			"Monster",
-			"monster",
-			[
+		},
+		{
+			"name": "Monster",
+			"character": "monster",
+			"colors": [
 				34,
 				51,
 				68
 			]
-		]
+		}
 	],
 	"locked":false,
-	"weekCharacters":[
+	"weekcharacters":[
 		"spooky",
 		"bf",
 		"gf"

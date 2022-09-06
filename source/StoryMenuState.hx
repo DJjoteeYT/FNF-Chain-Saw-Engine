@@ -83,11 +83,8 @@ class StoryMenuState extends MusicBeatState
 
 		Week.loadJsons(true);
 
-		if (FlxG.sound.music != null)
-		{
-			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
-		}
+		if (FlxG.sound.music != null && !FlxG.sound.music.playing)
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 		persistentUpdate = persistentDraw = true;
 
@@ -219,7 +216,7 @@ class StoryMenuState extends MusicBeatState
 			{
 				if (controls.UP_P)
 					changeWeek(-1);
-				else if (controls.DOWN_P)
+				if (controls.DOWN_P)
 					changeWeek(1);
 
 				if (controls.RIGHT)
@@ -234,14 +231,12 @@ class StoryMenuState extends MusicBeatState
 
 				if (controls.RIGHT_P)
 					changeDifficulty(1);
-				else if (controls.LEFT_P)
+				if (controls.LEFT_P)
 					changeDifficulty(-1);
 			}
 
 			if (controls.ACCEPT)
-			{
 				selectWeek();
-			}
 		}
 
 		if (controls.BACK && !movedBack && !selectedWeek)

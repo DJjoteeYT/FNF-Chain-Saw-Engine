@@ -120,12 +120,12 @@ class Note extends FlxSprite
 				animation.play('redScroll');
 		}
 
+		if (FlxG.save.data.downscroll && sustainNote) 
+			flipY = true;
+
 		if (sustainNote && prevNote != null)
 		{
 			alpha = 0.6;
-
-			if (FlxG.save.data.downscroll)
-				flipY = true;
 
 			x += width / 2;
 
@@ -162,7 +162,8 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				if (FlxG.save.data.scrollSpeed != 1)
+
+				if(FlxG.save.data.scrollSpeed != 1)
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * FlxG.save.data.scrollSpeed;
 				else
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
@@ -206,7 +207,10 @@ class Note extends FlxSprite
 				wasGoodHit = true;
 		}
 
-		if (tooLate && alpha > 0.3)
-			alpha = 0.3;
+		if (tooLate)
+		{
+			if (alpha > 0.3)
+				alpha = 0.3;
+		}
 	}
 }

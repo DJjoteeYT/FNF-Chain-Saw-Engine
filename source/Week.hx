@@ -5,12 +5,19 @@ import haxe.Json;
 
 typedef SwagWeek =
 {
-	var songs:Array<Dynamic>;
+	var songs:Array<SwagSongs>;
 	var locked:Bool;
 	var weekCharacters:Array<String>;
 	var weekName:String;
 	var hideStoryMode:Bool;
 	var hideFreeplay:Bool;
+}
+
+typedef SwagSongs =
+{
+	var name:String;
+	var character:String;
+	var colors:Array<Int>;
 }
 
 class Week
@@ -41,7 +48,7 @@ class Week
 		}
 	}
 
-	private static function parseJson(path:String):SwagWeek
+	public static function parseJson(path:String):SwagWeek
 	{
 		var rawJson:String = null;
 

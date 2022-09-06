@@ -86,7 +86,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (controls.UP_P)
 			changeSelection(-1);
-		else if (controls.DOWN_P)
+		if (controls.DOWN_P)
 			changeSelection(1);
 
 		if (controls.ACCEPT)

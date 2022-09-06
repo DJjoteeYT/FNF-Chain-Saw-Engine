@@ -1,35 +1,35 @@
 {
 	"songs":[
-		[
-			"Bopeebo",
-			"dad",
-			[
+		{
+			"name": "Bopeebo",
+			"character": "dad",
+			"colors": [
 				146,
 				113,
 				253
 			]
-		],
-		[
-			"Fresh",
-			"dad",
-			[
+		},
+		{
+			"name": "Fresh",
+			"character": "dad",
+			"colors": [
 				146,
 				113,
 				253
 			]
-		],
-		[
-			"Dad Battle",
-			"dad",
-			[
+		},
+		{
+			"name": "Dad Battle",
+			"character": "dad",
+			"colors": [
 				146,
 				113,
 				253
 			]
-		]
+		}
 	],
 	"locked":false,
-	"weekCharacters":[
+	"weekcharacters":[
 		"dad",
 		"bf",
 		"gf"

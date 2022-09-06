@@ -1,17 +1,17 @@
 {
 	"songs":[
-		[
-			"Tutorial",
-			"gf",
-			[
+		{
+			"name": "Tutorial",
+			"character": "gf",
+			"colors": [
 				146,
 				113,
 				253
 			]
-		]
+		}
 	],
 	"locked":false,
-	"weekCharacters":[
+	"weekcharacters":[
 		"",
 		"bf",
 		"gf"

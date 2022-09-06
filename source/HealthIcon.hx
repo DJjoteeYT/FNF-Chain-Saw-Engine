@@ -11,17 +11,21 @@ class HealthIcon extends FlxSprite
 	 */
 	public var sprTracker:FlxSprite;
 
-	public var char:String;
+	public var curCharacter:String = 'bf';
 	public var isPlayer:Bool = false;
 
-	public function new(char:String = 'bf', isPlayer:Bool = false)
+	public function new(curCharacter:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
 
+		this.curCharacter = curCharacter;
 		this.isPlayer = isPlayer;
-		changeIcon(char);
 
-		switch (char)
+		loadGraphic(Paths.returnGraphic('characters/' + curCharacter + '/icon'), true, 150, 150);
+		animation.add(curCharacter, [0, 1], 0, false, isPlayer);
+		animation.play(curCharacter);
+
+		switch (curCharacter)
 		{
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit' | 'gf-pixel':
 				antialiasing = false;
@@ -30,20 +34,6 @@ class HealthIcon extends FlxSprite
 		}
 
 		scrollFactor.set();
-	}
-
-	public function changeIcon(char:String)
-	{
-		if (char != this.char)
-		{
-			if (animation.getByName(char) == null)
-			{
-				loadGraphic(Paths.returnGraphic('characters/' + char + '/icon'), true, 150, 150);
-				animation.add(char, [0, 1], 0, false, isPlayer);
-			}
-			animation.play(char);
-			this.char = char;
-		}
 	}
 
 	override function update(elapsed:Float)

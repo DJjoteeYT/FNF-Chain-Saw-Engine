@@ -264,6 +264,7 @@ class PlayState extends MusicBeatState
 		if(stageFile == null)
 		{
 			stageFile = {
+				suffix: "",
 				zoom: 0.9,
 				girlfriend: [400, 130],
 				dad: [100, 100],
@@ -278,6 +279,7 @@ class PlayState extends MusicBeatState
 		gf = new Character(stageFile.girlfriend[0], stageFile.girlfriend[1], SONG.gfVersion);
 		dad = new Character(stageFile.dad[0], stageFile.dad[1], SONG.player2);
 		boyfriend = new Character(stageFile.boyfriend[0], stageFile.boyfriend[1], SONG.player1, true);
+
 		camPosGirlfriend = stageFile.camPosGirlfriend;
 		camPosDad = stageFile.camPosDad;
 		camPosBoyfriend = stageFile.camPosBoyfriend;
@@ -1036,11 +1038,10 @@ class PlayState extends MusicBeatState
 
 		var noteData:Array<SwagSection>;
 
+		// NEW SHIT
 		noteData = songData.notes;
 
-		var playerCounter:Int = 0;
-
-		var daBeats:Int = 0;
+		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 		for (section in noteData)
 		{
 			var coolSection:Int = Std.int(section.lengthInSteps / 4);
@@ -1085,17 +1086,13 @@ class PlayState extends MusicBeatState
 					sustainNote.mustPress = gottaHitNote;
 
 					if (sustainNote.mustPress)
-					{
-						sustainNote.x += FlxG.width / 2;
-					}
+						sustainNote.x += FlxG.width / 2; // general offset
 				}
 
 				swagNote.mustPress = gottaHitNote;
 
 				if (swagNote.mustPress)
-				{
 					swagNote.x += FlxG.width / 2; // general offset
-				}
 			}
 			daBeats += 1;
 		}
@@ -1879,14 +1876,7 @@ class PlayState extends MusicBeatState
 						daNote.x -= 11;
 				}
 
-				if (daNote.sustainNote && daNote.wasGoodHit && Conductor.songPosition >= daNote.strumTime)
-				{
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
-				}
-				else if ((daNote.mustPress && daNote.tooLate && !FlxG.save.data.downscroll || daNote.mustPress && daNote.tooLate && FlxG.save.data.downscroll)
-					&& daNote.mustPress)
+				if ((daNote.mustPress && daNote.tooLate && !FlxG.save.data.downscroll || daNote.mustPress && daNote.tooLate && FlxG.save.data.downscroll) && daNote.mustPress)
 				{
 					if (daNote.sustainNote && daNote.wasGoodHit)
 					{
@@ -1900,9 +1890,12 @@ class PlayState extends MusicBeatState
 						noteMiss(daNote.noteData, daNote);
 					}
 
-					daNote.visible = false;
-					daNote.kill();
-					notes.remove(daNote, true);
+					if (!daNote.sustainNote)
+					{
+						daNote.visible = false;
+						daNote.kill();
+						notes.remove(daNote, true);
+					}
 				}
 			});
 		}
