@@ -1,0 +1,72 @@
+{
+	"position":[
+		-150,
+		100
+	],
+	"camPos":[
+		300,
+		0
+	],
+	"animations":[
+		{
+			"animation": "idle",
+			"prefix": "idle spirit_",
+			"framerate": 24,
+			"indices": [],
+			"flipX": false,
+			"looped": false,
+			"flipY": false,
+			"offset": [0, 0]
+		},
+		{
+			"animation": "singUP",
+			"prefix": "up_",
+			"framerate": 24,
+			"looped": false,
+			"indices": [],
+			"flipX": false,
+			"flipY": false,
+			"offset": [0, -40]
+		},
+		{
+			"animation": "singRIGHT",
+			"prefix": "right_",
+			"framerate": 24,
+			"indices": [],
+			"flipX": false,
+			"looped": false,
+			"flipY": false,
+			"offset": [0, 0]
+		},
+		{
+			"animation": "singLEFT",
+			"prefix": "left_",
+			"framerate": 24,
+			"looped": false,
+			"indices": [],
+			"flipX": false,
+			"flipY": false,
+			"offset": [20, 0]
+		},
+		{
+			"animation": "singDOWN",
+			"prefix": "spirit down_",
+			"framerate": 24,
+			"looped": false,
+			"indices": [],
+			"flipX": false,
+			"flipY": false,
+			"offset": [-50, -170]
+		}
+	],
+	"scale":6,
+	"singDuration":4,
+	"antialiasing":false,
+	"flipX":false,
+	"flipY":false,
+	"colors":[
+		175,
+		102,
+		206
+	]
+}

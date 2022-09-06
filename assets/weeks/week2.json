@@ -1,0 +1,40 @@
+{
+	"songs":[
+		[
+			"Spookeez",
+			"spooky",
+			[
+				34,
+				51,
+				68
+			]
+		],
+		[
+			"South",
+			"spooky",
+			[
+				34,
+				51,
+				68
+			]
+		],
+		[
+			"Monster",
+			"monster",
+			[
+				34,
+				51,
+				68
+			]
+		]
+	],
+	"locked":false,
+	"weekCharacters":[
+		"spooky",
+		"bf",
+		"gf"
+	],
+	"weekName":"Spooky Month",
+	"hideStoryMode":false,
+	"hideFreeplay":false
+}

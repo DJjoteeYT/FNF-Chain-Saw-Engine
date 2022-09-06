@@ -1,0 +1,40 @@
+{
+	"songs":[
+		[
+			"Senpai",
+			"senpai",
+			[
+				255,
+				120,
+				191
+			]
+		],
+		[
+			"Roses",
+			"senpai-angry",
+			[
+				255,
+				120,
+				191
+			]
+		],
+		[
+			"Thorns",
+			"spirit",
+			[
+				255,
+				120,
+				191
+			]
+		]
+	],
+	"locked":false,
+	"weekCharacters":[
+		"senpai",
+		"bf",
+		"gf"
+	],
+	"weekName":"Hating Simulator ft. Moawling",
+	"hideStoryMode":false,
+	"hideFreeplay":false
+}

@@ -1,0 +1,22 @@
+{
+	"songs":[
+		[
+			"Tutorial",
+			"gf",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"locked":false,
+	"weekCharacters":[
+		"",
+		"bf",
+		"gf"
+	],
+	"weekName":"",
+	"hideStoryMode":false,
+	"hideFreeplay":false
+}

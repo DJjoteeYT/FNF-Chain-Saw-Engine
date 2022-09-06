@@ -1,0 +1,27 @@
+{
+	"zoom":0.9,
+	"girlfriend":[
+		400,
+		130
+	],
+	"dad":[
+		100,
+		100
+	],
+	"boyfriend":[
+		770,
+		450
+	],
+	"camPosGirlfriend":[
+		0,
+		0
+	],
+	"camPosDad":[
+		0,
+		0
+	],
+	"camPosBoyfriend":[
+		0,
+		0
+	]
+}
