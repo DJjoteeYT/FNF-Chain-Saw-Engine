@@ -101,8 +101,7 @@ class KeyBindMenu extends FlxSubState
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem(-1);
 				}
-
-				if (FlxG.keys.justPressed.DOWN)
+				else if (FlxG.keys.justPressed.DOWN)
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem(1);
@@ -179,7 +178,6 @@ class KeyBindMenu extends FlxSubState
 		FlxG.save.data.downBind = keys[1];
 		FlxG.save.data.leftBind = keys[0];
 		FlxG.save.data.rightBind = keys[3];
-
 		FlxG.save.flush();
 
 		PlayerSettings.player1.controls.loadKeyBinds();
@@ -188,9 +186,8 @@ class KeyBindMenu extends FlxSubState
 	function reset()
 	{
 		for (i in 0...5)
-		{
 			keys[i] = defaultKeys[i];
-		}
+
 		quit();
 	}
 
@@ -217,9 +214,7 @@ class KeyBindMenu extends FlxSubState
 		var notAllowed:Array<String> = [];
 
 		for (x in blacklist)
-		{
 			notAllowed.push(x);
-		}
 
 		trace(notAllowed);
 
