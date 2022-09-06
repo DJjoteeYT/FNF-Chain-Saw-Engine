@@ -303,10 +303,9 @@ class ChartingState extends MusicBeatState
 			shiftNotes(Std.int(stepperShiftNoteDial.value), Std.int(stepperShiftNoteDialstep.value), Std.int(stepperShiftNoteDialms.value));
 		});
 
-		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/characterList'));
-		var gfVersions:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/gfVersionList'));
-		var stages:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/stageList'));
-		var noteStyles:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/noteStyleList'));
+		final characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characters/characterList'));
+		final stages:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/stageList'));
+		final noteStyles:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/noteStyleList'));
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -324,9 +323,9 @@ class ChartingState extends MusicBeatState
 
 		var player2Label = new FlxText(140, 80, 64, 'Player 2');
 
-		var gfVersionDropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(gfVersions, true), function(gfVersion:String)
+		var gfVersionDropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(gfVersion:String)
 		{
-			_song.gfVersion = gfVersions[Std.parseInt(gfVersion)];
+			_song.gfVersion = characters[Std.parseInt(gfVersion)];
 		});
 		gfVersionDropDown.selectedLabel = _song.gfVersion;
 
