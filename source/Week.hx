@@ -43,7 +43,7 @@ class Week
 
 	private static function parseJson(path:String):SwagWeek
 	{
-		var rawJson:String = '';
+		var rawJson:String = null;
 
 		if(Assets.exists(path))
 			rawJson = Assets.getText(path);
