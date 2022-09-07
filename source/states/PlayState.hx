@@ -1833,7 +1833,9 @@ class PlayState extends MusicBeatState
 					daNote.alpha = 0.6;
 				}
 
-				if ((daNote.mustPress && daNote.tooLate && !FlxG.save.data.downscroll || daNote.mustPress && daNote.tooLate && FlxG.save.data.downscroll) && daNote.mustPress)
+				if (daNote.sustainNote && daNote.wasGoodHit && Conductor.songPosition >= daNote.strumTime)
+					destroyNote(daNote, true);
+				else if ((daNote.mustPress && !FlxG.save.data.downscroll || daNote.mustPress && FlxG.save.data.downscroll) && daNote.mustPress)
 				{
 					if (daNote.sustainNote && daNote.wasGoodHit)
 						destroyNote(daNote, true);
@@ -1843,6 +1845,7 @@ class PlayState extends MusicBeatState
 						{
 							health -= 0.0475;
 							vocals.volume = 0;
+							noteMiss(daNote.noteData, daNote);
 						}
 
 						destroyNote(daNote, false);
