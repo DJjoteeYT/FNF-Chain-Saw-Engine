@@ -12,8 +12,13 @@ using StringTools;
 
 class Note extends FlxSprite
 {
-	public var strumTime:Float = 0;
+	public static var swagWidth:Float = 160 * 0.7;
+	public static var PURP_NOTE:Int = 0;
+	public static var GREEN_NOTE:Int = 2;
+	public static var BLUE_NOTE:Int = 1;
+	public static var RED_NOTE:Int = 3;
 
+	public var strumTime:Float = 0;
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
@@ -22,13 +27,6 @@ class Note extends FlxSprite
 	public var prevNote:Note;
 	public var sustainLength:Float = 0;
 	public var sustainNote:Bool = false;
-
-	public static var swagWidth:Float = 160 * 0.7;
-	public static var PURP_NOTE:Int = 0;
-	public static var GREEN_NOTE:Int = 2;
-	public static var BLUE_NOTE:Int = 1;
-	public static var RED_NOTE:Int = 3;
-
 	public var rating:String = "shit";
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
