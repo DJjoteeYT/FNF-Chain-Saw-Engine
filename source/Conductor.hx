@@ -1,6 +1,6 @@
 package;
 
-import Song.SwagSong;
+import parsers.Song.SwagSong;
 import flixel.FlxG;
 
 /**

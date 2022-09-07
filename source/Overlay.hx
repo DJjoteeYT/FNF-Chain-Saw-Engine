@@ -8,6 +8,10 @@ import openfl.text.TextField;
 import openfl.text.TextFormat;
 import openfl.system.System;
 
+/**
+ * Credits: Yoshubs.
+ */
+
 class Overlay extends TextField
 {
 	var times:Array<Float> = [];
@@ -54,7 +58,7 @@ class Overlay extends TextField
 		if (mem > memPeak)
 			memPeak = mem;
 
-		visible = FlxG.save.data.fps;
+		visible = FlxG.save.data.overlay;
 
 		if (visible)
 			text = times.length + ' FPS\n${getInterval(mem)} / ${getInterval(memPeak)}\n';

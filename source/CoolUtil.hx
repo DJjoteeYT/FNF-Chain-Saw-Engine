@@ -40,4 +40,12 @@ class CoolUtil
 
 	public static function coolLerp(a:Float, b:Float, ratio:Float)
 		return a + camLerpShit(ratio) * (b - a);
+
+	public static function truncateFloat(number:Float, precision:Int):Float
+	{
+		var num = number;
+		num = num * Math.pow(10, precision);
+		num = Math.round(num) / Math.pow(10, precision);
+		return num;
+	}
 }

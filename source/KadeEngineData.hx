@@ -1,3 +1,5 @@
+package;
+
 import openfl.Lib;
 import flixel.FlxG;
 
@@ -23,8 +25,8 @@ class KadeEngineData
 		if (FlxG.save.data.songPosition == null)
 			FlxG.save.data.songPosition = false;
 
-		if (FlxG.save.data.fps == null)
-			FlxG.save.data.fps = false;
+		if (FlxG.save.data.overlay == null)
+			FlxG.save.data.overlay = false;
 
 		if (FlxG.save.data.changedHit == null)
 		{
@@ -33,8 +35,8 @@ class KadeEngineData
 			FlxG.save.data.changedHit = false;
 		}
 
-		if (FlxG.save.data.fpsCap == null)
-			FlxG.save.data.fpsCap = 60;
+		if (FlxG.save.data.overlayCap == null)
+			FlxG.save.data.overlayCap = 60;
 
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;

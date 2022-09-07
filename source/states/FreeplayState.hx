@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,9 +7,9 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import openfl.utils.Assets;
-#if desktop
-import Discord.DiscordClient;
-#end
+import parsers.Song;
+import parsers.Week;
+import states.PlayState;
 
 using StringTools;
 
@@ -104,7 +104,7 @@ class FreeplayState extends MusicBeatState
 		bg.color = FlxColor.interpolate(bg.color, songs[curSelected].color, CoolUtil.camLerpShit(0.045));
 
 		scoreText.text = "PERSONAL BEST:" + Math.round(lerpScore);
-		positionHighscore();
+		positionHighScore();
 
 		if (controls.UP_P)
 			changeSelection(-1);
@@ -118,7 +118,7 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			PlayState.SONG = Song.loadJson(Highscore.formatSong(StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase(), curDifficulty), StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase());
+			PlayState.SONG = Song.loadJson(HighScore.formatSong(StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase(), curDifficulty), StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase());
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 			PlayState.storyWeek = songs[curSelected].week;
@@ -139,7 +139,7 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty >= CoolUtil.difficultyArray.length)
 			curDifficulty = 0;
 
-		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		intendedScore = HighScore.getScore(songs[curSelected].songName, curDifficulty);
 
 		diffText.text = '< ' + CoolUtil.difficultyString(curDifficulty).toUpperCase() + ' >';
 	}
@@ -155,7 +155,7 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		intendedScore = HighScore.getScore(songs[curSelected].songName, curDifficulty);
 
 		var bullShit:Int = 0;
 
@@ -176,7 +176,7 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
-	private function positionHighscore()
+	private function positionHighScore()
 	{
 		scoreText.x = FlxG.width - scoreText.width - 6;
 		scoreBG.scale.x = FlxG.width - scoreText.x + 6;

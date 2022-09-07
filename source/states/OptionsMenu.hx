@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -40,7 +40,7 @@ class OptionsMenu extends MusicBeatState
 			new SongPositionOption("Show the songs current position (as a bar)"), new CpuStrums("CPU's strumline lights up when a note hits it."),
 		]),
 		new OptionCategory("Misc", [
-			new FPSOption("Toggle the FPS Counter"),
+			new OverlayOption("Toggle the Overlay"),
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new BotPlay("Showcase your charts and mods with autoplay.")
 		])
@@ -89,7 +89,7 @@ class OptionsMenu extends MusicBeatState
 		versionShit = new FlxText(5, FlxG.height
 			+ 40, 0,
 			"Offset (Left, Right, Shift for slow): "
-			+ HelperFunctions.truncateFloat(FlxG.save.data.offset, 2)
+			+ CoolUtil.truncateFloat(FlxG.save.data.offset, 2)
 			+ " - Description - "
 			+ currentDescription, 12);
 		versionShit.scrollFactor.set();
@@ -295,11 +295,11 @@ class OptionsMenu extends MusicBeatState
 			if (currentSelectedCat.getOptions()[curSelected].getAccept())
 				versionShit.text = currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
 			else
-				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
+				versionShit.text = "Offset (Left, Right, Shift for slow): " + CoolUtil.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
 					+ currentDescription;
 		}
 		else
-			versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
+			versionShit.text = "Offset (Left, Right, Shift for slow): " + CoolUtil.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
 				+ currentDescription;
 	}
 }

@@ -6,7 +6,7 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
-import PlayState;
+import states.PlayState;
 
 using StringTools;
 
@@ -120,8 +120,6 @@ class Note extends FlxSprite
 
 		if (sustainNote && prevNote != null)
 		{
-			alpha = 0.6;
-
 			x += width / 2;
 
 			switch (noteData)

@@ -1,35 +1,27 @@
 package;
 
 import flixel.FlxG;
-import flixel.util.FlxColor;
-import lime.app.Application;
-import openfl.Lib;
+import substates.KeyBindMenu;
+import states.GameplayCustomizeState;
+import states.OptionsMenu;
 
 class OptionCategory
 {
 	private var _options:Array<Option> = new Array<Option>();
 
 	public final function getOptions():Array<Option>
-	{
 		return _options;
-	}
 
 	public final function addOption(opt:Option)
-	{
 		_options.push(opt);
-	}
 
 	public final function removeOption(opt:Option)
-	{
 		_options.remove(opt);
-	}
 
 	private var _name:String = "New Category";
 
 	public final function getName()
-	{
 		return _name;
-	}
 
 	public function new(catName:String, options:Array<Option>)
 	{
@@ -41,53 +33,35 @@ class OptionCategory
 class Option
 {
 	public function new()
-	{
 		display = updateDisplay();
-	}
 
 	private var description:String = "";
 	private var display:String;
 	private var acceptValues:Bool = false;
 
 	public final function getDisplay():String
-	{
 		return display;
-	}
 
 	public final function getAccept():Bool
-	{
 		return acceptValues;
-	}
 
 	public final function getDescription():String
-	{
 		return description;
-	}
 
 	public function getValue():String
-	{
 		return throw "stub!";
-	};
 
 	public function press():Bool
-	{
 		return throw "stub!";
-	}
 
 	private function updateDisplay():String
-	{
 		return throw "stub!";
-	}
 
 	public function left():Bool
-	{
 		return throw "stub!";
-	}
 
 	public function right():Bool
-	{
 		return throw "stub!";
-	}
 }
 
 class DFJKOption extends Option
@@ -107,9 +81,7 @@ class DFJKOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Key Bindings";
-	}
 }
 
 class CpuStrums extends Option
@@ -129,9 +101,7 @@ class CpuStrums extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return FlxG.save.data.cpuStrums ? "Light CPU Strums" : "CPU Strums stay static";
-	}
 }
 
 class DownscrollOption extends Option
@@ -150,9 +120,7 @@ class DownscrollOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return FlxG.save.data.downscroll ? "Downscroll" : "Upscroll";
-	}
 }
 
 class GhostTapOption extends Option
@@ -171,9 +139,7 @@ class GhostTapOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return FlxG.save.data.ghost ? "Ghost Tapping" : "No Ghost Tapping";
-	}
 }
 
 class AccuracyOption extends Option
@@ -192,9 +158,7 @@ class AccuracyOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
-	}
 }
 
 class SongPositionOption extends Option
@@ -213,9 +177,7 @@ class SongPositionOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Song Position " + (!FlxG.save.data.songPosition ? "off" : "on");
-	}
 }
 
 class DistractionsAndEffectsOption extends Option
@@ -234,9 +196,7 @@ class DistractionsAndEffectsOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Distractions " + (!FlxG.save.data.distractions ? "off" : "on");
-	}
 }
 
 class ResetButtonOption extends Option
@@ -255,9 +215,7 @@ class ResetButtonOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Reset Button " + (!FlxG.save.data.resetButton ? "off" : "on");
-	}
 }
 
 class FlashingLightsOption extends Option
@@ -276,9 +234,7 @@ class FlashingLightsOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Flashing Lights " + (!FlxG.save.data.flashing ? "off" : "on");
-	}
 }
 
 class Judgement extends Option
@@ -291,14 +247,10 @@ class Judgement extends Option
 	}
 
 	public override function press():Bool
-	{
 		return true;
-	}
 
 	private override function updateDisplay():String
-	{
 		return "Safe Frames";
-	}
 
 	override function left():Bool
 	{
@@ -313,21 +265,19 @@ class Judgement extends Option
 	}
 
 	override function getValue():String
-	{
 		return "Safe Frames: "
 			+ Conductor.safeFrames
 			+ " - SIK: "
-			+ HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0)
+			+ CoolUtil.truncateFloat(45 * Conductor.timeScale, 0)
 			+ "ms GD: "
-			+ HelperFunctions.truncateFloat(90 * Conductor.timeScale, 0)
+			+ CoolUtil.truncateFloat(90 * Conductor.timeScale, 0)
 			+ "ms BD: "
-			+ HelperFunctions.truncateFloat(135 * Conductor.timeScale, 0)
+			+ CoolUtil.truncateFloat(135 * Conductor.timeScale, 0)
 			+ "ms SHT: "
-			+ HelperFunctions.truncateFloat(155 * Conductor.timeScale, 0)
+			+ CoolUtil.truncateFloat(155 * Conductor.timeScale, 0)
 			+ "ms TOTAL: "
-			+ HelperFunctions.truncateFloat(Conductor.safeZoneOffset, 0)
+			+ CoolUtil.truncateFloat(Conductor.safeZoneOffset, 0)
 			+ "ms";
-	}
 
 	override function right():Bool
 	{
@@ -342,7 +292,7 @@ class Judgement extends Option
 	}
 }
 
-class FPSOption extends Option
+class OverlayOption extends Option
 {
 	public function new(desc:String)
 	{
@@ -352,15 +302,13 @@ class FPSOption extends Option
 
 	public override function press():Bool
 	{
-		FlxG.save.data.fps = !FlxG.save.data.fps;
+		FlxG.save.data.overlay = !FlxG.save.data.overlay;
 		display = updateDisplay();
 		return true;
 	}
 
 	private override function updateDisplay():String
-	{
-		return "FPS Counter " + (!FlxG.save.data.fps ? "off" : "on");
-	}
+		return "Overlay " + (!FlxG.save.data.overlay ? "off" : "on");
 }
 
 class ScrollSpeedOption extends Option
@@ -373,14 +321,10 @@ class ScrollSpeedOption extends Option
 	}
 
 	public override function press():Bool
-	{
 		return false;
-	}
 
 	private override function updateDisplay():String
-	{
 		return "Scroll Speed";
-	}
 
 	override function right():Bool
 	{
@@ -391,13 +335,12 @@ class ScrollSpeedOption extends Option
 
 		if (FlxG.save.data.scrollSpeed > 4)
 			FlxG.save.data.scrollSpeed = 4;
+
 		return true;
 	}
 
 	override function getValue():String
-	{
-		return "Current Scroll Speed: " + HelperFunctions.truncateFloat(FlxG.save.data.scrollSpeed, 1);
-	}
+		return "Current Scroll Speed: " + CoolUtil.truncateFloat(FlxG.save.data.scrollSpeed, 1);
 
 	override function left():Bool
 	{
@@ -429,9 +372,7 @@ class AccuracyDOption extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Accuracy Mode: " + (FlxG.save.data.accuracyMod == 0 ? "Accurate" : "Complex");
-	}
 }
 
 class CustomizeGameplay extends Option
@@ -450,9 +391,7 @@ class CustomizeGameplay extends Option
 	}
 
 	private override function updateDisplay():String
-	{
 		return "Customize Gameplay";
-	}
 }
 
 class BotPlay extends Option

@@ -1,4 +1,4 @@
-package;
+package substates;
 
 import flixel.util.FlxAxes;
 import flixel.FlxSubState;
@@ -20,6 +20,7 @@ import lime.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.input.FlxKeyManager;
+import states.OptionsMenu;
 
 using StringTools;
 

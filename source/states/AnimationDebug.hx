@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -10,7 +10,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 /**
-	*DEBUG MODE
+ * DEBUG MODE
  */
 class AnimationDebug extends FlxState
 {

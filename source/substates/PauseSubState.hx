@@ -1,4 +1,4 @@
-package;
+package substates;
 
 import openfl.Lib;
 import Controls.Control;
@@ -13,6 +13,9 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import states.PlayState;
+import states.FreeplayState;
+import states.StoryMenuState;
 
 class PauseSubState extends MusicBeatSubstate
 {

@@ -1,3 +1,7 @@
+package;
+
+import states.PlayState;
+
 class EtternaFunctions
 {
 	public static var a1 = 0.254829592;

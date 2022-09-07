@@ -3,34 +3,11 @@ package;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.Assets;
-import haxe.Json;
+import parsers.Character as CharacterParse;
+import parsers.Character.SwagAnimation;
+import parsers.Character.SwagCharacter;
 
 using StringTools;
-
-typedef SwagCharacter =
-{
-	var position:Array<Float>;
-	var camPos:Array<Float>;
-	var animations:Array<SwagAnimation>;
-	var scale:Float;
-	var singDuration:Float;
-	var antialiasing:Bool;
-	var flipX:Bool;
-	var flipY:Bool;
-	var colors:Array<Int>;
-}
-
-typedef SwagAnimation =
-{
-	var animation:String;
-	var prefix:String;
-	var framerate:Int;
-	var looped:Bool;
-	var indices:Array<Int>;
-	var flipX:Bool;
-	var flipY:Bool;
-	var offset:Array<Float>;
-}
 
 class Character extends FlxSprite
 {
@@ -53,7 +30,7 @@ class Character extends FlxSprite
 		this.curCharacter = curCharacter;
 		this.isPlayer = isPlayer;
 
-		final character:SwagCharacter = parseJson(Paths.json('characters/' + curCharacter + '/data'));
+		final character:SwagCharacter = CharacterParse.loadJson(curCharacter + '/data');
 
 		if (Assets.exists(Paths.xml('characters/' + curCharacter + '/spritesheet')))
 			frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('characters/' + curCharacter + '/spritesheet'),
@@ -107,16 +84,6 @@ class Character extends FlxSprite
 			flipX = !flipX;
 
 		dance();
-	}
-
-	public static function parseJson(path:String):SwagCharacter
-	{
-		var rawJson:String = null;
-
-		if(Assets.exists(path))
-			rawJson = Assets.getText(path);
-
-		return Json.parse(rawJson);
 	}
 
 	override function update(elapsed:Float)

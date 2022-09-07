@@ -1,4 +1,4 @@
-package;
+package substates;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -6,6 +6,9 @@ import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import states.PlayState;
+import states.FreeplayState;
+import states.StoryMenuState;
 
 class GameOverSubstate extends MusicBeatSubstate
 {

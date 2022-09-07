@@ -1,10 +1,13 @@
+package;
+
 import flixel.FlxG;
+import states.PlayState;
 
 class Ratings
 {
 	public static function GenerateLetterRank(accuracy:Float) // generate a letter ranking
 	{
-		var ranking:String = "[?]";
+		var ranking:String;
 
 		if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
 			ranking = "[MFC]";
@@ -115,11 +118,6 @@ class Ratings
 		return "sick";
 	}
 
-	public static function CalculateRanking(score:Int, scoreDef:Int, nps:Int, maxNPS:Int, accuracy:Float):String
-	{
-		return "Score: " + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score)
-			+ " | Combo Breaks: " + PlayState.misses
-			+ " | Accuracy: " + HelperFunctions.truncateFloat(accuracy, 2) + " %"
-			+ " | " + GenerateLetterRank(accuracy);
-	}
+	public static function CalculateRanking(score:Int, accuracy:Float):String
+		return "Score: " + score + " | Combo Breaks: " + PlayState.misses + " | Accuracy: " + CoolUtil.truncateFloat(accuracy, 2) + " %" + " | " + GenerateLetterRank(accuracy);
 }

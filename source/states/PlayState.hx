@@ -1,9 +1,5 @@
-package;
+package states;
 
-#if desktop
-import Discord.DiscordClient;
-import sys.FileSystem;
-#end
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -24,8 +20,12 @@ import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
-import Song;
-import Stage.SwagStage;
+import parsers.Song;
+import parsers.Stage;
+import parsers.Stage.SwagStage;
+import states.PlayState;
+import substates.GameOverSubstate;
+import substates.PauseSubState;
 
 using StringTools;
 
@@ -100,7 +100,6 @@ class PlayState extends MusicBeatState
 
 	private var camGame:FlxCamera;
 
-	var notesHitArray:Array<Date> = [];
 	var currentFrames:Int = 0;
 
 	public var dialogue:Array<String> = ['dad:blah blah blah', 'bf:coolswag'];
@@ -122,7 +121,6 @@ class PlayState extends MusicBeatState
 	var bgGirls:BackgroundGirls;
 	var talking:Bool = true;
 	var songScore:Int = 0;
-	var songScoreDef:Int = 0;
 	var scoreTxt:FlxText;
 	var defaultCamZoom:Float = 1.05;
 
@@ -196,7 +194,7 @@ class PlayState extends MusicBeatState
 			+ ") "
 			+ Ratings.GenerateLetterRank(accuracy),
 			"\nAcc: "
-			+ HelperFunctions.truncateFloat(accuracy, 2)
+			+ CoolUtil.truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
 			+ " | Misses: "
@@ -995,7 +993,7 @@ class PlayState extends MusicBeatState
 			+ ") "
 			+ Ratings.GenerateLetterRank(accuracy),
 			"\nAcc: "
-			+ HelperFunctions.truncateFloat(accuracy, 2)
+			+ CoolUtil.truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
 			+ " | Misses: "
@@ -1243,7 +1241,7 @@ class PlayState extends MusicBeatState
 				+ ") "
 				+ Ratings.GenerateLetterRank(accuracy),
 				"Acc: "
-				+ HelperFunctions.truncateFloat(accuracy, 2)
+				+ CoolUtil.truncateFloat(accuracy, 2)
 				+ "% | Score: "
 				+ songScore
 				+ " | Misses: "
@@ -1282,7 +1280,7 @@ class PlayState extends MusicBeatState
 					+ ") "
 					+ Ratings.GenerateLetterRank(accuracy),
 					"\nAcc: "
-					+ HelperFunctions.truncateFloat(accuracy, 2)
+					+ CoolUtil.truncateFloat(accuracy, 2)
 					+ "% | Score: "
 					+ songScore
 					+ " | Misses: "
@@ -1320,7 +1318,7 @@ class PlayState extends MusicBeatState
 			+ ") "
 			+ Ratings.GenerateLetterRank(accuracy),
 			"\nAcc: "
-			+ HelperFunctions.truncateFloat(accuracy, 2)
+			+ CoolUtil.truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
 			+ " | Misses: "
@@ -1331,8 +1329,6 @@ class PlayState extends MusicBeatState
 	private var paused:Bool = false;
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
-	var nps:Int = 0;
-	var maxNPS:Int = 0;
 
 	public static var songRate = 1.5;
 
@@ -1344,20 +1340,6 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.save.data.botplay && FlxG.keys.justPressed.ONE)
 			camHUD.visible = !camHUD.visible;
-
-		var balls = notesHitArray.length - 1;
-		while (balls >= 0)
-		{
-			var cock:Date = notesHitArray[balls];
-			if (cock != null && cock.getTime() + 1000 < Date.now().getTime())
-				notesHitArray.remove(cock);
-			else
-				balls = 0;
-			balls--;
-		}
-		nps = notesHitArray.length;
-		if (nps > maxNPS)
-			maxNPS = nps;
 
 		switch (SONG.stage)
 		{
@@ -1377,7 +1359,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.screenCenter(X);
-		scoreTxt.text = Ratings.CalculateRanking(songScore, songScoreDef, nps, maxNPS, accuracy);
+		scoreTxt.text = Ratings.CalculateRanking(songScore, accuracy);
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.text = "Score: " + songScore;
 
@@ -1665,7 +1647,7 @@ class PlayState extends MusicBeatState
 				+ ") "
 				+ Ratings.GenerateLetterRank(accuracy),
 				"\nAcc: "
-				+ HelperFunctions.truncateFloat(accuracy, 2)
+				+ CoolUtil.truncateFloat(accuracy, 2)
 				+ "% | Score: "
 				+ songScore
 				+ " | Misses: "
@@ -1905,7 +1887,7 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 
 		if (SONG.validScore)
-			Highscore.saveScore(SONG.song, Math.round(songScore), storyDifficulty);
+			HighScore.saveScore(SONG.song, Math.round(songScore), storyDifficulty);
 
 		if (isStoryMode)
 		{
@@ -1922,7 +1904,7 @@ class PlayState extends MusicBeatState
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
 				if (SONG.validScore)
-					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
+					HighScore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 			}
 			else
 			{
@@ -2024,7 +2006,6 @@ class PlayState extends MusicBeatState
 		if (daRating != 'shit' || daRating != 'bad')
 		{
 			songScore += Math.round(score);
-			songScoreDef += Math.round(ConvertScore.convertScore(noteDiff));
 
 			var pixelShitPart1:String = "";
 			var pixelShitPart2:String = '';
@@ -2401,9 +2382,6 @@ class PlayState extends MusicBeatState
 
 		note.rating = Ratings.CalculateRating(noteDiff);
 
-		if (!note.sustainNote)
-			notesHitArray.unshift(Date.now());
-
 		if (!resetMashViolation && mashViolations >= 1)
 			mashViolations--;
 
@@ -2573,7 +2551,7 @@ class PlayState extends MusicBeatState
 			+ ") "
 			+ Ratings.GenerateLetterRank(accuracy),
 			"Acc: "
-			+ HelperFunctions.truncateFloat(accuracy, 2)
+			+ CoolUtil.truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
 			+ " | Misses: "

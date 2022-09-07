@@ -10,10 +10,8 @@ class BackgroundGirls extends FlxSprite
 		super(x, y);
 
 		frames = Paths.getSparrowAtlas('stages/weeb/bgFreaks');
-
 		animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
 		animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
-
 		animation.play('danceLeft');
 	}
 
