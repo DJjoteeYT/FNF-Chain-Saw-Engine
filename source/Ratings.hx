@@ -4,7 +4,7 @@ class Ratings
 {
 	public static function GenerateLetterRank(accuracy:Float) // generate a letter ranking
 	{
-		var ranking:String = "[N/A]";
+		var ranking:String = "[?]";
 
 		if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
 			ranking = "[MFC]";
@@ -82,7 +82,7 @@ class Ratings
 		}
 
 		if (accuracy == 0)
-			ranking = "N/A";
+			ranking = "?";
 
 		return ranking;
 	}
@@ -117,10 +117,9 @@ class Ratings
 
 	public static function CalculateRanking(score:Int, scoreDef:Int, nps:Int, maxNPS:Int, accuracy:Float):String
 	{
-		return (FlxG.save.data.npsDisplay ? "NPS: " + nps + " (Max " + maxNPS + ")" + " | " : "") +  "Score: "
-				+ (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score)
-				+ " | Combo Breaks: " + PlayState.misses
-				+ " | Accuracy: " + HelperFunctions.truncateFloat(accuracy, 2) + " %"
-				+ " | Rank: " + GenerateLetterRank(accuracy); // Letter Rank
+		return "Score: " + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score)
+			+ " | Combo Breaks: " + PlayState.misses
+			+ " | Accuracy: " + HelperFunctions.truncateFloat(accuracy, 2) + " %"
+			+ " | " + GenerateLetterRank(accuracy);
 	}
 }

@@ -214,7 +214,6 @@ class ChartingState extends MusicBeatState
 		check_voices.callback = function()
 		{
 			_song.needsVoices = check_voices.checked;
-			trace('CHECKED!');
 		};
 
 		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
@@ -676,7 +675,6 @@ class ChartingState extends MusicBeatState
 			{
 				deleteNote(note);
 				delete = true;
-				trace('deelte note');
 			}
 		});
 		for (p in 0...pressArray.length)
@@ -710,14 +708,8 @@ class ChartingState extends MusicBeatState
 
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
 		{
-			trace(curStep);
-			trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
-			trace('DUMBSHIT');
-
 			if (_song.notes[curSection + 1] == null)
-			{
 				addSection();
-			}
 
 			changeSection(curSection + 1, false);
 		}
@@ -810,7 +802,6 @@ class ChartingState extends MusicBeatState
 			{
 				if (FlxG.keys.justPressed.Z && lastNote != null)
 				{
-					trace(curRenderedNotes.members.contains(lastNote) ? "delete note" : "add note");
 					if (curRenderedNotes.members.contains(lastNote))
 						deleteNote(lastNote);
 					else
@@ -862,13 +853,10 @@ class ChartingState extends MusicBeatState
 
 				var stepMs = curStep * Conductor.stepCrochet;
 
-				trace(Conductor.stepCrochet / snap);
-
 				if (doSnapShit)
 					FlxG.sound.music.time = stepMs - (FlxG.mouse.wheel * Conductor.stepCrochet / snap);
 				else
 					FlxG.sound.music.time -= (FlxG.mouse.wheel * Conductor.stepCrochet * 0.4);
-				trace(stepMs + " + " + Conductor.stepCrochet / snap + " -> " + FlxG.sound.music.time);
 
 				vocals.time = FlxG.sound.music.time;
 			}
@@ -946,18 +934,6 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 	}
 
-	override function beatHit()
-	{
-		trace('beat');
-
-		super.beatHit();
-		if (!player2.animation.curAnim.name.startsWith("sing"))
-		{
-			player2.playAnim('idle');
-		}
-		player1.dance();
-	}
-
 	function recalculateSteps():Int
 	{
 		var lastChange:BPMChangeEvent = {
@@ -1001,11 +977,8 @@ class ChartingState extends MusicBeatState
 
 	function changeSection(sec:Int = 0, ?updateMusic:Bool = true):Void
 	{
-		trace('changing section' + sec);
-
 		if (_song.notes[sec] != null)
 		{
-			trace('naw im not null');
 			curSection = sec;
 
 			updateGrid();
@@ -1015,14 +988,6 @@ class ChartingState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 
-				/*var daNum:Int = 0;
-					var daLength:Float = 0;
-					while (daNum <= sec)
-					{
-						daLength += lengthBpmBullshit();
-						daNum++;
-				}*/
-
 				FlxG.sound.music.time = sectionStartTime();
 				vocals.time = FlxG.sound.music.time;
 				updateCurStep();
@@ -1031,8 +996,6 @@ class ChartingState extends MusicBeatState
 			updateGrid();
 			updateSectionUI();
 		}
-		else
-			trace('bro wtf I AM NULL');
 	}
 
 	function copySection(?sectionNum:Int = 1)
@@ -1231,7 +1194,6 @@ class ChartingState extends MusicBeatState
 
 		var millisecadd = (((measure * 4) + step / 4) * (60000 / _song.bpm)) + ms;
 		var totaladdsection = Std.int((millisecadd / (60000 / _song.bpm) / 4));
-		trace(millisecadd, totaladdsection);
 		if (millisecadd > 0)
 		{
 			for (i in 0...totaladdsection)
@@ -1301,35 +1263,7 @@ class ChartingState extends MusicBeatState
 		return FlxMath.remapToRange(strumTime, 0, 16 * Conductor.stepCrochet, gridBG.y, gridBG.y + gridBG.height);
 	}
 
-	/*
-		function calculateSectionLengths(?sec:SwagSection):Int
-		{
-			var daLength:Int = 0;
-
-			for (i in _song.notes)
-			{
-				var swagLength = i.lengthInSteps;
-
-				if (i.typeOfSection == Section.COPYCAT)
-					swagLength * 2;
-
-				daLength += swagLength;
-
-				if (sec != null && sec == i)
-				{
-					trace('swag loop??');
-					break;
-				}
-			}
-
-			return daLength;
-	}*/
 	private var daSpacing:Float = 0.3;
-
-	function loadLevel():Void
-	{
-		trace(_song.notes);
-	}
 
 	function getNotes():Array<Dynamic>
 	{

@@ -76,20 +76,18 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
-
 		for (i in 0...optionShit.length)
 		{
 			var menuItem:FlxSprite = new FlxSprite(0, 60 + (i * 160));
-			menuItem.frames = tex;
+			menuItem.frames = Paths.getSparrowAtlas('FNF_main_menu_assets');
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
-			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
+			menuItems.add(menuItem);
 		}
 
 		firstStart = false;
@@ -97,8 +95,8 @@ class MainMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollow, null, 0.60);
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer + ' - FNF', 12);
-		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.scrollFactor.set();
 		add(versionShit);
 
 		changeItem();
@@ -111,9 +109,7 @@ class MainMenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.8)
-		{
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
+			FlxG.sound.music.volume += 0.5 * elapsed;
 
 		if (!selectedSomethin)
 		{
@@ -134,9 +130,7 @@ class MainMenuState extends MusicBeatState
 			else if (controls.ACCEPT)
 			{
 				if (optionShit[curSelected] == 'donate')
-				{
-					fancyOpenURL("https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game");
-				}
+					FlxG.openURL("https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game");
 				else
 				{
 					selectedSomethin = true;
@@ -177,8 +171,6 @@ class MainMenuState extends MusicBeatState
 					});
 				}
 			}
-			else if (FlxG.keys.justPressed.SEVEN)
-				MusicBeatState.switchState(new AnimationDebug('pico'));
 		}
 
 		super.update(elapsed);
@@ -221,8 +213,9 @@ class MainMenuState extends MusicBeatState
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
-				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
 				spr.centerOffsets();
+				spr.centerOrigin();
+				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
 			}
 		});
 	}

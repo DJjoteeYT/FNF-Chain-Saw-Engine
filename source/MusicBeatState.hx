@@ -82,15 +82,6 @@ class MusicBeatState extends FlxState
 
 	public function beatHit():Void {}
 
-	public function fancyOpenURL(schmancy:String)
-	{
-		#if linux
-		Sys.command('/usr/bin/xdg-open', [schmancy, "&"]);
-		#else
-		FlxG.openURL(schmancy);
-		#end
-	}
-
 	public static function switchState(nextState:FlxState)
 	{
 		if(!FlxTransitionableState.skipNextTransIn)
