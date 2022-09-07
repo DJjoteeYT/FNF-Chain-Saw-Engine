@@ -82,7 +82,7 @@ class Ratings
 		}
 
 		if (accuracy == 0)
-			ranking = "?";
+			ranking = "[You Suck!]";
 
 		return ranking;
 	}
