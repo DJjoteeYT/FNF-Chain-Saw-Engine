@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxG;
-import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.display.BitmapData;
 import openfl.media.Sound;
@@ -12,7 +11,7 @@ using StringTools;
 
 class Paths
 {
-	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
+	public static var currentTrackedAssets:Map<String, BitmapData> = [];
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 
 	public static var localTrackedAssets:Array<String> = [];
@@ -32,7 +31,6 @@ class Paths
 					Assets.cache.clearBitmapData(key);
 					Assets.cache.clear(key);
 					FlxG.bitmap._cache.remove(key);
-					obj.destroy();
 					currentTrackedAssets.remove(key);
 					counter++;
 				}
@@ -56,7 +54,6 @@ class Paths
 				Assets.cache.clearBitmapData(key);
 				Assets.cache.clear(key);
 				FlxG.bitmap._cache.remove(key);
-				obj.destroy();
 				counterAssets++;
 			}
 		}
@@ -119,17 +116,13 @@ class Paths
 	inline static public function getPackerAtlas(key:String):FlxAtlasFrames
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key), txt('images/$key'));
 
-	public static function returnGraphic(key:String, ?cache:Bool = true):FlxGraphic
+	public static function returnGraphic(key:String, ?cache:Bool = true):BitmapData
 	{
 		var path:String = 'assets/$key.png';
 		if (Assets.exists(path, IMAGE))
 		{
 			if (!currentTrackedAssets.exists(path))
-			{
-				var graphic:FlxGraphic = FlxGraphic.fromBitmapData(Assets.getBitmapData(path), false, path, cache);
-				graphic.persist = true;
-				currentTrackedAssets.set(path, graphic);
-			}
+				currentTrackedAssets.set(path, Assets.getBitmapData(path, cache));
 
 			localTrackedAssets.push(path);
 			return currentTrackedAssets.get(path);
