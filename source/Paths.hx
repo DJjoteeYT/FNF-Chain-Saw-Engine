@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.display.BitmapData;
-import openfl.display3D.textures.Texture;
 import openfl.media.Sound;
 import openfl.system.System;
 import openfl.utils.Assets;
@@ -14,7 +13,6 @@ using StringTools;
 class Paths
 {
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
-	public static var currentTrackedTextures:Map<String, Texture> = [];
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 
 	public static var localTrackedAssets:Array<String> = [];
@@ -30,14 +28,6 @@ class Paths
 				@:privateAccess
 				if (obj != null)
 				{
-					var isTexture:Bool = currentTrackedTextures.exists(key);
-					if (isTexture)
-					{
-						var texture = currentTrackedTextures.get(key);
-						texture.dispose();
-						texture = null;
-						currentTrackedTextures.remove(key);
-					}
 					Assets.cache.removeBitmapData(key);
 					Assets.cache.clearBitmapData(key);
 					Assets.cache.clear(key);
@@ -129,37 +119,16 @@ class Paths
 	inline static public function getPackerAtlas(key:String):FlxAtlasFrames
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key), txt('images/$key'));
 
-	public static function returnGraphic(key:String, ?gpurender:Bool = false):FlxGraphic
+	public static function returnGraphic(key:String, ?cache:Bool = true):FlxGraphic
 	{
 		var path:String = 'assets/$key.png';
 		if (Assets.exists(path, IMAGE))
 		{
 			if (!currentTrackedAssets.exists(path))
 			{
-				var newGraphic:FlxGraphic = null;
-				var bitmap:BitmapData = Assets.getBitmapData(path);
-
-				if (gpurender)
-				{
-					switch (FlxG.save.data.render)
-					{
-						case 1:
-							var texture = FlxG.stage.context3D.createTexture(bitmap.width, bitmap.height, BGRA, true);
-							texture.uploadFromBitmapData(bitmap);
-							currentTrackedTextures.set(path, texture);
-							bitmap.dispose();
-							bitmap.disposeImage();
-							bitmap = null;
-							newGraphic = FlxGraphic.fromBitmapData(BitmapData.fromTexture(texture), false, path);
-						default:
-							newGraphic = FlxGraphic.fromBitmapData(bitmap, false, path);
-					}
-				}
-				else
-					newGraphic = FlxGraphic.fromBitmapData(bitmap, false, path);
-
-				newGraphic.persist = true;
-				currentTrackedAssets.set(path, newGraphic);
+				var graphic:FlxGraphic = FlxGraphic.fromBitmapData(Assets.getBitmapData(path), false, path, cache);
+				graphic.persist = true;
+				currentTrackedAssets.set(path, graphic);
 			}
 
 			localTrackedAssets.push(path);
