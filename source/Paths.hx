@@ -110,8 +110,8 @@ class Paths
 	inline static public function inst(song:String, ?cache:Bool = true):Sound
 		return returnSound('songs/' + song.replace(' ', '-').toLowerCase() + '/Inst', cache);
 
-	inline static public function image(key:String, ?gpurender:Bool = false):FlxGraphic
-		return returnGraphic('images/$key', gpurender);
+	inline static public function image(key:String, ?cache:Bool = true):FlxGraphic
+		return returnGraphic('images/$key', cache);
 
 	inline static public function getSparrowAtlas(key:String):FlxAtlasFrames
 		return FlxAtlasFrames.fromSparrow(image(key), xml('images/$key'));
