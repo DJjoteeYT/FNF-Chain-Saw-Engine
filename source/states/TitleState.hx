@@ -10,8 +10,6 @@ import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.utils.Assets;
 
-using StringTools;
-
 class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;

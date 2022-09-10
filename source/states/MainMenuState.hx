@@ -14,8 +14,6 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 
-using StringTools;
-
 class MainMenuState extends MusicBeatState
 {
 	var curSelected:Int = 0;

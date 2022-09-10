@@ -18,6 +18,11 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
+	public var offsetX:Float = 0;
+	public var offsetY:Float = 0;
+	public var offsetAngle:Float = 0;
+	public var multAlpha:Float = 1;
+
 	public var strumTime:Float = 0;
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
@@ -99,30 +104,30 @@ class Note extends FlxSprite
 				antialiasing = true;
 		}
 
-		switch (noteData)
+		x += swagWidth * (noteData % 4);
+		switch (noteData % 4)
 		{
 			case 0:
-				x += swagWidth * 0;
 				animation.play('purpleScroll');
 			case 1:
-				x += swagWidth * 1;
 				animation.play('blueScroll');
 			case 2:
-				x += swagWidth * 2;
 				animation.play('greenScroll');
 			case 3:
-				x += swagWidth * 3;
 				animation.play('redScroll');
 		}
 
-		if (FlxG.save.data.downscroll && sustainNote) 
-			flipY = true;
-
 		if (sustainNote && prevNote != null)
 		{
-			x += width / 2;
+			alpha = 0.6;
+			multAlpha = 0.6;
 
-			switch (noteData)
+			if (FlxG.save.data.downscroll) 
+				flipY = true;
+
+			offsetX += width / 2;
+
+			switch (noteData % 4)
 			{
 				case 2:
 					animation.play('greenholdend');
@@ -136,14 +141,14 @@ class Note extends FlxSprite
 
 			updateHitbox();
 
-			x -= width / 2;
+			offsetX -= width / 2;
 
 			if (PlayState.SONG.stage.startsWith('school'))
-				x += 30;
+				offsetX += 30;
 
 			if (prevNote.sustainNote)
 			{
-				switch (prevNote.noteData)
+				switch (prevNote.noteData % 4)
 				{
 					case 0:
 						prevNote.animation.play('purplehold');
@@ -155,14 +160,12 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				if(FlxG.save.data.scrollSpeed != 1)
-					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * FlxG.save.data.scrollSpeed;
-				else
-					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
-
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
 			}
 		}
+
+		x += offsetX;
 	}
 
 	override function update(elapsed:Float)

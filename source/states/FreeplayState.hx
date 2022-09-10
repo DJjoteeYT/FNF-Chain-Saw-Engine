@@ -11,8 +11,6 @@ import parsers.Song;
 import parsers.Week;
 import states.PlayState;
 
-using StringTools;
-
 class FreeplayState extends MusicBeatState
 {
 	private var grpSongs:FlxTypedGroup<Alphabet>;

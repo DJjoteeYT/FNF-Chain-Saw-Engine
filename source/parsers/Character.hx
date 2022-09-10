@@ -3,8 +3,6 @@ package parsers;
 import openfl.utils.Assets;
 import haxe.Json;
 
-using StringTools;
-
 typedef SwagCharacter =
 {
 	var position:Array<Float>;

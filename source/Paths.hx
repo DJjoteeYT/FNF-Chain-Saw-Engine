@@ -113,11 +113,11 @@ class Paths
 	inline static public function image(key:String, ?cache:Bool = true):FlxGraphic
 		return returnGraphic('images/$key', cache);
 
-	inline static public function getSparrowAtlas(key:String):FlxAtlasFrames
-		return FlxAtlasFrames.fromSparrow(image(key), xml('images/$key'));
+	inline static public function getSparrowAtlas(key:String, ?cache:Bool = true):FlxAtlasFrames
+		return FlxAtlasFrames.fromSparrow(returnGraphic('images/$key', cache), xml('images/$key'));
 
-	inline static public function getPackerAtlas(key:String):FlxAtlasFrames
-		return FlxAtlasFrames.fromSpriteSheetPacker(image(key), txt('images/$key'));
+	inline static public function getPackerAtlas(key:String, ?cache:Bool = true):FlxAtlasFrames
+		return FlxAtlasFrames.fromSpriteSheetPacker(returnGraphic('images/$key', cache), txt('images/$key'));
 
 	public static function returnGraphic(key:String, ?cache:Bool = true):FlxGraphic
 	{

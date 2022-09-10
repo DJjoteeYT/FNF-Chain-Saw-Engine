@@ -22,8 +22,6 @@ import flixel.text.FlxText;
 import flixel.input.FlxKeyManager;
 import states.OptionsMenu;
 
-using StringTools;
-
 class KeyBindMenu extends FlxSubState
 {
 	var keyTextDisplay:FlxText;

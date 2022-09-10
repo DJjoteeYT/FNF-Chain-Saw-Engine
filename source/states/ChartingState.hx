@@ -103,6 +103,10 @@ class ChartingState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		#if desktop
+		DiscordClient.changePresence("Chart Editor", null, null, true);
+		#end
+
 		curSection = lastSection;
 
 		if (PlayState.SONG != null)

@@ -15,8 +15,6 @@ import flixel.util.FlxTimer;
 import parsers.Song;
 import states.PlayState;
 
-using StringTools;
-
 class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;

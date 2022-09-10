@@ -5,6 +5,7 @@ import flixel.util.FlxColor;
 import openfl.Lib;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
+import flixel.FlxCamera;
 import flixel.FlxState;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
@@ -29,8 +30,13 @@ class MusicBeatState extends FlxState
 
 		if (!FlxTransitionableState.skipNextTransOut)
 		{
-			FlxG.camera.fade(FlxColor.BLACK, 0.7, true);
-			FlxTransitionableState.skipNextTransOut = false;
+			var cam:FlxCamera = new FlxCamera();
+			cam.bgColor.alpha = 0;
+			FlxG.cameras.add(cam, false);
+			cam.fade(FlxColor.BLACK, 0.7, true, function()
+			{
+				FlxTransitionableState.skipNextTransOut = false;
+			});
 		}
 	}
 
@@ -83,7 +89,10 @@ class MusicBeatState extends FlxState
 	{
 		if(!FlxTransitionableState.skipNextTransIn)
 		{
-			FlxG.camera.fade(FlxColor.BLACK, 0.7, false, function()
+			var cam:FlxCamera = new FlxCamera();
+			cam.bgColor.alpha = 0;
+			FlxG.cameras.add(cam, false);
+			cam.fade(FlxColor.BLACK, 0.7, false, function()
 			{
 				FlxTransitionableState.skipNextTransIn = false;
 				FlxG.switchState(nextState);
