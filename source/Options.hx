@@ -240,19 +240,9 @@ class Judgement extends Option
 	}
 
 	override function getValue():String
-		return "Safe Frames: "
-			+ Conductor.safeFrames
-			+ " - SIK: "
-			+ CoolUtil.truncateFloat(45 * Conductor.timeScale, 0)
-			+ "ms GD: "
-			+ CoolUtil.truncateFloat(90 * Conductor.timeScale, 0)
-			+ "ms BD: "
-			+ CoolUtil.truncateFloat(135 * Conductor.timeScale, 0)
-			+ "ms SHT: "
-			+ CoolUtil.truncateFloat(155 * Conductor.timeScale, 0)
-			+ "ms TOTAL: "
-			+ CoolUtil.truncateFloat(Conductor.safeZoneOffset, 0)
-			+ "ms";
+		return "Safe Frames: " + Conductor.safeFrames + " - SIK: " + CoolUtil.truncateFloat(45 * Conductor.timeScale, 0) + "ms GD: "
+			+ CoolUtil.truncateFloat(90 * Conductor.timeScale, 0) + "ms BD: " + CoolUtil.truncateFloat(135 * Conductor.timeScale, 0) + "ms SHT: "
+			+ CoolUtil.truncateFloat(155 * Conductor.timeScale, 0) + "ms TOTAL: " + CoolUtil.truncateFloat(Conductor.safeZoneOffset, 0) + "ms";
 
 	override function right():Bool
 	{

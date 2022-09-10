@@ -83,11 +83,13 @@ class MusicBeatState extends FlxState
 			beatHit();
 	}
 
-	public function beatHit():Void {}
+	public function beatHit():Void
+	{
+	}
 
 	public static function switchState(nextState:FlxState)
 	{
-		if(!FlxTransitionableState.skipNextTransIn)
+		if (!FlxTransitionableState.skipNextTransIn)
 		{
 			var cam:FlxCamera = new FlxCamera();
 			cam.bgColor.alpha = 0;

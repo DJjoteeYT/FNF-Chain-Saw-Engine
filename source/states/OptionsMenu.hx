@@ -37,7 +37,8 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Appearance", [
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new AccuracyOption("Display accuracy information."),
-			new SongPositionOption("Show the songs current position (as a bar)"), new CpuStrums("CPU's strumline lights up when a note hits it."),
+			new SongPositionOption("Show the songs current position (as a bar)"),
+			new CpuStrums("CPU's strumline lights up when a note hits it."),
 		]),
 		new OptionCategory("Misc", [
 			new OverlayOption("Toggle the Overlay"),
@@ -226,7 +227,8 @@ class OptionsMenu extends MusicBeatState
 			{
 				if (isCat)
 				{
-					if (currentSelectedCat.getOptions()[curSelected].press()) {
+					if (currentSelectedCat.getOptions()[curSelected].press())
+					{
 						grpControls.remove(grpControls.members[curSelected]);
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, currentSelectedCat.getOptions()[curSelected].getDisplay(), true, false);
 						ctrl.isMenuItem = true;

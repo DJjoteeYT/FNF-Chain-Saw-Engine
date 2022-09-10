@@ -74,6 +74,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	}
 
 	var isEnding:Bool = false;
+
 	function endBullshit():Void
 	{
 		if (!isEnding)

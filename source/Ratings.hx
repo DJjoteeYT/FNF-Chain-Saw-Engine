@@ -30,7 +30,8 @@ class Ratings
 		final timingWindows = [166.0, 135.0, 90.0, 45.0];
 		for (index in 0...timingWindows.length)
 		{
-			if (Math.abs(noteDiff) < (timingWindows[index] * Conductor.timeScale) && Math.abs(noteDiff) >= (index + 1 > timingWindows.length - 1 ? 0 : timingWindows[index + 1]) * Conductor.timeScale)
+			if (Math.abs(noteDiff) < (timingWindows[index] * Conductor.timeScale)
+				&& Math.abs(noteDiff) >= (index + 1 > timingWindows.length - 1 ? 0 : timingWindows[index + 1]) * Conductor.timeScale)
 			{
 				switch (index)
 				{

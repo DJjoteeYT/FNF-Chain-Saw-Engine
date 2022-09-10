@@ -122,7 +122,7 @@ class Note extends FlxSprite
 			alpha = 0.6;
 			multAlpha = 0.6;
 
-			if (FlxG.save.data.downscroll) 
+			if (FlxG.save.data.downscroll)
 				flipY = true;
 
 			offsetX += width / 2;

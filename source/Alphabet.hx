@@ -11,7 +11,8 @@ using StringTools;
 /**
  * Loosley based on FlxTypeText lolol
  */
-class Alphabet extends FlxSpriteGroup {
+class Alphabet extends FlxSpriteGroup
+{
 	public var delay:Float = 0.05;
 	public var paused:Bool = false;
 	public var targetY:Float = 0;
@@ -28,7 +29,8 @@ class Alphabet extends FlxSpriteGroup {
 	var isBold:Bool = false;
 	var splitWords:Array<String> = [];
 
-	public function new(x:Float = 0, y:Float = 0, text:String = "", ?bold:Bool = false, typed:Bool = false) {
+	public function new(x:Float = 0, y:Float = 0, text:String = "", ?bold:Bool = false, typed:Bool = false)
+	{
 		super(x, y);
 
 		this.text = text;
@@ -36,7 +38,8 @@ class Alphabet extends FlxSpriteGroup {
 		finalText = text;
 		isBold = bold;
 
-		if (text != "") {
+		if (text != "")
+		{
 			if (typed)
 				startTypedText();
 			else
@@ -44,19 +47,23 @@ class Alphabet extends FlxSpriteGroup {
 		}
 	}
 
-	public function addText() {
+	public function addText()
+	{
 		doSplitWords();
 
 		var xPos:Float = 0;
-		for (character in splitWords) {
+		for (character in splitWords)
+		{
 			if (character == " " || character == "-")
 				lastWasSpace = true;
 
-			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1) {
+			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1)
+			{
 				if (lastSprite != null)
 					xPos = lastSprite.x + lastSprite.width;
 
-				if (lastWasSpace) {
+				if (lastWasSpace)
+				{
 					xPos += 40;
 					lastWasSpace = false;
 				}
@@ -75,13 +82,15 @@ class Alphabet extends FlxSpriteGroup {
 		}
 	}
 
-	function doSplitWords():Void {
+	function doSplitWords():Void
+	{
 		splitWords = finalText.split("");
 	}
 
 	public var personTalking:String = 'gf';
 
-	public function startTypedText():Void {
+	public function startTypedText():Void
+	{
 		finalText = text;
 		doSplitWords();
 
@@ -90,8 +99,10 @@ class Alphabet extends FlxSpriteGroup {
 		var xPos:Float = 0;
 		var curRow:Int = 0;
 
-		new FlxTimer().start(0.05, function(tmr:FlxTimer) {
-			if (finalText.fastCodeAt(loopNum) == "\n".code) {
+		new FlxTimer().start(0.05, function(tmr:FlxTimer)
+		{
+			if (finalText.fastCodeAt(loopNum) == "\n".code)
+			{
 				yMulti += 1;
 				xPosResetted = true;
 				xPos = 0;
@@ -109,14 +120,18 @@ class Alphabet extends FlxSpriteGroup {
 			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(splitWords[loopNum]) != -1;
 			#end
 
-			if (AlphaCharacter.alphabet.indexOf(splitWords[loopNum].toLowerCase()) != -1 || isNumber || isSymbol) {
-				if (lastSprite != null && !xPosResetted) {
+			if (AlphaCharacter.alphabet.indexOf(splitWords[loopNum].toLowerCase()) != -1 || isNumber || isSymbol)
+			{
+				if (lastSprite != null && !xPosResetted)
+				{
 					lastSprite.updateHitbox();
 					xPos += lastSprite.width + 3;
-				} else
+				}
+				else
 					xPosResetted = false;
 
-				if (lastWasSpace) {
+				if (lastWasSpace)
+				{
 					xPos += 20;
 					lastWasSpace = false;
 				}
@@ -125,7 +140,8 @@ class Alphabet extends FlxSpriteGroup {
 				letter.row = curRow;
 				if (isBold)
 					letter.createBold(splitWords[loopNum]);
-				else {
+				else
+				{
 					if (isNumber)
 						letter.createNumber(splitWords[loopNum]);
 					else if (isSymbol)
@@ -150,8 +166,10 @@ class Alphabet extends FlxSpriteGroup {
 		}, splitWords.length);
 	}
 
-	override function update(elapsed:Float) {
-		if (isMenuItem) {
+	override function update(elapsed:Float)
+	{
+		if (isMenuItem)
+		{
 			y = CoolUtil.coolLerp(y, (FlxMath.remapToRange(targetY, 0, 1, 0, 1.3) * 120) + (FlxG.height * 0.48), 0.16);
 			x = CoolUtil.coolLerp(x, (targetY * 20) + 90, 0.16);
 		}
@@ -160,27 +178,31 @@ class Alphabet extends FlxSpriteGroup {
 	}
 }
 
-class AlphaCharacter extends FlxSprite {
+class AlphaCharacter extends FlxSprite
+{
 	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyz";
 	public static var numbers:String = "1234567890";
 	public static var symbols:String = "|~#$%()*+-:;<=>@[]^_.,'!?";
 
 	public var row:Int = 0;
 
-	public function new(x:Float, y:Float) {
+	public function new(x:Float, y:Float)
+	{
 		super(x, y);
 
 		frames = Paths.getSparrowAtlas('alphabet');
 		antialiasing = true;
 	}
 
-	public function createBold(letter:String) {
+	public function createBold(letter:String)
+	{
 		animation.addByPrefix(letter, letter.toUpperCase() + " bold", 24);
 		animation.play(letter);
 		updateHitbox();
 	}
 
-	public function createLetter(letter:String):Void {
+	public function createLetter(letter:String):Void
+	{
 		var letterCase:String = "lowercase";
 
 		if (letter.toLowerCase() != letter)
@@ -196,15 +218,18 @@ class AlphaCharacter extends FlxSprite {
 		y += row * 60;
 	}
 
-	public function createNumber(letter:String):Void {
+	public function createNumber(letter:String):Void
+	{
 		animation.addByPrefix(letter, letter, 24);
 		animation.play(letter);
 
 		updateHitbox();
 	}
 
-	public function createSymbol(letter:String) {
-		switch (letter) {
+	public function createSymbol(letter:String)
+	{
+		switch (letter)
+		{
 			case '.':
 				animation.addByPrefix(letter, 'period', 24);
 				animation.play(letter);

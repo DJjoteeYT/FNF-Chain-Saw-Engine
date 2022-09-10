@@ -11,7 +11,6 @@ import openfl.system.System;
 /**
  * Credits: Yoshubs.
  */
-
 class Overlay extends TextField
 {
 	var times:Array<Float> = [];
@@ -32,6 +31,7 @@ class Overlay extends TextField
 	}
 
 	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB'];
+
 	public static function getInterval(num:UInt):String
 	{
 		var size:Float = num;

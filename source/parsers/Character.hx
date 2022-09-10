@@ -37,7 +37,7 @@ class Character
 	{
 		var rawJson:String = '';
 
-		if(Assets.exists(path))
+		if (Assets.exists(path))
 			rawJson = Assets.getText(path);
 
 		return Json.parse(rawJson);

@@ -44,7 +44,7 @@ class Character extends FlxSprite
 
 		final animations:Array<SwagAnimation> = character.animations;
 
-		if(animations != null && animations.length > 0)
+		if (animations != null && animations.length > 0)
 		{
 			for (anim in animations)
 			{
@@ -57,12 +57,12 @@ class Character extends FlxSprite
 				final animFlipX:Bool = anim.flipX;
 				final animFlipY:Bool = anim.flipY;
 
-				if(animIndices != null && animIndices.length > 0)
+				if (animIndices != null && animIndices.length > 0)
 					animation.addByIndices(animAnimation, animPrefix, animIndices, '', animFramerate, animLooped, animFlipX, animFlipY);
 				else
 					animation.addByPrefix(animAnimation, animPrefix, animFramerate, animLooped, animFlipX, animFlipY);
 
-				if(animOffset != null && animOffset.length > 0)
+				if (animOffset != null && animOffset.length > 0)
 					addOffset(animAnimation, animOffset[0], animOffset[1]);
 				else
 					addOffset(animAnimation);
@@ -71,7 +71,7 @@ class Character extends FlxSprite
 		else
 			animation.addByPrefix('idle', 'BF idle dance', 24, false);
 
-		if(character.scale != 1)
+		if (character.scale != 1)
 			scale.set(character.scale, character.scale);
 
 		singDuration = character.singDuration;

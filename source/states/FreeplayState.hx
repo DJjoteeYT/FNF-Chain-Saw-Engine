@@ -39,7 +39,7 @@ class FreeplayState extends MusicBeatState
 			for (song in Week.currentLoadedWeeks.get(Week.weeksList[i]).songs)
 			{
 				var colors:Array<Int> = song.colors;
-				if(colors == null || colors.length < 3)
+				if (colors == null || colors.length < 3)
 					colors = [146, 113, 253];
 
 				songs.push(new SongMetadata(song.name, i, song.character, FlxColor.fromRGB(colors[0], colors[1], colors[2])));
@@ -116,7 +116,8 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			PlayState.SONG = Song.loadJson(HighScore.formatSong(StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase(), curDifficulty), StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase());
+			PlayState.SONG = Song.loadJson(HighScore.formatSong(StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase(), curDifficulty),
+				StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase());
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 			PlayState.storyWeek = songs[curSelected].week;

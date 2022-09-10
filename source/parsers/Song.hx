@@ -40,7 +40,7 @@ class Song
 	{
 		var rawJson:String = null;
 
-		if(Assets.exists(path))
+		if (Assets.exists(path))
 			rawJson = Assets.getText(path);
 
 		var swagShit:SwagSong = Json.parse(rawJson).song;
