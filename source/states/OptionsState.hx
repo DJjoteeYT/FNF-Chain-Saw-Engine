@@ -37,6 +37,8 @@ class OptionsState extends MusicBeatState
 
 		changeSelection();
 
+		PreferencesData.write();
+
 		super.create();
 	}
 
