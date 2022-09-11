@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import ui.CheckboxThingie;
 
 using StringTools;
 
@@ -12,8 +13,8 @@ class PreferencesSubState extends MusicBeatSubstate {
 	private var curSelected:Int = 0;
 
 	private final options:Array<Dynamic> = [
-		['Ghost-Tapping', PreferencesData.ghostTapping],
-		['Down-Scroll', PreferencesData.downScroll],
+		['Ghost Tapping', PreferencesData.ghostTapping],
+		['Downscroll', PreferencesData.downScroll],
 		['Accuracy-Display', PreferencesData.accuracyDisplay],
 		['Overlay', PreferencesData.overlay],
 		['Check For Updates', PreferencesData.checkForUpdates],

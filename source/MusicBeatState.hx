@@ -36,7 +36,6 @@ class MusicBeatState extends FlxState
 			cam.fade(FlxColor.BLACK, 0.7, true, function()
 			{
 				FlxTransitionableState.skipNextTransOut = false;
-				FlxG.cameras.remove(cam);
 			});
 		}
 	}
@@ -99,7 +98,6 @@ class MusicBeatState extends FlxState
 			{
 				FlxG.switchState(nextState);
 				FlxTransitionableState.skipNextTransIn = false;
-				FlxG.cameras.remove(cam);
 			});
 		}
 		else
