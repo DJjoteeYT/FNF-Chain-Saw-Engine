@@ -11,7 +11,7 @@ class OptionsState extends MusicBeatState
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
-	private var options:Array<String> = ['Preferences', 'Controls', 'Exit'];
+	private final options:Array<String> = ['Preferences', 'Controls', 'Exit'];
 
 	override function create()
 	{

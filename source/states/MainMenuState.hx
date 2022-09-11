@@ -18,7 +18,7 @@ class MainMenuState extends MusicBeatState
 {
 	private var curSelected:Int = 0;
 	private var menuItems:FlxTypedGroup<FlxSprite>;
-	private var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
+	private final optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
 	private var newGaming:FlxText;
 	private var newGaming2:FlxText;
 

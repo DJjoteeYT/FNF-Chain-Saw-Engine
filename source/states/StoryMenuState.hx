@@ -19,7 +19,7 @@ class StoryMenuState extends MusicBeatState
 {
 	private var scoreText:FlxText;
 
-	private var weekData:Array<Dynamic> = [
+	private final weekData:Array<Dynamic> = [
 		['Tutorial'],
 		['Bopeebo', 'Fresh', 'Dad Battle'],
 		['Spookeez', 'South', "Monster"],
@@ -32,7 +32,7 @@ class StoryMenuState extends MusicBeatState
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
 
-	private var weekCharacters:Array<Dynamic> = [
+	private final weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
 		['dad', 'bf', 'gf'],
 		['spooky', 'bf', 'gf'],
@@ -42,7 +42,7 @@ class StoryMenuState extends MusicBeatState
 		['senpai', 'bf', 'gf']
 	];
 
-	private var weekNames:Array<String> = [
+	private final weekNames:Array<String> = [
 		"",
 		"Daddy Dearest",
 		"Spooky Month",

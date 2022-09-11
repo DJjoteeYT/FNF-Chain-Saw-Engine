@@ -20,7 +20,7 @@ import states.StoryMenuState;
 class PauseSubState extends MusicBeatSubstate
 {
 	private var grpMenuShit:FlxTypedGroup<Alphabet>;
-	private var menuItems:Array<String> = ['Resume', 'Restart Song', 'Quit'];
+	private final menuItems:Array<String> = ['Resume', 'Restart Song', 'Quit'];
 	private var curSelected:Int = 0;
 	private var pauseMusic:FlxSound;
 	private var offsetChanged:Bool = false;

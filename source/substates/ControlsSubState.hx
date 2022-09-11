@@ -15,7 +15,7 @@ class ControlsSubState extends MusicBeatSubstate {
 	private static var defaultKey:String = 'Reset to Default Keys';
 	private var bindLength:Int = 0;
 
-	private var optionShit:Array<Dynamic> = [
+	private final optionShit:Array<Dynamic> = [
 		['UI'],
 		['Left', 'ui_left'],
 		['Down', 'ui_down'],
