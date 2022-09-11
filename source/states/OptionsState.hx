@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import substates.ControlsSubState;
+import substates.PreferencesSubState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 class OptionsState extends MusicBeatState
@@ -62,9 +63,7 @@ class OptionsState extends MusicBeatState
 			switch (options[curSelected])
 			{
 				case 'Preferences':
-					//openSubState(new ui.PreferencesMenu());
-					FlxG.sound.play(Paths.sound('cancelMenu'));
-					FlxG.switchState(new MainMenuState());
+					openSubState(new PreferencesSubState());
 				case 'Controls':
 					openSubState(new ControlsSubState());
 				case 'Exit':

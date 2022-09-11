@@ -1,8 +1,5 @@
-package ui;
+package substates;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
@@ -11,7 +8,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 using StringTools;
 
-class PreferencesMenu extends MusicBeatSubstate {
+class PreferencesSubState extends MusicBeatSubstate {
 	private var curSelected:Int = 0;
 
 	private final options:Array<Dynamic> = [
