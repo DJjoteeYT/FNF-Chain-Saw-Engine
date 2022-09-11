@@ -15,7 +15,7 @@ class BackgroundGirls extends FlxSprite
 		animation.play('danceLeft');
 	}
 
-	var danceDir:Bool = false;
+	private var danceDir:Bool = false;
 
 	public function getScared():Void
 	{

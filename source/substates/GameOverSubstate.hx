@@ -10,12 +10,12 @@ import states.PlayState;
 import states.FreeplayState;
 import states.StoryMenuState;
 
-class GameOverSubstate extends MusicBeatSubstate
+class GameOverSubState extends MusicBeatSubstate
 {
-	var bf:Character;
-	var camFollow:FlxObject;
+	private var bf:Character;
+	private var camFollow:FlxObject;
 
-	var stageSuffix:String = "";
+	private var stageSuffix:String = "";
 
 	public function new(x:Float, y:Float)
 	{
@@ -73,9 +73,9 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 	}
 
-	var isEnding:Bool = false;
+	private var isEnding:Bool = false;
 
-	function endBullshit():Void
+	private function endBullshit():Void
 	{
 		if (!isEnding)
 		{

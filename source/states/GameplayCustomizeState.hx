@@ -15,16 +15,16 @@ import flixel.FlxG;
 
 class GameplayCustomizeState extends MusicBeatState
 {
-	var defaultX:Float = FlxG.width * 0.55 - 135;
-	var defaultY:Float = FlxG.height / 2 - 50;
+	private var defaultX:Float = FlxG.width * 0.55 - 135;
+	private var defaultY:Float = FlxG.height / 2 - 50;
 
-	var sick:FlxSprite;
+	private var sick:FlxSprite;
 
-	var text:FlxText;
-	var blackBorder:FlxSprite;
+	private var text:FlxText;
+	private var blackBorder:FlxSprite;
 
-	var bf:Character;
-	var dad:Character;
+	private var bf:Character;
+	private var dad:Character;
 
 	public override function create()
 	{

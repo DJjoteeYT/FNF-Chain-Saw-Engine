@@ -16,19 +16,18 @@ import lime.app.Application;
 
 class MainMenuState extends MusicBeatState
 {
-	var curSelected:Int = 0;
-	var menuItems:FlxTypedGroup<FlxSprite>;
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
-	var newGaming:FlxText;
-	var newGaming2:FlxText;
+	private var curSelected:Int = 0;
+	private var menuItems:FlxTypedGroup<FlxSprite>;
+	private var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
+	private var newGaming:FlxText;
+	private var newGaming2:FlxText;
 
 	public static var firstStart:Bool = true;
-	public static var nightly:String = "";
-	public static var kadeEngineVer:String = "1.5.1" + nightly;
-	public static var gameVer:String = "0.2.7.1";
+	public static var nightly:String = #if nightly '-nightly' #else '' #end;
+	public static var gameVer:String = '0.2.7.1';
 
-	var magenta:FlxSprite;
-	var camFollow:FlxObject;
+	private var magenta:FlxSprite;
+	private var camFollow:FlxObject;
 
 	override function create()
 	{
@@ -73,7 +72,7 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...optionShit.length)
 		{
-			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			final offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
 			menuItem.frames = Paths.getSparrowAtlas('FNF_main_menu_assets');
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
@@ -90,7 +89,12 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer + ' - FNF', 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 23, 0, 'FNF: ' + gameVer, 12);
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.scrollFactor.set();
+		add(versionShit);
+
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 46, 0, 'Chain-Saw Engine: ' + Application.current.meta.get('version') + nightly, 12);
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.scrollFactor.set();
 		add(versionShit);
@@ -100,7 +104,7 @@ class MainMenuState extends MusicBeatState
 		super.create();
 	}
 
-	var selectedSomethin:Bool = false;
+	private var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -109,16 +113,20 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.UP_P)
+			if (controls.UI_UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
 			}
-
-			if (controls.DOWN_P)
+			else if (controls.UI_DOWN_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
+			}
+			else if (FlxG.mouse.wheel != 0)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+				changeItem(-FlxG.mouse.wheel);
 			}
 
 			if (controls.BACK)
@@ -172,7 +180,7 @@ class MainMenuState extends MusicBeatState
 		});
 	}
 
-	function goToState()
+	private function goToState()
 	{
 		final daChoice:String = optionShit[curSelected];
 
@@ -183,11 +191,11 @@ class MainMenuState extends MusicBeatState
 			case 'freeplay':
 				MusicBeatState.switchState(new FreeplayState());
 			case 'options':
-				MusicBeatState.switchState(new OptionsMenu());
+				MusicBeatState.switchState(new OptionsState());
 		}
 	}
 
-	function changeItem(huh:Int = 0)
+	private function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
 

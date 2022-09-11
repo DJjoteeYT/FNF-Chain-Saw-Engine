@@ -27,7 +27,7 @@ class Ratings
 
 	public static function CalculateRating(noteDiff:Float):String
 	{
-		final timingWindows = [166.0, 135.0, 90.0, 45.0];
+		var timingWindows:Array<Int> = [166, 135, 90, 45];
 		for (index in 0...timingWindows.length)
 		{
 			if (Math.abs(noteDiff) < (timingWindows[index] * Conductor.timeScale)

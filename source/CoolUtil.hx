@@ -41,6 +41,17 @@ class CoolUtil
 	public static function coolLerp(a:Float, b:Float, ratio:Float)
 		return a + camLerpShit(ratio) * (b - a);
 
+	public static function boundTo(value:Float, min:Float, max:Float):Float {
+		var newValue:Float = value;
+
+		if(newValue < min)
+			newValue = min;
+		else if(newValue > max)
+			newValue = max;
+
+		return newValue;
+	}
+
 	public static function truncateFloat(number:Float, precision:Int):Float
 	{
 		var num = number;

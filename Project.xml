@@ -3,7 +3,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Chain-Saw Engine" file="Chain-Saw Engine" packageName="com.majigsaw.chainsawengine" package="com.majigsaw.chainsawengine" main="Main" version="0.2.7.1" company="M.A. Jigsaw" />
+	<app title="Friday Night Funkin': Chain-Saw Engine" file="Chain-Saw Engine" packageName="com.majigsaw.chainsawengine" package="com.majigsaw.chainsawengine" main="Main" version="1.0.0" company="M.A. Jigsaw" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -37,13 +37,16 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 	<haxelib name="hscript" />
-	<haxelib name="discord_rpc" if="windows" />
-	<haxelib name="hxcpp-debug-server" if="desktop" />
+	<haxelib name="discord_rpc" if="desktop" />
+	<haxelib name="hxcpp-debug-server" if="debug" />
 
 	<!-- ______________________________ Haxe Defines _____________________________ -->
 
 	<!--You will get fine error reporting at parsing time-->
 	<haxedef name="hscriptPos" />
+
+	<!--No DCE is performed-->
+	<haxeflag name="-dce no" />
 
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />

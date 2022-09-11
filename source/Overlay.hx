@@ -13,8 +13,8 @@ import openfl.system.System;
  */
 class Overlay extends TextField
 {
-	var times:Array<Float> = [];
-	var memPeak:UInt = 0;
+	private var times:Array<Float> = [];
+	private var memPeak:UInt = 0;
 
 	public function new(x:Float, y:Float, color:Int)
 	{
@@ -27,7 +27,20 @@ class Overlay extends TextField
 		selectable = false;
 
 		defaultTextFormat = new TextFormat('_sans', 14, 0xFFFFFF);
-		addEventListener(Event.ENTER_FRAME, update);
+		addEventListener(Event.ENTER_FRAME, function(e:Event)
+		{
+			var now = Timer.stamp();
+			times.push(now);
+			while (times[0] < now - 1)
+				times.shift();
+
+			var mem = System.totalMemory;
+			if (mem > memPeak)
+				memPeak = mem;
+
+			if (visible)
+				text = times.length + ' FPS\n${getInterval(mem)} / ${getInterval(memPeak)}\n';
+		});
 	}
 
 	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -45,22 +58,5 @@ class Overlay extends TextField
 
 		size = Math.round(size * 100) / 100;
 		return size + " " + intervalArray[data];
-	}
-
-	function update(_:Event)
-	{
-		var now = Timer.stamp();
-		times.push(now);
-		while (times[0] < now - 1)
-			times.shift();
-
-		var mem = System.totalMemory;
-		if (mem > memPeak)
-			memPeak = mem;
-
-		visible = FlxG.save.data.overlay;
-
-		if (visible)
-			text = times.length + ' FPS\n${getInterval(mem)} / ${getInterval(memPeak)}\n';
 	}
 }

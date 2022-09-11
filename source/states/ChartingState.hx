@@ -41,60 +41,60 @@ using StringTools;
 
 class ChartingState extends MusicBeatState
 {
-	var _file:FileReference;
+	private var _file:FileReference;
 
 	public var playClaps:Bool = false;
 
 	public var snap:Int = 1;
 
-	var UI_box:FlxUITabMenu;
+	private var UI_box:FlxUITabMenu;
 
 	/**
 	 * Array of notes showing when each section STARTS in STEPS
 	 * Usually rounded up??
 	 */
-	var curSection:Int = 0;
+	private var curSection:Int = 0;
 
 	public static var lastSection:Int = 0;
 
-	var bpmTxt:FlxText;
+	private var bpmTxt:FlxText;
 
-	var strumLine:FlxSprite;
-	var curSong:String = 'Dad Battle';
-	var amountSteps:Int = 0;
-	var bullshitUI:FlxGroup;
-	var writingNotesText:FlxText;
-	var highlight:FlxSprite;
+	private var strumLine:FlxSprite;
+	private var curSong:String = 'Dad Battle';
+	private var amountSteps:Int = 0;
+	private var bullshitUI:FlxGroup;
+	private var writingNotesText:FlxText;
+	private var highlight:FlxSprite;
 
-	var GRID_SIZE:Int = 40;
+	private var GRID_SIZE:Int = 40;
 
-	var dummyArrow:FlxSprite;
+	private var dummyArrow:FlxSprite;
 
-	var curRenderedNotes:FlxTypedGroup<Note>;
-	var curRenderedSustains:FlxTypedGroup<FlxSprite>;
+	private var curRenderedNotes:FlxTypedGroup<Note>;
+	private var curRenderedSustains:FlxTypedGroup<FlxSprite>;
 
-	var gridBG:FlxSprite;
+	private var gridBG:FlxSprite;
 
-	var _song:SwagSong;
+	private var _song:SwagSong;
 
-	var typingShit:FlxInputText;
+	private var typingShit:FlxInputText;
 	/*
 	 * WILL BE THE CURRENT / LAST PLACED NOTE
 	**/
-	var curSelectedNote:Array<Dynamic>;
+	private var curSelectedNote:Array<Dynamic>;
 
-	var tempBpm:Float = 0;
-	var gridBlackLine:FlxSprite;
-	var vocals:FlxSound;
+	private var tempBpm:Float = 0;
+	private var gridBlackLine:FlxSprite;
+	private var vocals:FlxSound;
 
-	var player2:Character = new Character(0, 0, "dad");
-	var player1:Character = new Character(0, 0, "bf", true);
+	private var player2:Character = new Character(0, 0, "dad");
+	private var player1:Character = new Character(0, 0, "bf", true);
 
-	var leftIcon:HealthIcon;
-	var rightIcon:HealthIcon;
+	private var leftIcon:HealthIcon;
+	private var rightIcon:HealthIcon;
 
 	private var lastNote:Note;
-	var claps:Array<Note> = [];
+	private var claps:Array<Note> = [];
 
 	public var snapText:FlxText;
 
@@ -209,7 +209,7 @@ class ChartingState extends MusicBeatState
 		super.create();
 	}
 
-	function addSongUI():Void
+	private function addSongUI():Void
 	{
 		var UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
 		typingShit = UI_songTitle;
@@ -309,7 +309,7 @@ class ChartingState extends MusicBeatState
 
 		final characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characters/characterList'));
 		final stages:Array<String> = CoolUtil.coolTextFile(Paths.txt('stages/stageList'));
-		final noteStyles:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/noteStyleList'));
+		final noteStyles:Array<String> = ['normal', 'pixel'];
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -398,13 +398,13 @@ class ChartingState extends MusicBeatState
 		FlxG.camera.follow(strumLine);
 	}
 
-	var stepperLength:FlxUINumericStepper;
-	var check_mustHitSection:FlxUICheckBox;
-	var check_changeBPM:FlxUICheckBox;
-	var stepperSectionBPM:FlxUINumericStepper;
-	var check_altAnim:FlxUICheckBox;
+	private var stepperLength:FlxUINumericStepper;
+	private var check_mustHitSection:FlxUICheckBox;
+	private var check_changeBPM:FlxUICheckBox;
+	private var stepperSectionBPM:FlxUINumericStepper;
+	private var check_altAnim:FlxUICheckBox;
 
-	function addSectionUI():Void
+	private function addSectionUI():Void
 	{
 		var tab_group_section = new FlxUI(null, UI_box);
 		tab_group_section.name = 'Section';
@@ -464,11 +464,11 @@ class ChartingState extends MusicBeatState
 		UI_box.addGroup(tab_group_section);
 	}
 
-	var stepperSusLength:FlxUINumericStepper;
+	private var stepperSusLength:FlxUINumericStepper;
 
-	var tab_group_note:FlxUI;
+	private var tab_group_note:FlxUI;
 
-	function addNoteUI():Void
+	private function addNoteUI():Void
 	{
 		tab_group_note = new FlxUI(null, UI_box);
 		tab_group_note.name = 'Note';
@@ -502,7 +502,7 @@ class ChartingState extends MusicBeatState
 			UI_box.add(player2); */
 	}
 
-	function loadSong(daSong:String):Void
+	private function loadSong(daSong:String):Void
 	{
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -525,7 +525,7 @@ class ChartingState extends MusicBeatState
 		};
 	}
 
-	function generateUI():Void
+	private function generateUI():Void
 	{
 		while (bullshitUI.members.length > 0)
 		{
@@ -536,7 +536,7 @@ class ChartingState extends MusicBeatState
 		bullshitUI.add(title);
 	}
 
-	function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
+	private function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
 		if (id == FlxUICheckBox.CLICK_EVENT)
 		{
@@ -611,14 +611,14 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	var updatedSection:Bool = false;
+	private var updatedSection:Bool = false;
 
-	function stepStartTime(step):Float
+	private function stepStartTime(step):Float
 	{
 		return _song.bpm / (step / 4) / 60;
 	}
 
-	function sectionStartTime():Float
+	private function sectionStartTime():Float
 	{
 		var daBPM:Float = _song.bpm;
 		var daPos:Float = 0;
@@ -633,8 +633,8 @@ class ChartingState extends MusicBeatState
 		return daPos;
 	}
 
-	var writingNotes:Bool = false;
-	var doSnapShit:Bool = true;
+	private var writingNotes:Bool = false;
+	private var doSnapShit:Bool = true;
 
 	override function update(elapsed:Float)
 	{
@@ -924,7 +924,7 @@ class ChartingState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function changeNoteSustain(value:Float):Void
+	private function changeNoteSustain(value:Float):Void
 	{
 		if (curSelectedNote != null)
 		{
@@ -939,7 +939,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 	}
 
-	function recalculateSteps():Int
+	private function recalculateSteps():Int
 	{
 		var lastChange:BPMChangeEvent = {
 			stepTime: 0,
@@ -958,7 +958,7 @@ class ChartingState extends MusicBeatState
 		return curStep;
 	}
 
-	function resetSection(songBeginning:Bool = false):Void
+	private function resetSection(songBeginning:Bool = false):Void
 	{
 		updateGrid();
 
@@ -980,7 +980,7 @@ class ChartingState extends MusicBeatState
 		updateSectionUI();
 	}
 
-	function changeSection(sec:Int = 0, ?updateMusic:Bool = true):Void
+	private function changeSection(sec:Int = 0, ?updateMusic:Bool = true):Void
 	{
 		if (_song.notes[sec] != null)
 		{
@@ -1003,7 +1003,7 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	function copySection(?sectionNum:Int = 1)
+	private function copySection(?sectionNum:Int = 1)
 	{
 		var daSec = FlxMath.maxInt(curSection, sectionNum);
 
@@ -1018,7 +1018,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 	}
 
-	function updateSectionUI():Void
+	private function updateSectionUI():Void
 	{
 		var sec = _song.notes[curSection];
 
@@ -1029,7 +1029,7 @@ class ChartingState extends MusicBeatState
 		stepperSectionBPM.value = sec.bpm;
 	}
 
-	function updateHeads():Void
+	private function updateHeads():Void
 	{
 		if (check_mustHitSection.checked)
 		{
@@ -1043,13 +1043,13 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	function updateNoteUI():Void
+	private function updateNoteUI():Void
 	{
 		if (curSelectedNote != null)
 			stepperSusLength.value = curSelectedNote[2];
 	}
 
-	function updateGrid():Void
+	private function updateGrid():Void
 	{
 		remove(gridBG);
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * _song.notes[curSection].lengthInSteps);
@@ -1129,7 +1129,7 @@ class ChartingState extends MusicBeatState
 		_song.notes.push(sec);
 	}
 
-	function selectNote(note:Note):Void
+	private function selectNote(note:Note):Void
 	{
 		var swagNum:Int = 0;
 
@@ -1147,7 +1147,7 @@ class ChartingState extends MusicBeatState
 		updateNoteUI();
 	}
 
-	function deleteNote(note:Note):Void
+	private function deleteNote(note:Note):Void
 	{
 		lastNote = note;
 		for (i in _song.notes[curSection].sectionNotes)
@@ -1161,14 +1161,14 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 	}
 
-	function clearSection():Void
+	private function clearSection():Void
 	{
 		_song.notes[curSection].sectionNotes = [];
 
 		updateGrid();
 	}
 
-	function clearSong():Void
+	private function clearSong():Void
 	{
 		for (daSection in 0..._song.notes.length)
 		{
@@ -1193,7 +1193,7 @@ class ChartingState extends MusicBeatState
 		return sec;
 	}
 
-	function shiftNotes(measure:Int = 0, step:Int = 0, ms:Int = 0):Void
+	private function shiftNotes(measure:Int = 0, step:Int = 0, ms:Int = 0):Void
 	{
 		var newSong = [];
 
@@ -1258,19 +1258,19 @@ class ChartingState extends MusicBeatState
 		autosaveSong();
 	}
 
-	function getStrumTime(yPos:Float):Float
+	private function getStrumTime(yPos:Float):Float
 	{
 		return FlxMath.remapToRange(yPos, gridBG.y, gridBG.y + gridBG.height, 0, 16 * Conductor.stepCrochet);
 	}
 
-	function getYfromStrum(strumTime:Float):Float
+	private function getYfromStrum(strumTime:Float):Float
 	{
 		return FlxMath.remapToRange(strumTime, 0, 16 * Conductor.stepCrochet, gridBG.y, gridBG.y + gridBG.height);
 	}
 
 	private var daSpacing:Float = 0.3;
 
-	function getNotes():Array<Dynamic>
+	private function getNotes():Array<Dynamic>
 	{
 		var noteData:Array<Dynamic> = [];
 
@@ -1282,19 +1282,19 @@ class ChartingState extends MusicBeatState
 		return noteData;
 	}
 
-	function loadJson(song:String):Void
+	private function loadJson(song:String):Void
 	{
 		PlayState.SONG = Song.loadJson(song.toLowerCase(), song.toLowerCase());
 		MusicBeatState.switchState(new ChartingState());
 	}
 
-	function loadAutosave():Void
+	private function loadAutosave():Void
 	{
 		PlayState.SONG = Song.parseJson(FlxG.save.data.autosave);
 		MusicBeatState.switchState(new ChartingState());
 	}
 
-	function autosaveSong():Void
+	private function autosaveSong():Void
 	{
 		FlxG.save.data.autosave = Json.stringify({
 			"song": _song
@@ -1320,7 +1320,7 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	function onSaveComplete(_):Void
+	private function onSaveComplete(_):Void
 	{
 		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
@@ -1332,7 +1332,7 @@ class ChartingState extends MusicBeatState
 	/**
 	 * Called when the save file dialog is cancelled.
 	 */
-	function onSaveCancel(_):Void
+	private function onSaveCancel(_):Void
 	{
 		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
@@ -1343,7 +1343,7 @@ class ChartingState extends MusicBeatState
 	/**
 	 * Called if there is an error while saving the gameplay recording.
 	 */
-	function onSaveError(_):Void
+	private function onSaveError(_):Void
 	{
 		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);

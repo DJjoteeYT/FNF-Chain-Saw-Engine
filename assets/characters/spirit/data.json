@@ -16,7 +16,7 @@
 			"flipX": false,
 			"looped": false,
 			"flipY": false,
-			"offset": [0, 0]
+			"offset": [-220, -280]
 		},
 		{
 			"animation": "singUP",
@@ -26,7 +26,7 @@
 			"indices": [],
 			"flipX": false,
 			"flipY": false,
-			"offset": [0, -40]
+			"offset": [-220, -240]
 		},
 		{
 			"animation": "singRIGHT",
@@ -36,7 +36,7 @@
 			"flipX": false,
 			"looped": false,
 			"flipY": false,
-			"offset": [0, 0]
+			"offset": [-220, -280]
 		},
 		{
 			"animation": "singLEFT",
@@ -46,7 +46,7 @@
 			"indices": [],
 			"flipX": false,
 			"flipY": false,
-			"offset": [20, 0]
+			"offset": [-200, -280]
 		},
 		{
 			"animation": "singDOWN",
@@ -56,7 +56,7 @@
 			"indices": [],
 			"flipX": false,
 			"flipY": false,
-			"offset": [-50, -170]
+			"offset": [170, 110]
 		}
 	],
 	"scale":6,

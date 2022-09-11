@@ -90,19 +90,26 @@ class Character extends FlxSprite
 	{
 		if (animation.curAnim != null)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
-				holdTimer += elapsed;
-
-			if (holdTimer >= Conductor.stepCrochet * singDuration * 0.001)
+			if (!isPlayer)
 			{
-				dance();
-				holdTimer = 0;
-			}
+				if (animation.curAnim.name.startsWith('sing'))
+					holdTimer += elapsed;
 
-			if (isPlayer)
-			{
-				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
+				if (holdTimer >= Conductor.stepCrochet * 0.0011 * singDuration)
+				{
 					dance();
+					holdTimer = 0;
+				}
+			}
+			else
+			{
+				if (animation.curAnim.name.startsWith('sing'))
+					holdTimer += elapsed;
+				else
+					holdTimer = 0;
+
+				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
+					playAnim('idle', true, false, 10);
 
 				if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
 					playAnim('deathLoop');

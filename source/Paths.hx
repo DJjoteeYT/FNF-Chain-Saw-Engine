@@ -19,7 +19,6 @@ class Paths
 
 	public static function clearUnusedMemory()
 	{
-		var counter:Int = 0;
 		for (key in currentTrackedAssets.keys())
 		{
 			if (!localTrackedAssets.contains(key))
@@ -34,7 +33,6 @@ class Paths
 					FlxG.bitmap._cache.remove(key);
 					obj.destroy();
 					currentTrackedAssets.remove(key);
-					counter++;
 				}
 			}
 		}
@@ -44,8 +42,6 @@ class Paths
 
 	public static function clearStoredMemory()
 	{
-		var counterAssets:Int = 0;
-
 		@:privateAccess
 		for (key in FlxG.bitmap._cache.keys())
 		{
@@ -57,11 +53,9 @@ class Paths
 				Assets.cache.clear(key);
 				FlxG.bitmap._cache.remove(key);
 				obj.destroy();
-				counterAssets++;
 			}
 		}
 
-		var counterSound:Int = 0;
 		for (key in currentTrackedSounds.keys())
 		{
 			if (!localTrackedAssets.contains(key) && key != null)
@@ -69,19 +63,12 @@ class Paths
 				Assets.cache.removeSound(key);
 				Assets.cache.clearSounds(key);
 				currentTrackedSounds.remove(key);
-				counterSound++;
 			}
 		}
 
-		var counterLeft:Int = 0;
 		for (key in Assets.cache.getKeys())
-		{
 			if (!localTrackedAssets.contains(key) && key != null)
-			{
 				Assets.cache.clear(key);
-				counterLeft++;
-			}
-		}
 
 		localTrackedAssets = [];
 	}

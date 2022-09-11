@@ -14,16 +14,16 @@ import flixel.util.FlxColor;
  */
 class AnimationDebug extends FlxState
 {
-	var bf:Character;
-	var dad:Character;
-	var char:Character;
-	var textAnim:FlxText;
-	var dumbTexts:FlxTypedGroup<FlxText>;
-	var animList:Array<String> = [];
-	var curAnim:Int = 0;
-	var isDad:Bool = true;
-	var daAnim:String = 'spooky';
-	var camFollow:FlxObject;
+	private var bf:Character;
+	private var dad:Character;
+	private var char:Character;
+	private var textAnim:FlxText;
+	private var dumbTexts:FlxTypedGroup<FlxText>;
+	private var animList:Array<String> = [];
+	private var curAnim:Int = 0;
+	private var isDad:Bool = true;
+	private var daAnim:String = 'spooky';
+	private var camFollow:FlxObject;
 
 	public function new(daAnim:String = 'spooky')
 	{
@@ -85,7 +85,7 @@ class AnimationDebug extends FlxState
 		super.create();
 	}
 
-	function genBoyOffsets(pushList:Bool = true):Void
+	private function genBoyOffsets(pushList:Bool = true):Void
 	{
 		var daLoop:Int = 0;
 
@@ -103,7 +103,7 @@ class AnimationDebug extends FlxState
 		}
 	}
 
-	function updateTexts():Void
+	private function updateTexts():Void
 	{
 		dumbTexts.forEach(function(text:FlxText)
 		{

@@ -15,24 +15,24 @@ using StringTools;
 
 class DialogueBox extends FlxSpriteGroup
 {
-	var box:FlxSprite;
+	private var box:FlxSprite;
 
-	var curCharacter:String = '';
+	private var curCharacter:String = '';
 
-	var dialogue:Alphabet;
-	var dialogueList:Array<String> = [];
+	private var dialogue:Alphabet;
+	private var dialogueList:Array<String> = [];
 
-	var swagDialogue:FlxTypeText;
+	private var swagDialogue:FlxTypeText;
 
-	var dropText:FlxText;
+	private var dropText:FlxText;
 
 	public var finishThing:Void->Void;
 
-	var portraitLeft:FlxSprite;
-	var portraitRight:FlxSprite;
+	private var portraitLeft:FlxSprite;
+	private var portraitRight:FlxSprite;
 
-	var handSelect:FlxSprite;
-	var bgFade:FlxSprite;
+	private var handSelect:FlxSprite;
+	private var bgFade:FlxSprite;
 
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
@@ -135,8 +135,8 @@ class DialogueBox extends FlxSpriteGroup
 		add(swagDialogue);
 	}
 
-	var dialogueOpened:Bool = false;
-	var dialogueStarted:Bool = false;
+	private var dialogueOpened:Bool = false;
+	private var dialogueStarted:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -206,9 +206,9 @@ class DialogueBox extends FlxSpriteGroup
 		super.update(elapsed);
 	}
 
-	var isEnding:Bool = false;
+	private var isEnding:Bool = false;
 
-	function startDialogue():Void
+	private function startDialogue():Void
 	{
 		cleanDialog();
 
@@ -234,7 +234,7 @@ class DialogueBox extends FlxSpriteGroup
 		}
 	}
 
-	function cleanDialog():Void
+	private function cleanDialog():Void
 	{
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];

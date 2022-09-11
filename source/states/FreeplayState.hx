@@ -17,15 +17,15 @@ class FreeplayState extends MusicBeatState
 	private var curPlaying:Bool = false;
 	private var iconArray:Array<HealthIcon> = [];
 
-	var songs:Array<SongMetadata> = [];
-	var curSelected:Int = 0;
-	var curDifficulty:Int = 1;
-	var scoreText:FlxText;
-	var diffText:FlxText;
-	var lerpScore:Float = 0;
-	var intendedScore:Int = 0;
-	var bg:FlxSprite;
-	var scoreBG:FlxSprite;
+	private var songs:Array<SongMetadata> = [];
+	private var curSelected:Int = 0;
+	private var curDifficulty:Int = 1;
+	private var scoreText:FlxText;
+	private var diffText:FlxText;
+	private var lerpScore:Float = 0;
+	private var intendedScore:Int = 0;
+	private var bg:FlxSprite;
+	private var scoreBG:FlxSprite;
 
 	override function create()
 	{
@@ -104,14 +104,16 @@ class FreeplayState extends MusicBeatState
 		scoreText.text = "PERSONAL BEST:" + Math.round(lerpScore);
 		positionHighScore();
 
-		if (controls.UP_P)
+		if (controls.UI_UP_P)
 			changeSelection(-1);
-		if (controls.DOWN_P)
+		else if (controls.UI_DOWN_P)
 			changeSelection(1);
+		else if (FlxG.mouse.wheel != 0)
+			changeSelection(-FlxG.mouse.wheel);
 
-		if (controls.LEFT_P)
+		if (controls.UI_LEFT_P)
 			changeDiff(-1);
-		if (controls.RIGHT_P)
+		if (controls.UI_RIGHT_P)
 			changeDiff(1);
 
 		if (controls.ACCEPT)

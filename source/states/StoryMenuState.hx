@@ -17,9 +17,9 @@ import states.PlayState;
 
 class StoryMenuState extends MusicBeatState
 {
-	var scoreText:FlxText;
+	private var scoreText:FlxText;
 
-	var weekData:Array<Dynamic> = [
+	private var weekData:Array<Dynamic> = [
 		['Tutorial'],
 		['Bopeebo', 'Fresh', 'Dad Battle'],
 		['Spookeez', 'South', "Monster"],
@@ -28,11 +28,11 @@ class StoryMenuState extends MusicBeatState
 		['Cocoa', 'Eggnog', 'Winter Horrorland'],
 		['Senpai', 'Roses', 'Thorns']
 	];
-	var curDifficulty:Int = 1;
+	private var curDifficulty:Int = 1;
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
 
-	var weekCharacters:Array<Dynamic> = [
+	private var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
 		['dad', 'bf', 'gf'],
 		['spooky', 'bf', 'gf'],
@@ -42,7 +42,7 @@ class StoryMenuState extends MusicBeatState
 		['senpai', 'bf', 'gf']
 	];
 
-	var weekNames:Array<String> = [
+	private var weekNames:Array<String> = [
 		"",
 		"Daddy Dearest",
 		"Spooky Month",
@@ -52,21 +52,21 @@ class StoryMenuState extends MusicBeatState
 		"Hating Simulator ft. Moawling"
 	];
 
-	var txtWeekTitle:FlxText;
+	private var txtWeekTitle:FlxText;
 
-	var curWeek:Int = 0;
+	private var curWeek:Int = 0;
 
-	var txtTracklist:FlxText;
+	private var txtTracklist:FlxText;
 
-	var grpWeekText:FlxTypedGroup<MenuItem>;
-	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
+	private var grpWeekText:FlxTypedGroup<MenuItem>;
+	private var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
 
-	var grpLocks:FlxTypedGroup<FlxSprite>;
+	private var grpLocks:FlxTypedGroup<FlxSprite>;
 
-	var difficultySelectors:FlxGroup;
-	var sprDifficulty:FlxSprite;
-	var leftArrow:FlxSprite;
-	var rightArrow:FlxSprite;
+	private var difficultySelectors:FlxGroup;
+	private var sprDifficulty:FlxSprite;
+	private var leftArrow:FlxSprite;
+	private var rightArrow:FlxSprite;
 
 	override function create()
 	{
@@ -209,24 +209,26 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (!selectedWeek)
 			{
-				if (controls.UP_P)
+				if (controls.UI_UP_P)
 					changeWeek(-1);
-				if (controls.DOWN_P)
+				else if (controls.UI_DOWN_P)
 					changeWeek(1);
+				else if (FlxG.mouse.wheel != 0)
+					changeWeek(-FlxG.mouse.wheel);
 
-				if (controls.RIGHT)
+				if (controls.UI_RIGHT)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.LEFT)
+				if (controls.UI_LEFT)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.UI_RIGHT_P)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+				else if (controls.UI_LEFT_P)
 					changeDifficulty(-1);
 			}
 
@@ -244,11 +246,11 @@ class StoryMenuState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	var movedBack:Bool = false;
-	var selectedWeek:Bool = false;
-	var stopspamming:Bool = false;
+	private var movedBack:Bool = false;
+	private var selectedWeek:Bool = false;
+	private var stopspamming:Bool = false;
 
-	function selectWeek()
+	private function selectWeek()
 	{
 		if (weekUnlocked[curWeek])
 		{
@@ -287,7 +289,7 @@ class StoryMenuState extends MusicBeatState
 		}
 	}
 
-	function changeDifficulty(change:Int = 0):Void
+	private function changeDifficulty(change:Int = 0):Void
 	{
 		curDifficulty += change;
 
@@ -318,10 +320,10 @@ class StoryMenuState extends MusicBeatState
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
 	}
 
-	var lerpScore:Int = 0;
-	var intendedScore:Int = 0;
+	private var lerpScore:Int = 0;
+	private var intendedScore:Int = 0;
 
-	function changeWeek(change:Int = 0):Void
+	private function changeWeek(change:Int = 0):Void
 	{
 		curWeek += change;
 
@@ -347,7 +349,7 @@ class StoryMenuState extends MusicBeatState
 		updateText();
 	}
 
-	function updateText()
+	private function updateText()
 	{
 		grpWeekCharacters.members[0].setCharacter(weekCharacters[curWeek][0]);
 		grpWeekCharacters.members[1].setCharacter(weekCharacters[curWeek][1]);
@@ -461,7 +463,7 @@ class MenuItem extends FlxSpriteGroup
 	public function startFlashing():Void
 		isFlashing = true;
 
-	var fakeFramerate:Int = Math.round((1 / FlxG.elapsed) / 10);
+	private var fakeFramerate:Int = Math.round((1 / FlxG.elapsed) / 10);
 
 	override function update(elapsed:Float)
 	{

@@ -19,11 +19,11 @@ import states.StoryMenuState;
 
 class PauseSubState extends MusicBeatSubstate
 {
-	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Quit'];
-	var curSelected:Int = 0;
-	var pauseMusic:FlxSound;
-	var offsetChanged:Bool = false;
+	private var grpMenuShit:FlxTypedGroup<Alphabet>;
+	private var menuItems:Array<String> = ['Resume', 'Restart Song', 'Quit'];
+	private var curSelected:Int = 0;
+	private var pauseMusic:FlxSound;
+	private var offsetChanged:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -87,9 +87,9 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);
 
-		if (controls.UP_P)
+		if (controls.UI_UP_P)
 			changeSelection(-1);
-		if (controls.DOWN_P)
+		if (controls.UI_DOWN_P)
 			changeSelection(1);
 
 		if (controls.ACCEPT)
@@ -118,7 +118,7 @@ class PauseSubState extends MusicBeatSubstate
 		super.destroy();
 	}
 
-	function changeSelection(change:Int = 0):Void
+	private function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
 

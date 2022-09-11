@@ -7,41 +7,25 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.app.Application;
 import openfl.utils.Assets;
 
 class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
 
-	var blackScreen:FlxSprite;
-	var credGroup:FlxGroup;
-	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
-	var curWacky:Array<String> = [];
-	var wackyImage:FlxSprite;
+	private var blackScreen:FlxSprite;
+	private var credGroup:FlxGroup;
+	private var textGroup:FlxGroup;
+	private var ngSpr:FlxSprite;
+	private var curWacky:Array<String> = [];
+	private var wackyImage:FlxSprite;
 
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		PlayerSettings.init();
-
 		curWacky = FlxG.random.getObject(getIntroTextShit());
-
-		#if desktop
-		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			DiscordClient.shutdown();
-		});
-		#end
-
-		KadeEngineData.initSave();
-
-		HighScore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)
 		{
@@ -60,12 +44,12 @@ class TitleState extends MusicBeatState
 		});
 	}
 
-	var logoBl:FlxSprite;
-	var gfDance:FlxSprite;
-	var danceLeft:Bool = false;
-	var titleText:FlxSprite;
+	private var logoBl:FlxSprite;
+	private var gfDance:FlxSprite;
+	private var danceLeft:Bool = false;
+	private var titleText:FlxSprite;
 
-	function startIntro()
+	private function startIntro()
 	{
 		if (!initialized)
 		{
@@ -126,7 +110,7 @@ class TitleState extends MusicBeatState
 			initialized = true;
 	}
 
-	function getIntroTextShit():Array<Array<String>>
+	private function getIntroTextShit():Array<Array<String>>
 	{
 		var fullText:String = Assets.getText(Paths.txt('introText'));
 
@@ -139,7 +123,7 @@ class TitleState extends MusicBeatState
 		return swagGoodArray;
 	}
 
-	var transitioning:Bool = false;
+	private var transitioning:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -182,7 +166,7 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>)
+	private function createCoolText(textArray:Array<String>)
 	{
 		for (i in 0...textArray.length)
 		{
@@ -194,7 +178,7 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	function addMoreText(text:String)
+	private function addMoreText(text:String)
 	{
 		var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
 		coolText.screenCenter(X);
@@ -203,7 +187,7 @@ class TitleState extends MusicBeatState
 		textGroup.add(coolText);
 	}
 
-	function deleteCoolText()
+	private function deleteCoolText()
 	{
 		while (textGroup.members.length > 0)
 		{
@@ -257,9 +241,9 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	var skippedIntro:Bool = false;
+	private var skippedIntro:Bool = false;
 
-	function skipIntro():Void
+	private function skipIntro():Void
 	{
 		if (!skippedIntro)
 		{

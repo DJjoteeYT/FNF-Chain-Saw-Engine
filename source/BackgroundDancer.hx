@@ -16,7 +16,7 @@ class BackgroundDancer extends FlxSprite
 		antialiasing = true;
 	}
 
-	var danceDir:Bool = false;
+	private var danceDir:Bool = false;
 
 	public function dance():Void
 	{
