@@ -5,6 +5,10 @@ import hscript.Interp;
 import hscript.Parser;
 import openfl.Lib;
 
+/**
+ * Class based from Wednesdays-Infidelty Mod.
+ * Credits: lunarcleint.
+ */
 class Script extends FlxBasic
 {
 	public var interp:Interp;
