@@ -8,8 +8,7 @@ import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.system.FlxSound;
 import flixel.FlxBasic;
 import hscript.Interp;
@@ -55,6 +54,7 @@ class Script extends FlxBasic
 		setVariable('FlxMath', FlxMath);
 		setVariable('FlxAtlasFrames', FlxAtlasFrames);
 		setVariable('FlxSound', FlxSound);
+		setVariable('FlxSpriteGroup', FlxSpriteGroup);
 
 		setVariable('Paths', Paths);
 		setVariable('Conductor', Conductor);
