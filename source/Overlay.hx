@@ -23,10 +23,11 @@ class Overlay extends TextField
 		this.x = x;
 		this.y = x;
 
-		autoSize = LEFT;
-		selectable = false;
+		this.autoSize = LEFT;
+		this.selectable = false;
+		this.mouseEnabled = false;
 
-		defaultTextFormat = new TextFormat('_sans', 14, 0xFFFFFF);
+		this.defaultTextFormat = new TextFormat('_sans', 14, 0xFFFFFF);
 		addEventListener(Event.ENTER_FRAME, function(e:Event)
 		{
 			var now = Timer.stamp();
@@ -43,7 +44,7 @@ class Overlay extends TextField
 		});
 	}
 
-	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB'];
+	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
 	public static function getInterval(num:UInt):String
 	{
