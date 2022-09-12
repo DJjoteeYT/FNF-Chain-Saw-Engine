@@ -9,10 +9,11 @@ import ui.CheckboxThingie;
 
 using StringTools;
 
-class PreferencesSubState extends MusicBeatSubstate {
+class PreferencesSubState extends MusicBeatSubstate
+{
 	private var curSelected:Int = 0;
 
-	private final options:Array<Dynamic> = [
+	private var options:Array<Dynamic> = [
 		['Ghost Tapping', PreferencesData.ghostTapping],
 		['Downscroll', PreferencesData.downScroll],
 		['Accuracy-Display', PreferencesData.accuracyDisplay],
@@ -26,7 +27,8 @@ class PreferencesSubState extends MusicBeatSubstate {
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var checkboxArray:Array<CheckboxThingie> = [];
 
-	public function new() {
+	public function new()
+	{
 		super();
 
 		#if desktop
@@ -61,7 +63,8 @@ class PreferencesSubState extends MusicBeatSubstate {
 		reloadValues();
 	}
 
-	override function update(elapsed:Float) {
+	override function update(elapsed:Float)
+	{
 		if (controls.UI_UP_P)
 			changeSelection(-1);
 		else if (controls.UI_DOWN_P)

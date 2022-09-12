@@ -21,7 +21,7 @@ class Paths
 	{
 		for (key in currentTrackedAssets.keys())
 		{
-			if (!localTrackedAssets.contains(key))
+			if (!localTrackedAssets.contains(key) && key != null)
 			{
 				var obj = currentTrackedAssets.get(key);
 				@:privateAccess
@@ -82,6 +82,9 @@ class Paths
 	inline static public function json(key:String):String
 		return 'assets/$key.json';
 
+	inline static public function hx(key:String):String
+		return 'assets/$key.hx';
+
 	inline static public function font(key:String):String
 		return 'assets/fonts/$key';
 
@@ -129,7 +132,6 @@ class Paths
 	public static function returnSound(key:String, ?cache:Bool = true):Sound
 	{
 		var path:String = 'assets/$key.ogg';
-
 		if (Assets.exists(path, SOUND))
 		{
 			if (!currentTrackedSounds.exists(path))

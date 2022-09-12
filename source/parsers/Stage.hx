@@ -17,8 +17,8 @@ typedef SwagStage =
 
 class Stage
 {
-	public static function loadJson(file:String):SwagStage
-		return parseJson(Paths.json('stages/' + file));
+	public static function loadJson(stage:String):SwagStage
+		return parseJson(Paths.json('stages/' + stage + '/data'));
 
 	public static function parseJson(path:String):SwagStage
 	{
