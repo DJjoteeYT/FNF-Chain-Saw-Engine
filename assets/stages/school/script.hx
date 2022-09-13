@@ -2,7 +2,7 @@ var bgGirls:FlxSprite;
 
 function create()
 {
-	var bgSky = new FlxSprite().loadGraphic(Paths.returnGraphic('stages/school/images/weebSky'));
+	var bgSky:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.returnGraphic('stages/school/images/weebSky'));
 	bgSky.setGraphicSize(Std.int(bgSky.width * PlayState.daPixelZoom));
 	bgSky.updateHitbox();
 	bgSky.scrollFactor.set(0.1, 0.1);
