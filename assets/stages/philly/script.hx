@@ -1,4 +1,4 @@
-var phillyCityLights:Array<FlxSprite>;
+var phillyCityLights:FlxSpriteGroup;
 var phillyTrain:FlxSprite;
 var curLight:Int = 0;
 var startedMoving:Bool = false;
@@ -21,7 +21,7 @@ function create()
 	city.updateHitbox();
 	PlayState.instance.add(city);
 
-	phillyCityLights = [];
+	phillyCityLights = new FlxSpriteGroup();
 	PlayState.instance.add(phillyCityLights);
 
 	for (i in 0...5)
@@ -31,8 +31,7 @@ function create()
 		light.visible = false;
 		light.setGraphicSize(Std.int(light.width * 0.85));
 		light.updateHitbox();
-		PlayState.instance.add(light);
-		phillyCityLights.push(light);
+		phillyCityLights.add(light);
 	}
 
 	var streetBehind:FlxSprite = new FlxSprite(-40, 50).loadGraphic(Paths.returnGraphic('stages/philly/images/behindTrain'));
@@ -112,12 +111,14 @@ function beatHit(curBeat:Int)
 
 	if (curBeat % 4 == 0)
 	{
-		for (light in phillyCityLights)
+		phillyCityLights.forEach(function(light:FlxSprite)
+		{
 			light.visible = false;
+		});
 
 		curLight = FlxG.random.int(0, phillyCityLights.length - 1);
 
-		phillyCityLights[curLight].visible = true;
+		phillyCityLights.members[curLight].visible = true;
 	}
 
 	if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
