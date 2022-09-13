@@ -1,5 +1,5 @@
 var limo:FlxSprite;
-var grpLimoDancers:Array<FlxSprite>;
+var grpLimoDancers:FlxSpriteGroup;
 var fastCar:FlxSprite;
 var fastCarCanDrive:Bool = true;
 
@@ -17,7 +17,7 @@ function create()
 	bgLimo.scrollFactor.set(0.4, 0.4);
 	PlayState.instance.add(bgLimo);
 
-	grpLimoDancers = [];
+	grpLimoDancers = new FlxSpriteGroup();
 	PlayState.instance.add(grpLimoDancers);
 
 	for (i in 0...5)
@@ -29,8 +29,7 @@ function create()
 		dancer.animation.addByIndices('danceRight', 'bg dancer sketch PINK', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		dancer.animation.play('danceLeft');
 		dancer.scrollFactor.set(0.4, 0.4);
-		PlayState.instance.add(dancer);
-		grpLimoDancers.push(dancer);
+		grpLimoDancers.add(dancer);
 	}
 
 	limo = new FlxSprite(-120, 550);
@@ -55,7 +54,7 @@ function resetFastCar()
 
 function fastCarDrive()
 {
-	FlxG.sound.play(Paths.sound('carPass' + FlxG.random.int(0, 1)), 0.7);
+	FlxG.sound.play(Paths.returnSound('stages/limk/sounds/carPass' + FlxG.random.int(0, 1)), 0.7);
 
 	fastCar.velocity.x = (FlxG.random.int(170, 220) / FlxG.elapsed) * 3;
 	fastCarCanDrive = false;
@@ -69,7 +68,7 @@ var danceDir:Bool = false;
 
 function beatHit(curBeat:Int)
 {
-	for (dancer in grpLimoDancers)
+	grpLimoDancers.forEach(function(dancer:FlxSprite)
 	{
 		danceDir = !danceDir;
 
@@ -77,7 +76,7 @@ function beatHit(curBeat:Int)
 			dancer.animation.play('danceRight', true);
 		else
 			dancer.animation.play('danceLeft', true);
-	}
+	});
 
 	if (FlxG.random.bool(10) && fastCarCanDrive)
 		fastCarDrive();
