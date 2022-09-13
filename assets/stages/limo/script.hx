@@ -54,7 +54,7 @@ function resetFastCar()
 
 function fastCarDrive()
 {
-	FlxG.sound.play(Paths.returnSound('stages/limk/sounds/carPass' + FlxG.random.int(0, 1)), 0.7);
+	FlxG.sound.play(Paths.returnSound('stages/limo/sounds/carPass' + FlxG.random.int(0, 1)), 0.7);
 
 	fastCar.velocity.x = (FlxG.random.int(170, 220) / FlxG.elapsed) * 3;
 	fastCarCanDrive = false;
