@@ -64,10 +64,10 @@
 	<haxedef name="HXCPP_GC_BIG_BLOCKS" if="cpp" />
 
 	<!--Include line information in stack traces, even in release mode-->
-	<haxedef name="HXCPP_STACK_LINE" if="cpp" />
+	<haxedef name="HXCPP_STACK_LINE" if="cpp" unless="debug" />
 
 	<!--Add null-pointer checks, even in release mode-->
-	<haxedef name="HXCPP_CHECK_POINTER" if="cpp" />
+	<haxedef name="HXCPP_CHECK_POINTER" if="cpp" unless="debug" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
