@@ -113,37 +113,23 @@ class Script extends FlxBasic
 			Lib.application.window.alert(e.message, "Hscript Error!");
 	}
 
-	public function executeFunc(funcName:String, ?args:Array<Any>):Dynamic
+	public function executeFunc(funcName:String, ?args:Array<Dynamic> = []):Dynamic
 	{
 		if (interp == null)
 			return null;
 
 		if (interp.variables.exists(funcName))
 		{
-			var func:Dynamic = getVariable(funcName);
 			var result:Dynamic = null;
-			if (args == null)
-			{
-				try
-				{
-					result = func();
-				}
-				catch (e:Dynamic)
-					Lib.application.window.alert(e, "Hscript Error!");
 
-				return result;
-			}
-			else
+			try
 			{
-				try
-				{
-					result = Reflect.callMethod(null, func, args);
-				}
-				catch (e:Dynamic)
-					Lib.application.window.alert(e, "Hscript Error!");
-
-				return result;
+				result = Reflect.callMethod(null, getVariable(funcName), args);
 			}
+			catch (e:Dynamic)
+				Lib.application.window.alert(e, "Hscript Error!");
+
+			return result;
 		}
 
 		return null;
