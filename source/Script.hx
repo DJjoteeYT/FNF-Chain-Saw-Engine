@@ -120,16 +120,12 @@ class Script extends FlxBasic
 
 		if (interp.variables.exists(funcName))
 		{
-			var result:Dynamic = null;
-
 			try
 			{
-				result = Reflect.callMethod(null, getVariable(funcName), args);
+				return Reflect.callMethod(null, getVariable(funcName), args);
 			}
 			catch (e:Dynamic)
 				Lib.application.window.alert(e, "Hscript Error!");
-
-			return result;
 		}
 
 		return null;
