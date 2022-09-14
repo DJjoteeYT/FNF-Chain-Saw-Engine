@@ -7,5 +7,5 @@ function beatHit(curBeat:Int)
 	}
 
 	if (curBeat % 8 == 7)
-		PlayState.boyfriend.playAnim('hey', true);
+		PlayState.instance.boyfriend.playAnim('hey', true);
 }

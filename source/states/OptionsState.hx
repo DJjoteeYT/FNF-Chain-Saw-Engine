@@ -8,11 +8,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class OptionsState extends MusicBeatState
 {
-	private static var curSelected:Int = 0;
-
-	private var grpOptions:FlxTypedGroup<Alphabet>;
-
 	private final options:Array<String> = ['Preferences', 'Controls', 'Exit'];
+	private var grpOptions:FlxTypedGroup<Alphabet>;
+	private var curSelected:Int = 0;
 
 	override function create()
 	{
@@ -70,7 +68,7 @@ class OptionsState extends MusicBeatState
 					openSubState(new ControlsSubState());
 				case 'Exit':
 					FlxG.sound.play(Paths.sound('cancelMenu'));
-					FlxG.switchState(new MainMenuState());
+					MusicBeatState.switchState(new MainMenuState());
 			}
 		}
 	}
@@ -81,13 +79,13 @@ class OptionsState extends MusicBeatState
 
 		if (curSelected < 0)
 			curSelected = options.length - 1;
-
-		if (curSelected >= options.length)
+		else if (curSelected >= options.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
 
-		for (item in grpOptions.members) {
+		for (item in grpOptions.members)
+		{
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 

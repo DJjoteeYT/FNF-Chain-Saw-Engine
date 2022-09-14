@@ -13,6 +13,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import parsers.Song;
+import parsers.Week;
 import states.PlayState;
 
 class StoryMenuState extends MusicBeatState
@@ -72,6 +73,8 @@ class StoryMenuState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		Week.loadJsons(true);
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -295,7 +298,7 @@ class StoryMenuState extends MusicBeatState
 
 		if (curDifficulty < 0)
 			curDifficulty = CoolUtil.difficultyArray.length - 1;
-		if (curDifficulty >= CoolUtil.difficultyArray.length)
+		else if (curDifficulty >= CoolUtil.difficultyArray.length)
 			curDifficulty = 0;
 
 		sprDifficulty.offset.x = 0;
@@ -315,7 +318,7 @@ class StoryMenuState extends MusicBeatState
 
 		sprDifficulty.alpha = 0;
 		sprDifficulty.y = leftArrow.y - 15;
-		intendedScore = HighScore.getWeekScore(curWeek, curDifficulty);
+		intendedScore = HighScore.getWeekScore(Week.weeksList[curWeek], curDifficulty);
 
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
 	}
@@ -368,7 +371,7 @@ class StoryMenuState extends MusicBeatState
 
 		txtTracklist.text += "\n";
 
-		intendedScore = HighScore.getWeekScore(curWeek, curDifficulty);
+		intendedScore = HighScore.getWeekScore(Week.weeksList[curWeek], curDifficulty);
 	}
 }
 

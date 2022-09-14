@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import openfl.utils.Assets;
 
 class HealthIcon extends FlxSprite
 {
@@ -19,9 +20,18 @@ class HealthIcon extends FlxSprite
 		this.curCharacter = curCharacter;
 		this.isPlayer = isPlayer;
 
-		loadGraphic(Paths.returnGraphic('characters/' + curCharacter + '/icon'), true, 150, 150);
-		animation.add(curCharacter, [0, 1], 0, false, isPlayer);
-		animation.play(curCharacter);
+		if (Paths.returnGraphic('characters/' + curCharacter + '/icon') != null)
+		{
+			loadGraphic(Paths.returnGraphic('characters/' + curCharacter + '/icon'), true, 150, 150);
+			animation.add(curCharacter, [0, 1], 0, false, isPlayer);
+			animation.play(curCharacter);
+		}
+		else
+		{
+			loadGraphic(Paths.returnGraphic('characters/bf/icon'), true, 150, 150);
+			animation.add('bf', [0, 1], 0, false, isPlayer);
+			animation.play('bf');
+		}
 
 		switch (curCharacter)
 		{

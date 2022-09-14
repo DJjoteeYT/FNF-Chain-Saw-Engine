@@ -11,8 +11,7 @@ function create()
 	PlayState.instance.add(bg);
 
 	upperBoppers = new FlxSprite(-240, -90);
-	upperBoppers.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/mall/images/upperBop'),
-		Paths.xml('stages/mall/images/upperBop'));
+	upperBoppers.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/mall/images/upperBop'), Paths.xml('stages/mall/images/upperBop'));
 	upperBoppers.animation.addByPrefix('bop', "Upper Crowd Bob", 24, false);
 	upperBoppers.scrollFactor.set(0.33, 0.33);
 	upperBoppers.setGraphicSize(Std.int(upperBoppers.width * 0.85));
@@ -31,8 +30,7 @@ function create()
 	PlayState.instance.add(tree);
 
 	bottomBoppers = new FlxSprite(-300, 140);
-	bottomBoppers.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/mall/images/bottomBop'),
-		Paths.xml('stages/mall/images/bottomBop'));
+	bottomBoppers.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/mall/images/bottomBop'), Paths.xml('stages/mall/images/bottomBop'));
 	bottomBoppers.animation.addByPrefix('bop', 'Bottom Level Boppers', 24, false);
 	bottomBoppers.scrollFactor.set(0.9, 0.9);
 	bottomBoppers.setGraphicSize(Std.int(bottomBoppers.width * 1));
@@ -43,8 +41,7 @@ function create()
 	PlayState.instance.add(fgSnow);
 
 	santa = new FlxSprite(-840, 150);
-	santa.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/mall/images/santa'),
-		Paths.xml('stages/mall/images/santa'));
+	santa.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/mall/images/santa'), Paths.xml('stages/mall/images/santa'));
 	santa.animation.addByPrefix('idle', 'santa idle in fear', 24, false);
 	PlayState.instance.add(santa);
 }

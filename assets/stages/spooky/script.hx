@@ -5,8 +5,7 @@ var lightningOffset:Int = 8;
 function create()
 {
 	halloweenBG = new FlxSprite(-200, -100);
-	halloweenBG.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/spooky/images/halloween_bg'),
-		Paths.xml('stages/spooky/images/halloween_bg'));
+	halloweenBG.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/spooky/images/halloween_bg'), Paths.xml('stages/spooky/images/halloween_bg'));
 	halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
 	halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
 	halloweenBG.animation.play('idle');

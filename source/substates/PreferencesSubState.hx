@@ -72,10 +72,13 @@ class PreferencesSubState extends MusicBeatSubstate
 		else if (FlxG.mouse.wheel != 0)
 			changeSelection(-FlxG.mouse.wheel);
 
-		if (controls.BACK) {
+		if (controls.BACK)
+		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			close();
-		} else if (controls.ACCEPT) {
+		}
+		else if (controls.ACCEPT)
+		{
 			options[curSelected][1] = !options[curSelected][1];
 
 			FlxG.sound.play(Paths.sound('scrollMenu'));

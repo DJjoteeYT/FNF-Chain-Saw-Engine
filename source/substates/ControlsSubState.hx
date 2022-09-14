@@ -8,35 +8,19 @@ import Controls;
 
 using StringTools;
 
-class ControlsSubState extends MusicBeatSubstate {
+class ControlsSubState extends MusicBeatSubstate
+{
 	private static var curSelected:Int = 1;
 	private static var curAlt:Bool = false;
 
 	private static var defaultKey:String = 'Reset to Default Keys';
+
 	private var bindLength:Int = 0;
 
 	private final optionShit:Array<Dynamic> = [
-		['UI'],
-		['Left', 'ui_left'],
-		['Down', 'ui_down'],
-		['Up', 'ui_up'],
-		['Right', 'ui_right'],
-		[''],
-		['NOTES'],
-		['Left', 'note_left'],
-		['Down', 'note_down'],
-		['Up', 'note_up'],
-		['Right', 'note_right'],
-		[''],
-		['Reset', 'reset'],
-		['Accept', 'accept'],
-		['Back', 'back'],
-		['Pause', 'pause'],
-		[''],
-		['VOLUME'],
-		['Mute', 'volume_mute'],
-		['Up', 'volume_up'],
-		['Down', 'volume_down'],
+		['UI'], ['Left', 'ui_left'], ['Down', 'ui_down'], ['Up', 'ui_up'], ['Right', 'ui_right'], [''], ['NOTES'], ['Left', 'note_left'],
+		['Down', 'note_down'], ['Up', 'note_up'], ['Right', 'note_right'], [''], ['Reset', 'reset'], ['Accept', 'accept'], ['Back', 'back'],
+		['Pause', 'pause'], [''], ['VOLUME'], ['Mute', 'volume_mute'], ['Up', 'volume_up'], ['Down', 'volume_down'],
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -45,7 +29,8 @@ class ControlsSubState extends MusicBeatSubstate {
 	private var rebindingKey:Bool = false;
 	private var nextAccept:Int = 5;
 
-	public function new() {
+	public function new()
+	{
 		super();
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -67,18 +52,21 @@ class ControlsSubState extends MusicBeatSubstate {
 
 			var optionText:Alphabet = new Alphabet(0, (10 * i), optionShit[i][0], (!isCentered || (optionShit[i] == defaultKey)), false);
 			optionText.isMenuItem = true;
-			if(isCentered) {
+			if (isCentered)
+			{
 				optionText.screenCenter(X);
 				optionText.forceX = optionText.x;
 				optionText.yAdd = -55;
-			} else {
+			}
+			else
+			{
 				optionText.forceX = 200;
 			}
 			optionText.yMult = 60;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
-			if(!isCentered)
+			if (!isCentered)
 				addBindTexts(optionText, i);
 		}
 
@@ -87,36 +75,50 @@ class ControlsSubState extends MusicBeatSubstate {
 
 	private var leaving:Bool = false;
 	private var bindingTime:Float = 0;
-	override function update(elapsed:Float) {
-		if(!rebindingKey) {
-			if (controls.UI_UP_P) {
+
+	override function update(elapsed:Float)
+	{
+		if (!rebindingKey)
+		{
+			if (controls.UI_UP_P)
+			{
 				changeSelection(-1);
 			}
-			if (controls.UI_DOWN_P) {
+			if (controls.UI_DOWN_P)
+			{
 				changeSelection(1);
 			}
-			if (controls.UI_LEFT_P || controls.UI_RIGHT_P) {
+			if (controls.UI_LEFT_P || controls.UI_RIGHT_P)
+			{
 				changeAlt();
 			}
 
-			if (controls.BACK) {
+			if (controls.BACK)
+			{
 				PreferencesData.reloadControls();
 				close();
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
 
-			if(controls.ACCEPT && nextAccept <= 0) {
-				if(optionShit[curSelected][0] == defaultKey) {
+			if (controls.ACCEPT && nextAccept <= 0)
+			{
+				if (optionShit[curSelected][0] == defaultKey)
+				{
 					PreferencesData.keyBinds = PreferencesData.defaultKeys.copy();
 					reloadKeys();
 					changeSelection();
 					FlxG.sound.play(Paths.sound('confirmMenu'));
-				} else if(!unselectableCheck(curSelected)) {
+				}
+				else if (!unselectableCheck(curSelected))
+				{
 					bindingTime = 0;
 					rebindingKey = true;
-					if (curAlt) {
+					if (curAlt)
+					{
 						grpInputsAlt[getInputTextNum()].alpha = 0;
-					} else {
+					}
+					else
+					{
 						grpInputs[getInputTextNum()].alpha = 0;
 					}
 					FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -126,12 +128,14 @@ class ControlsSubState extends MusicBeatSubstate {
 		else
 		{
 			var keyPressed:Int = FlxG.keys.firstJustPressed();
-			if (keyPressed > -1) {
+			if (keyPressed > -1)
+			{
 				var keysArray:Array<FlxKey> = PreferencesData.keyBinds.get(optionShit[curSelected][1]);
 				keysArray[curAlt ? 1 : 0] = keyPressed;
 
 				var opposite:Int = (curAlt ? 0 : 1);
-				if(keysArray[opposite] == keysArray[1 - opposite]) {
+				if (keysArray[opposite] == keysArray[1 - opposite])
+				{
 					keysArray[opposite] = NONE;
 				}
 				PreferencesData.keyBinds.set(optionShit[curSelected][1], keysArray);
@@ -142,7 +146,7 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 
 			bindingTime += elapsed;
-			if(bindingTime > 5)
+			if (bindingTime > 5)
 			{
 				if (curAlt)
 					grpInputsAlt[curSelected].alpha = 1;
@@ -155,21 +159,22 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 		}
 
-		if(nextAccept > 0)
+		if (nextAccept > 0)
 			nextAccept -= 1;
 
 		super.update(elapsed);
 	}
 
-	private function getInputTextNum() {
+	private function getInputTextNum()
+	{
 		var num:Int = 0;
 		for (i in 0...curSelected)
-			if(optionShit[i].length > 1)
+			if (optionShit[i].length > 1)
 				num++;
 
 		return num;
 	}
-	
+
 	private function changeSelection(change:Int = 0)
 	{
 		do
@@ -180,7 +185,7 @@ class ControlsSubState extends MusicBeatSubstate {
 			if (curSelected >= optionShit.length)
 				curSelected = 0;
 		}
-		while(unselectableCheck(curSelected));
+		while (unselectableCheck(curSelected));
 
 		var bullShit:Int = 0;
 
@@ -195,17 +200,17 @@ class ControlsSubState extends MusicBeatSubstate {
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
-			if(!unselectableCheck(bullShit-1))
+			if (!unselectableCheck(bullShit - 1))
 			{
 				item.alpha = 0.6;
 				if (item.targetY == 0)
 				{
 					item.alpha = 1;
-					if(curAlt)
+					if (curAlt)
 					{
 						for (i in 0...grpInputsAlt.length)
 						{
-							if(grpInputsAlt[i].sprTracker == item)
+							if (grpInputsAlt[i].sprTracker == item)
 							{
 								grpInputsAlt[i].alpha = 1;
 								break;
@@ -216,7 +221,7 @@ class ControlsSubState extends MusicBeatSubstate {
 					{
 						for (i in 0...grpInputs.length)
 						{
-							if(grpInputs[i].sprTracker == item)
+							if (grpInputs[i].sprTracker == item)
 							{
 								grpInputs[i].alpha = 1;
 								break;
@@ -235,9 +240,10 @@ class ControlsSubState extends MusicBeatSubstate {
 		curAlt = !curAlt;
 		for (i in 0...grpInputs.length)
 		{
-			if(grpInputs[i].sprTracker == grpOptions.members[curSelected]) {
+			if (grpInputs[i].sprTracker == grpOptions.members[curSelected])
+			{
 				grpInputs[i].alpha = 0.6;
-				if(!curAlt)
+				if (!curAlt)
 					grpInputs[i].alpha = 1;
 				break;
 			}
@@ -245,10 +251,10 @@ class ControlsSubState extends MusicBeatSubstate {
 
 		for (i in 0...grpInputsAlt.length)
 		{
-			if(grpInputsAlt[i].sprTracker == grpOptions.members[curSelected])
+			if (grpInputsAlt[i].sprTracker == grpOptions.members[curSelected])
 			{
 				grpInputsAlt[i].alpha = 0.6;
-				if(curAlt)
+				if (curAlt)
 					grpInputsAlt[i].alpha = 1;
 				break;
 			}
@@ -256,8 +262,9 @@ class ControlsSubState extends MusicBeatSubstate {
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
-	private function unselectableCheck(num:Int, ?checkDefaultKey:Bool = false):Bool {
-		if(optionShit[num][0] == defaultKey)
+	private function unselectableCheck(num:Int, ?checkDefaultKey:Bool = false):Bool
+	{
+		if (optionShit[num][0] == defaultKey)
 			return checkDefaultKey;
 
 		return optionShit[num].length < 2 && optionShit[num][0] != defaultKey;
@@ -282,7 +289,7 @@ class ControlsSubState extends MusicBeatSubstate {
 
 	private function reloadKeys()
 	{
-		while(grpInputs.length > 0)
+		while (grpInputs.length > 0)
 		{
 			var item:AttachedText = grpInputs[0];
 			item.kill();
@@ -290,7 +297,7 @@ class ControlsSubState extends MusicBeatSubstate {
 			item.destroy();
 		}
 
-		while(grpInputsAlt.length > 0)
+		while (grpInputsAlt.length > 0)
 		{
 			var item:AttachedText = grpInputsAlt[0];
 			item.kill();
@@ -299,7 +306,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		}
 
 		for (i in 0...grpOptions.length)
-			if(!unselectableCheck(i, true))
+			if (!unselectableCheck(i, true))
 				addBindTexts(grpOptions.members[i], i);
 
 		var bullShit:Int = 0;
@@ -314,22 +321,22 @@ class ControlsSubState extends MusicBeatSubstate {
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
-			if(!unselectableCheck(bullShit-1))
+			if (!unselectableCheck(bullShit - 1))
 			{
 				item.alpha = 0.6;
 				if (item.targetY == 0)
 				{
 					item.alpha = 1;
-					if(curAlt)
+					if (curAlt)
 					{
 						for (i in 0...grpInputsAlt.length)
-							if(grpInputsAlt[i].sprTracker == item)
+							if (grpInputsAlt[i].sprTracker == item)
 								grpInputsAlt[i].alpha = 1;
 					}
 					else
 					{
 						for (i in 0...grpInputs.length)
-							if(grpInputs[i].sprTracker == item)
+							if (grpInputs[i].sprTracker == item)
 								grpInputs[i].alpha = 1;
 					}
 				}

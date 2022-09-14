@@ -5,6 +5,7 @@ import flixel.FlxG;
 class HighScore
 {
 	public static var songScores:Map<String, Int> = new Map();
+	public static var weekScores:Map<String, Int> = new Map();
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
 	{
@@ -24,15 +25,15 @@ class HighScore
 			trace('BotPlay detected. Score saving is disabled.');
 	}
 
-	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
+	public static function saveWeekScore(week:String, score:Int = 0, ?diff:Int = 0):Void
 	{
 		if (!FlxG.save.data.botplay)
 		{
-			var daWeek:String = formatSong('week' + week, diff);
+			var daWeek:String = formatSong(week, diff);
 
-			if (songScores.exists(daWeek))
+			if (weekScores.exists(daWeek))
 			{
-				if (songScores.get(daWeek) < score)
+				if (weekScores.get(daWeek) < score)
 					setScore(daWeek, score);
 			}
 			else
@@ -40,16 +41,6 @@ class HighScore
 		}
 		else
 			trace('BotPlay detected. Score saving is disabled.');
-	}
-
-	/**
-	 * YOU SHOULD FORMAT SONG WITH formatSong() BEFORE TOSSING IN SONG VARIABLE
-	 */
-	static function setScore(song:String, score:Int):Void
-	{
-		songScores.set(song, score);
-		FlxG.save.data.songScores = songScores;
-		FlxG.save.flush();
 	}
 
 	public static function formatSong(song:String, diff:Int):String
@@ -72,19 +63,34 @@ class HighScore
 		return songScores.get(formatSong(song, diff));
 	}
 
-	public static function getWeekScore(week:Int, diff:Int):Int
+	static function setScore(song:String, score:Int):Void
 	{
-		if (!songScores.exists(formatSong('week' + week, diff)))
-			setScore(formatSong('week' + week, diff), 0);
+		songScores.set(song, score);
+		FlxG.save.data.songScores = songScores;
+		FlxG.save.flush();
+	}
 
-		return songScores.get(formatSong('week' + week, diff));
+	public static function getWeekScore(week, diff:Int):Int
+	{
+		if (!weekScores.exists(formatSong(week, diff)))
+			setWeekScore(formatSong(week, diff), 0);
+
+		return weekScores.get(formatSong(week, diff));
+	}
+
+	static function setWeekScore(song:String, score:Int):Void
+	{
+		weekScores.set(song, score);
+		FlxG.save.data.weekScores = songScores;
+		FlxG.save.flush();
 	}
 
 	public static function load():Void
 	{
 		if (FlxG.save.data.songScores != null)
-		{
 			songScores = FlxG.save.data.songScores;
-		}
+
+		if (FlxG.save.data.weekScores != null)
+			weekScores = FlxG.save.data.weekScores;
 	}
 }

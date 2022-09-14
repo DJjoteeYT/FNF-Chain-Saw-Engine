@@ -33,7 +33,7 @@ class PreferencesData
 		'ui_right' => [D, RIGHT],
 		'accept' => [SPACE, ENTER],
 		'back' => [BACKSPACE, ESCAPE],
-		'pause'	=> [ENTER, ESCAPE],
+		'pause' => [ENTER, ESCAPE],
 		'reset' => [R, NONE],
 		'volume_mute' => [ZERO, NONE],
 		'volume_up' => [NUMPADPLUS, PLUS],
@@ -51,7 +51,7 @@ class PreferencesData
 		'ui_right' => [D, RIGHT],
 		'accept' => [SPACE, ENTER],
 		'back' => [BACKSPACE, ESCAPE],
-		'pause'	=> [ENTER, ESCAPE],
+		'pause' => [ENTER, ESCAPE],
 		'reset' => [R, NONE],
 		'volume_mute' => [ZERO, NONE],
 		'volume_up' => [NUMPADPLUS, PLUS],
@@ -107,14 +107,14 @@ class PreferencesData
 			framerate = FlxG.save.data.framerate;
 
 			final refreshRate:Int = Application.current.window.displayMode.refreshRate;
-			if(framerate != refreshRate)
+			if (framerate != refreshRate)
 			{
 				framerate = refreshRate;
-				if(framerate < 60)
+				if (framerate < 60)
 					framerate = 60;
 			}
 
-			if(framerate > FlxG.drawFramerate)
+			if (framerate > FlxG.drawFramerate)
 			{
 				FlxG.updateFramerate = framerate;
 				FlxG.drawFramerate = framerate;
@@ -146,7 +146,7 @@ class PreferencesData
 		if (FlxG.save.data.flashing != null)
 			flashing = FlxG.save.data.flashing;
 
-		if(FlxG.save.data.volume != null)
+		if (FlxG.save.data.volume != null)
 			FlxG.sound.volume = FlxG.save.data.volume;
 
 		if (FlxG.save.data.mute != null)
@@ -154,7 +154,7 @@ class PreferencesData
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_input', 'ninjamuffin99');
-		if(save != null && save.data.keyBinds != null)
+		if (save != null && save.data.keyBinds != null)
 		{
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.keyBinds;
 			for (control => keys in loadedControls)
@@ -183,7 +183,7 @@ class PreferencesData
 
 		while (i < len)
 		{
-			if(copiedArray[i] == NONE)
+			if (copiedArray[i] == NONE)
 			{
 				copiedArray.remove(NONE);
 				--i;

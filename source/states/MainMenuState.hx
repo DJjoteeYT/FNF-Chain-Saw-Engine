@@ -16,18 +16,14 @@ import lime.app.Application;
 
 class MainMenuState extends MusicBeatState
 {
-	private var curSelected:Int = 0;
-	private var menuItems:FlxTypedGroup<FlxSprite>;
-	private final optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
-	private var newGaming:FlxText;
-	private var newGaming2:FlxText;
-
-	public static var firstStart:Bool = true;
 	public static var nightly:String = #if nightly '-nightly' #else '' #end;
 	public static var gameVer:String = '0.2.7.1';
 
-	private var magenta:FlxSprite;
+	private final optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
+	private var menuItems:FlxTypedGroup<FlxSprite>;
+	private var curSelected:Int = 0;
 	private var camFollow:FlxObject;
+	private var magenta:FlxSprite;
 
 	override function create()
 	{
@@ -45,10 +41,10 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('menuBG'));
-		bg.scrollFactor.x = 0;
-		bg.scrollFactor.y = 0.10;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
+		bg.scrollFactor.x = 0;
+		bg.scrollFactor.y = 0.10;
 		bg.screenCenter();
 		bg.antialiasing = true;
 		add(bg);
@@ -57,10 +53,10 @@ class MainMenuState extends MusicBeatState
 		add(camFollow);
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.scrollFactor.x = 0;
-		magenta.scrollFactor.y = 0.10;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
 		magenta.updateHitbox();
+		magenta.scrollFactor.x = 0;
+		magenta.scrollFactor.y = 0.10;
 		magenta.screenCenter();
 		magenta.visible = false;
 		magenta.antialiasing = true;
@@ -72,29 +68,26 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...optionShit.length)
 		{
-			final offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
+			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + (108 - (Math.max(optionShit.length, 4) - 4) * 80));
 			menuItem.frames = Paths.getSparrowAtlas('FNF_main_menu_assets');
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
-			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
+			menuItem.ID = i;
 			menuItems.add(menuItem);
 		}
 
-		firstStart = false;
-
 		FlxG.camera.follow(camFollow, null, 0.60);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 23, 0, 'FNF: ' + gameVer, 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 46, 0, 'FNF: ' + gameVer, 12);
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.scrollFactor.set();
 		add(versionShit);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 46, 0, 'Chain-Saw Engine: ' + Application.current.meta.get('version') + nightly, 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 23, 0, 'Chain-Saw Engine: ' + Application.current.meta.get('version') + nightly, 12);
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.scrollFactor.set();
 		add(versionShit);
@@ -130,7 +123,11 @@ class MainMenuState extends MusicBeatState
 			}
 
 			if (controls.BACK)
+			{
+				selectedSomethin = true;
+				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new TitleState());
+			}
 			else if (controls.ACCEPT)
 			{
 				selectedSomethin = true;
@@ -201,7 +198,7 @@ class MainMenuState extends MusicBeatState
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
-		if (curSelected < 0)
+		else if (curSelected < 0)
 			curSelected = menuItems.length - 1;
 
 		menuItems.forEach(function(spr:FlxSprite)
