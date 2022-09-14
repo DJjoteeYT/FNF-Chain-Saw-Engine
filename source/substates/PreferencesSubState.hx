@@ -31,7 +31,7 @@ class PreferencesSubState extends MusicBeatSubstate
 	{
 		super();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		DiscordClient.changePresence("Preferences Menu", null);
 		#end
 

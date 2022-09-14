@@ -35,7 +35,7 @@ class Main extends Sprite
 		PreferencesData.load();
 		HighScore.load();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		DiscordClient.initialize();
 
 		Application.current.onExit.add(function(exitCode:Int)

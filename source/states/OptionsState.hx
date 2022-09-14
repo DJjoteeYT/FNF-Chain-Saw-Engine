@@ -14,7 +14,7 @@ class OptionsState extends MusicBeatState
 
 	override function create()
 	{
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 

@@ -1,6 +1,6 @@
 package;
 
-#if desktop
+#if FUTURE_DISCORD_RCP
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
 

@@ -31,7 +31,7 @@ class GameplayCustomizeState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Customizing Gameplay", null);
 		#end

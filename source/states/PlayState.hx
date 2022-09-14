@@ -95,7 +95,7 @@ class PlayState extends MusicBeatState
 	private final divider:String = " | ";
 	private final iconOffset:Int = 26;
 
-	#if desktop
+	#if FUTURE_DISCORD_RCP
 	// Discord RPC variables
 	private var storyDifficultyText:String = "";
 	private var iconRPC:String = "";
@@ -115,7 +115,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		// Making difficulty text for Discord Rich Presence.
 		switch (storyDifficulty)
 		{
@@ -617,7 +617,7 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.play();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
 		#end
@@ -737,7 +737,7 @@ class PlayState extends MusicBeatState
 					vocals.pause();
 			}
 
-			#if desktop
+			#if FUTURE_DISCORD_RCP
 			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
 			#end
 			if (!startTimer.finished)
@@ -760,7 +760,7 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 			paused = false;
 
-			#if desktop
+			#if FUTURE_DISCORD_RCP
 			// if (startTimer.finished)
 			// {
 			DiscordClient.changePresence(detailsText
@@ -797,7 +797,7 @@ class PlayState extends MusicBeatState
 			vocals.play();
 		}
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
 		#end
 	}
@@ -891,7 +891,7 @@ class PlayState extends MusicBeatState
 
 			openSubState(new GameOverSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-			#if desktop
+			#if FUTURE_DISCORD_RCP
 			// Game Over doesn't get his own variable because it's only used here
 			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
 			#end
@@ -1479,7 +1479,7 @@ class PlayState extends MusicBeatState
 			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
 			resyncVocals();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText
 			+ " "

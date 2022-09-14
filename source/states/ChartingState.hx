@@ -103,7 +103,7 @@ class ChartingState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		DiscordClient.changePresence("Chart Editor", null, null, true);
 		#end
 

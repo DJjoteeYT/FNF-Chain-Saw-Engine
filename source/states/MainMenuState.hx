@@ -30,7 +30,7 @@ class MainMenuState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		#if desktop
+		#if FUTURE_DISCORD_RCP
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
