@@ -79,7 +79,7 @@ class Note extends FlxSprite
 					animation.add('bluehold', [1]);
 				}
 
-				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
 			default:
 				frames = Paths.getSparrowAtlas('NOTE_assets');

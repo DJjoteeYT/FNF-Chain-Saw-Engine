@@ -52,7 +52,7 @@ class StrumNote extends FlxSprite
 				}
 
 				antialiasing = false;
-				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				setGraphicSize(Std.int(width * 6));
 
 			default:
 				frames = Paths.getSparrowAtlas('NOTE_assets');

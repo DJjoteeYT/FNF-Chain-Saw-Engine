@@ -14,6 +14,7 @@ import flixel.FlxBasic;
 import hscript.Interp;
 import hscript.Parser;
 import openfl.Lib;
+import openfl.utils.Assets;
 import states.PlayState;
 
 using StringTools;
@@ -27,12 +28,11 @@ class Script extends FlxBasic
 	public var interp:Interp;
 	public var parser:Parser;
 
-	public function new(codeToRun:String)
+	public function new(file:String)
 	{
 		super();
 
 		interp = new Interp();
-
 		parser = new Parser();
 		parser.allowJSON = true;
 		parser.allowTypes = true;
@@ -57,19 +57,20 @@ class Script extends FlxBasic
 		setVariable('FlxSpriteGroup', FlxSpriteGroup);
 
 		setVariable('Paths', Paths);
+		setVariable('CoolUtil', CoolUtil);
 		setVariable('Conductor', Conductor);
 		setVariable('PlayState', PlayState);
 
 		try
 		{
-			interp.execute(parser.parseString(codeToRun));
+			interp.execute(parser.parseString(Assets.getText(file)));
 		}
 		catch (e:Dynamic)
 			Lib.application.window.alert(e.message, "Hscript Error!");
 
-		executeFunc('create');
+		trace('Script Loaded Succesfully: $file');
 
-		trace('working!1!!!!!!!!!1!');
+		executeFunc('create', []);
 	}
 
 	public function setVariable(name:String, val:Dynamic):Void
@@ -100,7 +101,7 @@ class Script extends FlxBasic
 		return null;
 	}
 
-	public function removeVariable(name:String, val:Dynamic):Void
+	public function removeVariable(name:String):Void
 	{
 		if (interp == null)
 			return;
@@ -113,7 +114,22 @@ class Script extends FlxBasic
 			Lib.application.window.alert(e.message, "Hscript Error!");
 	}
 
-	public function executeFunc(funcName:String, ?args:Array<Dynamic> = []):Dynamic
+	public function existsVariable(name:String):Bool
+	{
+		if (interp == null)
+			return false;
+
+		try
+		{
+			return interp.variables.exists(name);
+		}
+		catch (e:Dynamic)
+			Lib.application.window.alert(e.message, "Hscript Error!");
+
+		return false;
+	}
+
+	public function executeFunc(funcName:String, ?args:Array<Dynamic>):Dynamic
 	{
 		if (interp == null)
 			return null;

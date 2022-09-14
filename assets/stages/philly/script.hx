@@ -52,7 +52,7 @@ function updateTrainPos()
 	if (trainSound.time >= 4700)
 	{
 		startedMoving = true;
-		PlayState.gf.playAnim('hairBlow');
+		PlayState.instance.gf.playAnim('hairBlow');
 	}
 
 	if (startedMoving)
@@ -82,7 +82,7 @@ function trainStart()
 
 function trainReset()
 {
-	PlayState.gf.playAnim('hairFall');
+	PlayState.instance.gf.playAnim('hairFall');
 	phillyTrain.x = FlxG.width + 200;
 	trainMoving = false;
 	trainCars = 8;
