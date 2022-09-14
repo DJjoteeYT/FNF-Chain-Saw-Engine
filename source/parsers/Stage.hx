@@ -7,12 +7,11 @@ typedef SwagStage =
 {
 	var suffix:String;
 	var zoom:Float;
-	var girlfriend:Array<Float>;
+	var gf:Array<Float>;
 	var dad:Array<Float>;
 	var boyfriend:Array<Float>;
-	var camPosGirlfriend:Array<Float>;
-	var camPosDad:Array<Float>;
-	var camPosBoyfriend:Array<Float>;
+	var camFollowDad:Array<Float>;
+	var camFollowBoyfriend:Array<Float>;
 }
 
 class Stage

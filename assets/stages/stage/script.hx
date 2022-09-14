@@ -12,4 +12,11 @@ function create()
 	stageCurtains.updateHitbox();
 	stageCurtains.antialiasing = true;
 	PlayState.instance.add(stageCurtains);
+
+	if (PlayState.SONG.player2 == 'gf')
+	{
+		PlayState.instance.dad.setPosition(PlayState.instance.gf.x,
+			instance.gf.y);
+		PlayState.instance.gf.visible = false;
+	}
 }

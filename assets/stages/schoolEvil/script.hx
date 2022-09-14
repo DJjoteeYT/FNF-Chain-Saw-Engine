@@ -8,4 +8,6 @@ function create()
 	bg.scrollFactor.set(0.8, 0.9);
 	bg.scale.set(6, 6);
 	PlayState.instance.add(bg);
+
+	PlayState.instance.add(new FlxTrail(PlayState.instance.dad, null, 4, 24, 0.3, 0.069));
 }

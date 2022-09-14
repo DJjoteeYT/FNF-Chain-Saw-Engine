@@ -18,8 +18,10 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	public var stunned:Bool = false;
 
+	public var position:Array<Float> = [0, 0];
+	public var camPos:Array<Float> = [0, 0];
 	public var singDuration:Float = 4;
-	public var colors:Array<Int>;
+	public var colors:Array<Int> = [175, 102, 206];
 
 	public function new(x:Float, y:Float, curCharacter:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -74,6 +76,8 @@ class Character extends FlxSprite
 		if (character.scale != 1)
 			scale.set(character.scale, character.scale);
 
+		position = character.position;
+		camPos = character.camPos;
 		singDuration = character.singDuration;
 		antialiasing = character.antialiasing;
 		flipX = character.flipX;

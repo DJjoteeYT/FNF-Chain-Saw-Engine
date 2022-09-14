@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.addons.effects.FlxTrail;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
@@ -55,6 +56,7 @@ class Script extends FlxBasic
 		setVariable('FlxAtlasFrames', FlxAtlasFrames);
 		setVariable('FlxSound', FlxSound);
 		setVariable('FlxSpriteGroup', FlxSpriteGroup);
+		setVariable('FlxTrail', FlxTrail);
 
 		setVariable('Paths', Paths);
 		setVariable('CoolUtil', CoolUtil);

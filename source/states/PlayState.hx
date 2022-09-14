@@ -6,11 +6,9 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
-import flixel.addons.effects.FlxTrail;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
-import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
@@ -84,9 +82,8 @@ class PlayState extends MusicBeatState
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
-	private var camPosGirlfriend:Array<Float> = [0, 0];
-	private var camPosDad:Array<Float> = [0, 0];
-	private var camPosBoyfriend:Array<Float> = [0, 0];
+	private var camFollowDad:Array<Float> = [0, 0];
+	private var camFollowBoyfriend:Array<Float> = [0, 0];
 	private var dialogue:Array<String> = ['dad:blah blah blah', 'bf:coolswag'];
 	private var health:Float = 1;
 	private var notes:FlxTypedGroup<Note>;
@@ -198,39 +195,36 @@ class PlayState extends MusicBeatState
 			stageFile = {
 				suffix: "",
 				zoom: 0.9,
-				girlfriend: [400, 130],
+				gf: [400, 130],
 				dad: [100, 100],
 				boyfriend: [770, 450],
-				camPosGirlfriend: [0, 0],
-				camPosDad: [0, 0],
-				camPosBoyfriend: [0, 0]
+				camFollowDad: [150, -100],
+				camFollowBoyfriend: [-100, -100]
 			};
 		}
 
 		defaultCamZoom = stageFile.zoom;
-		camPosGirlfriend = stageFile.camPosGirlfriend;
-		camPosDad = stageFile.camPosDad;
-		camPosBoyfriend = stageFile.camPosBoyfriend;
+		camFollowDad = stageFile.camFollowDad;
+		camFollowBoyfriend = stageFile.camFollowBoyfriend;
+
+		gf = new Character(0, 0, SONG.gfVersion);
+		gf.x = stageFile.gf[0] + gf.position[0];
+		gf.y = stageFile.gf[1] + gf.position[1];
+
+		dad = new Character(0, 0, SONG.player2);
+		dad.x = stageFile.dad[0] + dad.position[0];
+		dad.y = stageFile.dad[1] + dad.position[1];
+
+		boyfriend = new Character(0, 0, SONG.player1, true);
+		boyfriend.x = stageFile.boyfriend[0] + boyfriend.position[0];
+		boyfriend.y = stageFile.boyfriend[1] + boyfriend.position[1];
 
 		if (Assets.exists(Paths.hx('stages/' + SONG.stage + '/script')))
 			scriptArray.push(new Script(Paths.hx('stages/' + SONG.stage + '/script')));
 
-		gf = new Character(stageFile.girlfriend[0], stageFile.girlfriend[1], SONG.gfVersion);
-		dad = new Character(stageFile.dad[0], stageFile.dad[1], SONG.player2);
-		boyfriend = new Character(stageFile.boyfriend[0], stageFile.boyfriend[1], SONG.player1, true);
-
-		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
-
-		switch (SONG.player2)
+		/*switch (SONG.player2)
 		{
 			case 'gf':
-				dad.setPosition(gf.x, gf.y);
-				gf.visible = false;
-				if (isStoryMode)
-				{
-					camPos.x += 600;
-					tweenCamIn();
-				}
 
 			case "spooky":
 				dad.y += 200;
@@ -257,14 +251,7 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
-		}
-
-		switch (SONG.stage)
-		{
-			case 'schoolEvil':
-				if (FlxG.save.data.distractions)
-					add(new FlxTrail(dad, null, 4, 24, 0.3, 0.069));
-		}
+		}*/
 
 		add(gf);
 		add(dad);
@@ -282,7 +269,7 @@ class PlayState extends MusicBeatState
 		generateSong(SONG.song);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
-		camFollow.setPosition(camPos.x, camPos.y);
+		camFollow.setPosition(dad.getGraphicMidpoint().x + dad.camPos[0], dad.getGraphicMidpoint().y + dad.camPos[1]);
 
 		if (prevCamFollow != null)
 		{
@@ -1031,41 +1018,15 @@ class PlayState extends MusicBeatState
 		switch (character)
 		{
 			case 'dad':
-				if (camPosDad[0] == 0)
-					camFollow.x = dad.getMidpoint().x + 150;
-				else
-					camFollow.x = dad.getMidpoint().x + camPosDad[0];
-
-				if (camPosDad[1] == 0)
-					camFollow.y = dad.getMidpoint().y - 100;
-				else
-					camFollow.y = dad.getMidpoint().y + camPosDad[1];
-
-				switch (dad.curCharacter)
-				{
-					case 'mom':
-						camFollow.y = dad.getMidpoint().y;
-					case 'senpai':
-						camFollow.y = dad.getMidpoint().y - 430;
-						camFollow.x = dad.getMidpoint().x - 100;
-					case 'senpai-angry':
-						camFollow.y = dad.getMidpoint().y - 430;
-						camFollow.x = dad.getMidpoint().x - 100;
-				}
+				camFollow.x = dad.getMidpoint().x + camFollowDad[0];
+				camFollow.y = dad.getMidpoint().y + camFollowDad[1];
 
 				if (SONG.song.toLowerCase() == 'tutorial')
 					tweenCamIn();
 
 			default:
-				if (camPosBoyfriend[0] == 0)
-					camFollow.x = boyfriend.getMidpoint().x - 100;
-				else
-					camFollow.x = boyfriend.getMidpoint().x + camPosBoyfriend[0];
-
-				if (camPosBoyfriend[1] == 0)
-					camFollow.y = boyfriend.getMidpoint().y - 100;
-				else
-					camFollow.y = boyfriend.getMidpoint().y + camPosBoyfriend[1];
+				camFollow.x = boyfriend.getMidpoint().x + camFollowBoyfriend[0];
+				camFollow.y = boyfriend.getMidpoint().y + camFollowBoyfriend[1];
 		}
 	}
 

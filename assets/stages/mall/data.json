@@ -1,7 +1,7 @@
 {
 	"suffix":"",
 	"zoom":0.8,
-	"girlfriend":[
+	"gf":[
 		400,
 		130
 	],
@@ -13,16 +13,12 @@
 		1010,
 		230
 	],
-	"camPosGirlfriend":[
-		0,
-		0
+	"camFollowDad":[
+		150,
+		-100
 	],
-	"camPosDad":[
-		0,
-		0
-	],
-	"camPosBoyfriend":[
-		0,
+	"camFollowBoyfriend":[
+		-100,
 		-200
 	]
 }
