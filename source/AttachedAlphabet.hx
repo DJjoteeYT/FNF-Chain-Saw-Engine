@@ -2,6 +2,10 @@ package;
 
 import flixel.FlxSprite;
 
+/**
+ * Class from Psych Engine used here for controls menu.
+ * Credits: Shadow Mario.
+ */
 class AttachedAlphabet extends Alphabet
 {
 	public var offsetX:Float = 0;
