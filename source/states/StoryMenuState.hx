@@ -15,7 +15,7 @@ import flixel.util.FlxTimer;
 import parsers.Song;
 import parsers.Week;
 import states.PlayState;
-import Highscore; //dave and bambi is the best - jonnycat
+
 class StoryMenuState extends MusicBeatState
 {
 	private var scoreText:FlxText;
