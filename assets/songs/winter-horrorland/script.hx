@@ -2,7 +2,7 @@ var allowCountdown:Bool = false;
 
 function startCountdown()
 {
-	if (!allowCountdown/* && PlayState.isStoryMode */ && !PlayState.seenCutscene)
+	if (!allowCountdown && PlayState.isStoryMode && !PlayState.seenCutscene)
 	{
 		var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), 0xFF000000);
 		blackScreen.scrollFactor.set();
