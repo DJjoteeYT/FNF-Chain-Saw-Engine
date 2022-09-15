@@ -26,7 +26,7 @@ import openfl.utils.Assets;
 import substates.GameOverSubState;
 import substates.PauseSubState;
 import states.PlayState;
-import Highscore; //hi person who compiled this code
+
 using StringTools;
 
 class PlayState extends MusicBeatState
