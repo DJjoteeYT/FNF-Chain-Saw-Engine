@@ -16,7 +16,7 @@ function create()
 	if (PlayState.SONG.player2 == 'gf')
 	{
 		PlayState.instance.dad.setPosition(PlayState.instance.gf.x,
-			instance.gf.y);
+			PlayState.instance.gf.y);
 		PlayState.instance.gf.visible = false;
 	}
 }
