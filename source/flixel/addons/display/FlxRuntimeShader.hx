@@ -45,29 +45,18 @@ class FlxRuntimeShader extends FlxShader
 		this.glVersion = glslVersion;
 
 		if (fragmentSource == null)
-		{
 			this.glFragmentSource = __processFragmentSource(glFragmentSourceRaw);
-		}
 		else
-		{
 			this.glFragmentSource = __processFragmentSource(fragmentSource);
-		}
 
 		if (vertexSource == null)
-		{
-			var s = __processVertexSource(glVertexSourceRaw);
-			this.glVertexSource = s;
-		}
+			this.glVertexSource = __processVertexSource(glVertexSourceRaw);
 		else
-		{
-			var s = __processVertexSource(vertexSource);
-			this.glVertexSource = s;
-		}
+			this.glVertexSource = __processVertexSource(vertexSource);;
 
-		@:privateAccess {
-			// This tells the shader that the glVertexSource/glFragmentSource have been updated.
-			this.__glSourceDirty = true;
-		}
+		// This tells the shader that the glVertexSource/glFragmentSource have been updated.
+		@:privateAccess
+		this.__glSourceDirty = true;
 
 		super();
 	}
@@ -322,7 +311,5 @@ class FlxRuntimeShader extends FlxShader
 	}
 
 	public function toString():String
-	{
 		return 'FlxRuntimeShader';
-	}
 }
