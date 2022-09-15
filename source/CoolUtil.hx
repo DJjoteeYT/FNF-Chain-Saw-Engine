@@ -35,10 +35,10 @@ class CoolUtil
 		return dumbArray;
 	}
 
-	public static function camLerpShit(ratio:Float)
+	public static function camLerpShit(ratio:Float):Float
 		return FlxG.elapsed / (1 / 60) * ratio;
 
-	public static function coolLerp(a:Float, b:Float, ratio:Float)
+	public static function coolLerp(a:Float, b:Float, ratio:Float):Float
 		return a + camLerpShit(ratio) * (b - a);
 
 	public static function boundTo(value:Float, min:Float, max:Float):Float
@@ -55,7 +55,7 @@ class CoolUtil
 
 	public static function truncateFloat(number:Float, precision:Int):Float
 	{
-		var num = number;
+		var num:Float = number;
 		num = num * Math.pow(10, precision);
 		num = Math.round(num) / Math.pow(10, precision);
 		return num;
