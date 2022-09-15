@@ -138,7 +138,7 @@ class Script extends FlxBasic
 		if (interp == null)
 			return null;
 
-		if (interp.variables.exists(funcName))
+		if (existsVariable(funcName))
 		{
 			try
 			{
