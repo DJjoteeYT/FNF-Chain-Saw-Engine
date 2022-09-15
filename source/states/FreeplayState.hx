@@ -10,7 +10,7 @@ import openfl.utils.Assets;
 import parsers.Song;
 import parsers.Week;
 import states.PlayState;
-import Highscore; //hehe im fixing things
+
 class FreeplayState extends MusicBeatState
 {
 	private var grpSongs:FlxTypedGroup<Alphabet>;
