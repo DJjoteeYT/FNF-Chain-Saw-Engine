@@ -131,7 +131,7 @@ class Script extends FlxBasic
 		return false;
 	}
 
-	public function executeFunc(funcName:String, ?args:Array<Dynamic>):Dynamic
+	public function executeFunc(funcName:String, args:Array<Dynamic>):Dynamic
 	{
 		if (interp == null)
 			return null;
