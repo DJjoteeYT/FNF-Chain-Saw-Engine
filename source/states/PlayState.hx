@@ -1451,11 +1451,11 @@ class PlayState extends MusicBeatState
 	{
 		var value:Dynamic = Script.Function_Continue;
 
-		for (script in scriptArray)
+		for (i in 0...scriptArray.length)
 		{
-			final call:Dynamic = script.executeFunc(funcName, args);
+			final call:Dynamic = scriptArray[i].executeFunc(funcName, args);
 			final bool:Bool = call == Script.Function_Continue;
-			if (!bool)
+			if (!bool && call != null)
 				value = call;
 		}
 
