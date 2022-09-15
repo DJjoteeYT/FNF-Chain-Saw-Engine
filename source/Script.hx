@@ -3,16 +3,16 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.FlxBasic;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.display.FlxRuntimeShader;
-import flixel.math.FlxMath;
-import flixel.util.FlxTimer;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
+import flixel.math.FlxMath;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 import flixel.system.FlxSound;
-import flixel.FlxBasic;
+import flixel.util.FlxTimer;
 import hscript.Interp;
 import hscript.Parser;
 import openfl.Lib;
@@ -27,6 +27,9 @@ using StringTools;
  */
 class Script extends FlxBasic
 {
+	public static var Function_Stop:Dynamic = 1;
+	public static var Function_Continue:Dynamic = 0;
+
 	public var interp:Interp;
 	public var parser:Parser;
 
@@ -38,6 +41,9 @@ class Script extends FlxBasic
 		parser = new Parser();
 		parser.allowJSON = true;
 		parser.allowTypes = true;
+
+		setVariable('Function_Stop', Function_Stop);
+		setVariable('Function_Continue', Function_Continue);
 
 		setVariable('Math', Math);
 		setVariable('Reflect', Reflect);
