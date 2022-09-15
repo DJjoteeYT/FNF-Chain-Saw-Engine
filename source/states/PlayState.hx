@@ -94,7 +94,6 @@ class PlayState extends MusicBeatState
 
 	#if FUTURE_DISCORD_RCP
 	// Discord RPC variables
-	private var storyDifficultyText:String = "";
 	private var iconRPC:String = "";
 	private var detailsText:String = "";
 	private var detailsPausedText:String = "";
@@ -113,17 +112,6 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.stop();
 
 		#if FUTURE_DISCORD_RCP
-		// Making difficulty text for Discord Rich Presence.
-		switch (storyDifficulty)
-		{
-			case 0:
-				storyDifficultyText = "Easy";
-			case 1:
-				storyDifficultyText = "Normal";
-			case 2:
-				storyDifficultyText = "Hard";
-		}
-
 		iconRPC = SONG.player2;
 
 		switch (iconRPC)
@@ -144,7 +132,7 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 
 		// Updating Discord Rich Presence.
-		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
+		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score, iconRPC);
 		#end
 
 		camGame = new FlxCamera();
@@ -606,7 +594,7 @@ class PlayState extends MusicBeatState
 
 		#if FUTURE_DISCORD_RCP
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
+		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score, iconRPC);
 		#end
 	}
 
@@ -725,7 +713,7 @@ class PlayState extends MusicBeatState
 			}
 
 			#if FUTURE_DISCORD_RCP
-			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
+			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score, iconRPC);
 			#end
 			if (!startTimer.finished)
 				startTimer.active = false;
@@ -754,7 +742,7 @@ class PlayState extends MusicBeatState
 				+ " "
 				+ SONG.song
 				+ " ("
-				+ storyDifficultyText
+				+ CoolUtil.difficultyString(storyDifficulty)
 				+ ") "
 				+ "\nScore: "
 				+ score, iconRPC, true,
@@ -785,7 +773,7 @@ class PlayState extends MusicBeatState
 		}
 
 		#if FUTURE_DISCORD_RCP
-		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
+		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score, iconRPC);
 		#end
 	}
 
@@ -880,7 +868,7 @@ class PlayState extends MusicBeatState
 
 			#if FUTURE_DISCORD_RCP
 			// Game Over doesn't get his own variable because it's only used here
-			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + storyDifficultyText + ") " + "\nScore: " + score, iconRPC);
+			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score, iconRPC);
 			#end
 		}
 
@@ -1446,7 +1434,7 @@ class PlayState extends MusicBeatState
 			+ " "
 			+ SONG.song
 			+ " ("
-			+ storyDifficultyText
+			+ CoolUtil.difficultyString(storyDifficulty)
 			+ ") "
 			+ "\nScore: "
 			+ score, iconRPC, true,
