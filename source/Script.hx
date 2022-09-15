@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.addons.effects.FlxTrail;
+import flixel.addons.display.FlxRuntimeShader;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
