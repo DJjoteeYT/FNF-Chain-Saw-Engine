@@ -1500,7 +1500,7 @@ class PlayState extends MusicBeatState
 		super.destroy();
 	}
 
-	private function callScripts(funcName:String, args:Array<Any>)
+	private function callScripts(funcName:String, args:Array<Dynamic>)
 		for (i in 0...scriptArray.length)
 			scriptArray[i].executeFunc(funcName, args);
 
