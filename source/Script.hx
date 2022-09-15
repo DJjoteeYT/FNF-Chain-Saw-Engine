@@ -58,6 +58,7 @@ class Script extends FlxBasic
 		setVariable('FlxSound', FlxSound);
 		setVariable('FlxSpriteGroup', FlxSpriteGroup);
 		setVariable('FlxTrail', FlxTrail);
+		setVariable('FlxRuntimeShader', FlxRuntimeShader);
 
 		setVariable('Paths', Paths);
 		setVariable('CoolUtil', CoolUtil);
