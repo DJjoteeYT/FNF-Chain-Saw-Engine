@@ -74,7 +74,10 @@ class Character extends FlxSprite
 			animation.addByPrefix('idle', 'BF idle dance', 24, false);
 
 		if (character.scale != 1)
-			scale.set(character.scale, character.scale);
+		{
+			setGraphicSize(Std.int(width * character.scale));
+			updateHitbox();
+		}
 
 		position = character.position;
 		camPos = character.camPos;
