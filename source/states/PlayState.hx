@@ -298,7 +298,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 
 		#if android
-		addAndroidControls();
+		addAndroidControls(false);
 		#end
 
 		if (Assets.exists(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')))
