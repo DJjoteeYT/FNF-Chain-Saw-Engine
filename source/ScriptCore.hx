@@ -17,6 +17,8 @@ import hscript.Interp;
 import hscript.Parser;
 import openfl.Lib;
 import openfl.utils.Assets;
+import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
 import states.PlayState;
 
 using StringTools;
@@ -65,6 +67,9 @@ class ScriptCore extends FlxBasic
 		setVariable('FlxSpriteGroup', FlxSpriteGroup);
 		setVariable('FlxTrail', FlxTrail);
 		setVariable('FlxRuntimeShader', FlxRuntimeShader);
+
+		setVariable('BitmapFilter', BitmapFilter);
+		setVariable('ShaderFilter', ShaderFilter);
 
 		setVariable('Paths', Paths);
 		setVariable('CoolUtil', CoolUtil);

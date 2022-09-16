@@ -85,6 +85,12 @@ class Paths
 	inline static public function hx(key:String):String
 		return 'assets/$key.hx';
 
+	inline static public function frag(key:String):String
+		return 'assets/$key.frag';
+
+	inline static public function vert(key:String):String
+		return 'assets/$key.vert';
+
 	inline static public function font(key:String):String
 		return 'assets/fonts/$key';
 
