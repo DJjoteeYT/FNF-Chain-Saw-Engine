@@ -64,6 +64,11 @@ class OptionsState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
+			#if android
+			if (options[curSelected] != 'Exit')
+				removeVirtualPad();
+			#end
+
 			switch (options[curSelected])
 			{
 				case 'Preferences':
