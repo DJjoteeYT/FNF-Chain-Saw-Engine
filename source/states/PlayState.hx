@@ -298,7 +298,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 
 		#if android
-		addAndroidControls(false);
+		addAndroidControls();
 		#end
 
 		if (Assets.exists(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')))
@@ -819,7 +819,10 @@ class PlayState extends MusicBeatState
 				camearaFollow('bf');
 		}
 
-		if (health <= 0 || (controls.RESET && !inCutscene && !endingSong))
+		if (controls.RESET && !inCutscene && !endingSong)
+			health = 0;
+
+		if (health <= 0)
 			gameOver();
 
 		if (unspawnNotes[0] != null)
