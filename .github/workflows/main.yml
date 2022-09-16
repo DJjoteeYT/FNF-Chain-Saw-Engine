@@ -41,9 +41,10 @@ jobs:
           haxelib --quiet install openfl 9.1.0
           haxelib --quiet install flixel
           haxelib --quiet --never run lime setup
-          haxelib --quiet install hscript
           haxelib --quiet install flixel-ui
           haxelib --quiet install flixel-addons
+          haxelib --quiet install hscript
+          haxelib --quiet install polymod
           haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git --quiet
 
       - name: Setup Lime
