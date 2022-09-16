@@ -33,6 +33,10 @@ class ControlsSubState extends MusicBeatSubstate
 	{
 		super();
 
+		#if FUTURE_DISCORD_RCP
+		DiscordClient.changePresence("Controls Menu", null);
+		#end
+
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.screenCenter();
@@ -86,26 +90,28 @@ class ControlsSubState extends MusicBeatSubstate
 		if (!rebindingKey)
 		{
 			if (controls.UI_UP_P)
-			{
 				changeSelection(-1);
-			}
-			if (controls.UI_DOWN_P)
-			{
+			else if (controls.UI_DOWN_P)
 				changeSelection(1);
-			}
+			else if (FlxG.mouse.wheel != 0)
+				changeSelection(-FlxG.mouse.wheel);
+
 			if (controls.UI_LEFT_P || controls.UI_RIGHT_P)
-			{
 				changeAlt();
-			}
 
 			if (controls.BACK)
 			{
 				PreferencesData.reloadControls();
+				PreferencesData.write();
+				#if android
+				flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+				FlxG.resetState();
+				#else
 				close();
+				#end
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
-
-			if (controls.ACCEPT && nextAccept <= 0)
+			else if (controls.ACCEPT && nextAccept <= 0)
 			{
 				if (optionShit[curSelected][0] == defaultKey)
 				{

@@ -4,7 +4,6 @@ import Controls;
 import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
-import lime.app.Application;
 import openfl.Lib;
 
 class PreferencesData
@@ -16,7 +15,6 @@ class PreferencesData
 	public static var overlay:Bool = false;
 	public static var framerate:Int = 60;
 	public static var safeFrames:Int = 10;
-	public static var accuracyMode:String = 'Accurate';
 	public static var checkForUpdates:Bool = true;
 	public static var autoPlay:Bool = true;
 	public static var antialiasing:Bool = true;
@@ -67,7 +65,6 @@ class PreferencesData
 		FlxG.save.data.overlay = overlay;
 		FlxG.save.data.framerate = framerate;
 		FlxG.save.data.safeFrames = safeFrames;
-		FlxG.save.data.accuracyMode = accuracyMode;
 		FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.autoPlay = autoPlay;
 		FlxG.save.data.antialiasing = antialiasing;
@@ -75,7 +72,7 @@ class PreferencesData
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_input', 'ninjamuffin99');
+		save.bind('controls_input', Lib.application.meta.get('company'));
 		save.data.keyBinds = keyBinds;
 		save.flush();
 
@@ -106,7 +103,7 @@ class PreferencesData
 		{
 			framerate = FlxG.save.data.framerate;
 
-			final refreshRate:Int = Application.current.window.displayMode.refreshRate;
+			final refreshRate:Int = Lib.application.window.displayMode.refreshRate;
 			if (framerate != refreshRate)
 			{
 				framerate = refreshRate;
@@ -131,9 +128,6 @@ class PreferencesData
 		if (FlxG.save.data.safeFrames != null)
 			safeFrames = FlxG.save.data.safeFrames;
 
-		if (FlxG.save.data.accuracyMode != null)
-			accuracyMode = FlxG.save.data.accuracyMode;
-
 		if (FlxG.save.data.checkForUpdates != null)
 			checkForUpdates = FlxG.save.data.checkForUpdates;
 
@@ -153,7 +147,7 @@ class PreferencesData
 			FlxG.sound.muted = FlxG.save.data.mute;
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_input', 'ninjamuffin99');
+		save.bind('controls_input', Lib.application.meta.get('company'));
 		if (save != null && save.data.keyBinds != null)
 		{
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.keyBinds;

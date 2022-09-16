@@ -36,25 +36,25 @@ class PlayState extends MusicBeatState
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
 	public static var seenCutscene:Bool = false;
+	public static var deathCounter:Int = 0;
+	public static var practiceMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	public var playerStrums:FlxTypedGroup<StrumNote> = null;
-	public var opponentStrums:FlxTypedGroup<StrumNote> = null;
-	public var dad:Character;
-	public var gf:Character;
-	public var boyfriend:Character;
+	private var playerStrums:FlxTypedGroup<StrumNote> = null;
+	private var opponentStrums:FlxTypedGroup<StrumNote> = null;
+	private var dad:Character;
+	private var gf:Character;
+	private var boyfriend:Character;
 
-	public var scriptArray:Array<Script> = [];
+	private var scriptArray:Array<ScriptCore> = [];
+	private var defaultPlayerStrumX:Array<Float> = [];
+	private var defaultPlayerStrumY:Array<Float> = [];
+	private var defaultOpponentStrumX:Array<Float> = [];
+	private var defaultOpponentStrumY:Array<Float> = [];
 
 	private var unspawnNotes:Array<Note> = [];
-
-	public var defaultPlayerStrumX:Array<Float> = [];
-	public var defaultPlayerStrumY:Array<Float> = [];
-	public var defaultOpponentStrumX:Array<Float> = [];
-	public var defaultOpponentStrumY:Array<Float> = [];
-
 	private var prevCamFollow:FlxObject;
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -196,7 +196,7 @@ class PlayState extends MusicBeatState
 		boyfriend.y = stageFile.boyfriend[1] + boyfriend.position[1];
 
 		if (Assets.exists(Paths.hx('stages/' + SONG.stage + '/script')))
-			scriptArray.push(new Script(Paths.hx('stages/' + SONG.stage + '/script')));
+			scriptArray.push(new ScriptCore(Paths.hx('stages/' + SONG.stage + '/script')));
 
 		/*switch (SONG.player2)
 		{
@@ -302,7 +302,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		if (Assets.exists(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')))
-			scriptArray.push(new Script(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')));
+			scriptArray.push(new ScriptCore(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')));
 
 		startingSong = true;
 
@@ -428,7 +428,7 @@ class PlayState extends MusicBeatState
 
 		inCutscene = false;
 		var ret:Dynamic = callScripts('startCountdown', []);
-		if (ret != Script.Function_Stop)
+		if (ret != ScriptCore.Function_Stop)
 		{
 			#if android
 			androidControls.visible = true;
@@ -819,11 +819,17 @@ class PlayState extends MusicBeatState
 				camearaFollow('bf');
 		}
 
-		if (controls.RESET && !inCutscene && !endingSong)
-			health = 0;
+		if (!inCutscene && !endingSong)
+		{
+			//if (controls.RESET && startedCountdown)
+			//{
+				//health = 0;
+				//trace("RESET = True");
+			//}
 
-		if (health <= 0)
-			gameOver();
+			if (health <= 0 && !practiceMode)
+				gameOver();
+		}
 
 		if (unspawnNotes[0] != null)
 		{
@@ -847,7 +853,7 @@ class PlayState extends MusicBeatState
 	private function pause()
 	{
 		var ret:Dynamic = callScripts('pause', []);
-		if (ret != Script.Function_Stop)
+		if (ret != ScriptCore.Function_Stop)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
@@ -857,10 +863,14 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	/**
+	 * Jigsaw: GameOver!
+	 * Adam: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!
+	 */
 	private function gameOver()
 	{
 		var ret:Dynamic = callScripts('gameOver', []);
-		if (ret != Script.Function_Stop)
+		if (ret != ScriptCore.Function_Stop)
 		{
 			boyfriend.stunned = true;
 			persistentUpdate = persistentDraw = false;
@@ -870,6 +880,8 @@ class PlayState extends MusicBeatState
 				vocals.stop();
 
 			FlxG.sound.music.stop();
+
+			deathCounter += 1;
 
 			openSubState(new GameOverSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -931,6 +943,9 @@ class PlayState extends MusicBeatState
 
 			if (daNote.sustainNote)
 			{
+				if (PreferencesData.downScroll)
+					daNote.flipY = true;
+
 				// https://github.com/KadeDev/Vs-Zardy/blob/main/source/PlayState.hx line 3083
 				daNote.y -= daNote.height - (0.45 * Conductor.stepCrochet * FlxMath.roundDecimal(PlayState.SONG.speed, 2));
 
@@ -1016,7 +1031,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		var ret:Dynamic = callScripts('endSong', []);
-		if (ret != Script.Function_Stop)
+		if (ret != ScriptCore.Function_Stop)
 		{
 			if (SONG.validScore)
 				HighScore.saveScore(SONG.song, Math.round(score), storyDifficulty);
@@ -1080,7 +1095,8 @@ class PlayState extends MusicBeatState
 			addedScore = 200;
 		}
 
-		score += addedScore;
+		if (!practiceMode)
+			score += addedScore;
 
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
@@ -1251,7 +1267,7 @@ class PlayState extends MusicBeatState
 
 			if (possibleNotes.length > 0)
 			{
-				if (!FlxG.save.data.ghost)
+				if (!PreferencesData.ghostTapping)
 				{
 					for (i in 0...controlArray.length)
 						if (controlArray[i] && !ignoreList.contains(i))
@@ -1262,7 +1278,7 @@ class PlayState extends MusicBeatState
 					if (controlArray[possibleNote.noteData])
 						goodNoteHit(possibleNote);
 			}
-			else if (!FlxG.save.data.ghost)
+			else if (!PreferencesData.ghostTapping)
 			{
 				for (i in 0...controlArray.length)
 					noteMiss(controlArray[i], i);
@@ -1293,7 +1309,9 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 
 			combo = 0;
-			score -= 10;
+
+			if (!practiceMode)
+				score -= 10;
 
 			FlxG.sound.play(Paths.sound('missnote' + FlxG.random.int(1, 3)), FlxG.random.float(0.1, 0.2));
 
@@ -1426,29 +1444,20 @@ class PlayState extends MusicBeatState
 		if (generatedMusic)
 			notes.sort(FlxSort.byY, (PreferencesData.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING));
 
-		if (SONG.notes[Math.floor(curStep / 16)] != null)
-		{
-			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
-				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
-
-			// Dad doesnt interupt his own notes
-			if (SONG.notes[Math.floor(curStep / 16)].mustHitSection && dad.curCharacter != 'gf')
-				dad.dance();
-		}
-
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP1.updateHitbox();
 
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
 		iconP2.updateHitbox();
 
-		if (curBeat % gfSpeed == 0)
+		if (curBeat % Math.round(gfSpeed * 2) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
 			gf.dance();
 
-		if (!boyfriend.animation.curAnim.name.startsWith('sing')
-			&& !boyfriend.animation.curAnim.name.endsWith('miss')
-			&& !boyfriend.stunned)
+		if (curBeat % 2 == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
 			boyfriend.dance();
+
+		if (curBeat % 2 == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
+			dad.dance();
 	}
 
 	override function destroy()
@@ -1464,12 +1473,12 @@ class PlayState extends MusicBeatState
 
 	private function callScripts(funcName:String, args:Array<Dynamic>):Dynamic
 	{
-		var value:Dynamic = Script.Function_Continue;
+		var value:Dynamic = ScriptCore.Function_Continue;
 
 		for (i in 0...scriptArray.length)
 		{
 			final call:Dynamic = scriptArray[i].executeFunc(funcName, args);
-			final bool:Bool = call == Script.Function_Continue;
+			final bool:Bool = call == ScriptCore.Function_Continue;
 			if (!bool && call != null)
 				value = call;
 		}

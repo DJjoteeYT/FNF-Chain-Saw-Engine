@@ -34,6 +34,7 @@ class Main extends Sprite
 		addChild(new FlxGame(gameWidth, gameHeight, TitleState, zoom, 60, 60, true, false));
 		addChild(new Overlay(10, 10, 0xFFFFFF));
 
+		ModCore.reload();
 		PlayerSettings.init();
 		PreferencesData.load();
 		HighScore.load();

@@ -72,10 +72,10 @@ enum Control
 	UI_LEFT;
 	UI_RIGHT;
 	UI_DOWN;
-	RESET;
 	ACCEPT;
 	BACK;
 	PAUSE;
+	RESET;
 }
 
 enum KeyboardScheme
@@ -449,10 +449,10 @@ class Controls extends FlxActionSet
 			case UI_LEFT: _ui_left;
 			case UI_RIGHT: _ui_right;
 			case UI_DOWN: _ui_down;
-			case RESET: _reset;
 			case ACCEPT: _accept;
 			case BACK: _back;
 			case PAUSE: _pause;
+			case RESET: _reset;
 		}
 	}
 
@@ -498,14 +498,14 @@ class Controls extends FlxActionSet
 				func(_ui_down, PRESSED);
 				func(_ui_downP, JUST_PRESSED);
 				func(_ui_downR, JUST_RELEASED);
-			case RESET:
-				func(_reset, JUST_PRESSED);
 			case ACCEPT:
 				func(_accept, JUST_PRESSED);
 			case BACK:
 				func(_back, JUST_PRESSED);
 			case PAUSE:
 				func(_pause, JUST_PRESSED);
+			case RESET:
+				func(_reset, JUST_PRESSED);
 		}
 	}
 
@@ -681,17 +681,14 @@ class Controls extends FlxActionSet
 		{
 			case Keys:
 				for (input in getActionFromControl(control).inputs)
-				{
 					if (input.device == KEYBOARD)
 						list.push(input.inputID);
-				}
 			case Gamepad(id):
 				for (input in getActionFromControl(control).inputs)
-				{
 					if (input.device == GAMEPAD && input.deviceID != -1 && input.deviceID == id)
 						list.push(input.inputID);
-				}
 		}
+
 		return list;
 	}
 
