@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxGame;
-import lime.app.Application;
 import openfl.Lib;
 import openfl.display.Sprite;
 import states.TitleState;
@@ -14,7 +13,7 @@ class Main extends Sprite
 
 	public function new()
 	{
-		super()
+		super();
 
 		SUtil.uncaughtErrorHandler();
 
@@ -42,7 +41,7 @@ class Main extends Sprite
 		#if FUTURE_DISCORD_RCP
 		DiscordClient.initialize();
 
-		Application.current.onExit.add(function(exitCode:Int)
+		Lib.application.onExit.add(function(exitCode:Int)
 		{
 			DiscordClient.shutdown();
 		});
