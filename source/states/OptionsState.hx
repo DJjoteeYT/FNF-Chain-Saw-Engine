@@ -37,6 +37,10 @@ class OptionsState extends MusicBeatState
 
 		PreferencesData.write();
 
+		#if android
+		addVirtualPad(UP_DOWN, A);
+		#end
+
 		super.create();
 	}
 
