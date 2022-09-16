@@ -32,8 +32,6 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-		menuItems = pauseOG;
-
 		for (i in 0...CoolUtil.difficultyArray.length)
 			difficultyChoices.push(CoolUtil.difficultyArray[i]);
 
@@ -95,7 +93,7 @@ class PauseSubState extends MusicBeatSubstate
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
-		regenMenu();
+		regenMenu(pauseOG);
 
 		#if android
 		addVirtualPad(UP_DOWN, A);
@@ -103,12 +101,14 @@ class PauseSubState extends MusicBeatSubstate
 		#end
 	}
 
-	private function regenMenu()
+	private function regenMenu(items:Array<String> = [])
 	{
 		while (grpMenuShit.members.length > 0)
 		{
 			grpMenuShit.remove(grpMenuShit.members[0], true);
 		}
+
+		menuItems = items;
 
 		for (i in 0...menuItems.length)
 		{
@@ -146,8 +146,7 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					FlxG.resetState();
 				case "Change Difficulty":
-					menuItems = difficultyChoices;
-					regenMenu();
+					regenMenu(difficultyChoices);
 				case "Toggle Practice Mode":
 					PlayState.practiceMode = !PlayState.practiceMode;
 					practiceText.visible = PlayState.practiceMode;
@@ -164,8 +163,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.storyDifficulty = curSelected;
 					FlxG.resetState();
 				case "BACK":
-					menuItems = pauseOG;
-					regenMenu();
+					regenMenu(pauseOG);
 			}
 		}
 	}
@@ -184,7 +182,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;
-		if (curSelected >= menuItems.length)
+		else if (curSelected >= menuItems.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;

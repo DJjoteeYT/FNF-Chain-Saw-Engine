@@ -17,6 +17,7 @@ class Character extends FlxSprite
 	public var curCharacter:String = 'bf';
 	public var holdTimer:Float = 0;
 	public var stunned:Bool = false;
+	public var specialAnim:Bool = false;
 
 	public var position:Array<Float> = [0, 0];
 	public var camPos:Array<Float> = [0, 0];
@@ -97,6 +98,12 @@ class Character extends FlxSprite
 	{
 		if (animation.curAnim != null)
 		{
+			if(specialAnim && animation.curAnim.finished)
+			{
+				specialAnim = false;
+				dance();
+			}
+
 			if (!isPlayer)
 			{
 				if (animation.curAnim.name.startsWith('sing'))
@@ -133,7 +140,7 @@ class Character extends FlxSprite
 
 	public function dance()
 	{
-		if (!debugMode)
+		if (!debugMode && !specialAnim)
 		{
 			if (animation.getByName('danceLeft') != null && animation.getByName('danceRight') != null)
 			{
@@ -151,6 +158,8 @@ class Character extends FlxSprite
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
+		specialAnim = false;
+
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		if (animOffsets.exists(AnimName))
