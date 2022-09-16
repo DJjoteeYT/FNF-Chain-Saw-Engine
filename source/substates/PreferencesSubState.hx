@@ -81,7 +81,12 @@ class PreferencesSubState extends MusicBeatSubstate
 		if (controls.BACK)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+			#if android
+			flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		}
 		else if (controls.ACCEPT)
 		{
