@@ -76,6 +76,10 @@ class GameplayCustomizeState extends MusicBeatState
 		sick.y = FlxG.save.data.changedHitY;
 
 		FlxG.mouse.visible = true;
+
+		#if android
+		addVirtualPad(NONE, B);
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -97,7 +101,7 @@ class GameplayCustomizeState extends MusicBeatState
 			sick.y = FlxG.mouse.y - Std.int(sick.height / 2);
 		}
 
-		if (FlxG.keys.justPressed.R)
+		if (controls.RESET)
 		{
 			sick.x = defaultX;
 			sick.y = defaultY;
