@@ -58,50 +58,11 @@ class SUtil
 			if (!FileSystem.exists(SUtil.getPath()))
 				FileSystem.createDirectory(SUtil.getPath());
 
-			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
-			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.",
-					'Error!');
-				FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
-				System.exit(1);
-			}
-			else if ((FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
-				&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
-			{
-				Lib.application.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
-					'Error!');
-				System.exit(1);
-			}
-			else
-			{
-				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
-				{
-					Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.",
-						'Error!');
-					FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
-					System.exit(1);
-				}
-				else if (FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
-				{
-					Lib.application.window.alert("Why did you create a file called assets instead of copying the assets directory from the .APK?, expect a crash.",
-						'Error!');
-					System.exit(1);
-				}
+			if (!FileSystem.exists(SUtil.getPath() + 'mods'))
+				FileSystem.createDirectory(SUtil.getPath() + 'mods');
 
-				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
-				{
-					Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.",
-						'Error!');
-					FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
-					System.exit(1);
-				}
-				else if (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods'))
-				{
-					Lib.application.window.alert("Why did you create a file called mods instead of copying the mods directory from the .APK?, expect a crash.",
-						'Error!');
-					System.exit(1);
-				}
-			}
+			if (!FileSystem.exists(SUtil.getPath() + 'mods/modpacks-goes-here.txt'))
+				File.saveContent(SUtil.getPath() + 'mods/modpacks-goes-here.txt', '');
 		}
 		#end
 	}
