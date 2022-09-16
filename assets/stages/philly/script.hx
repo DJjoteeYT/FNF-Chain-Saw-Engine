@@ -22,15 +22,15 @@ function create()
 	PlayState.instance.add(city);
 
 	phillyCityLights = new FlxSpriteGroup();
+	phillyCityLights.scrollFactor.set(0.3, 0.3);
+	phillyCityLights.setGraphicSize(Std.int(phillyCityLights.width * 0.85));
+	phillyCityLights.updateHitbox();
 	PlayState.instance.add(phillyCityLights);
 
 	for (i in 0...5)
 	{
 		var light:FlxSprite = new FlxSprite(city.x).loadGraphic(Paths.returnGraphic('stages/philly/images/win' + i));
-		light.scrollFactor.set(0.3, 0.3);
 		light.visible = false;
-		light.setGraphicSize(Std.int(light.width * 0.85));
-		light.updateHitbox();
 		phillyCityLights.add(light);
 	}
 

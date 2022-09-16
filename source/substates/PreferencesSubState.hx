@@ -14,18 +14,18 @@ class PreferencesSubState extends MusicBeatSubstate
 	private var curSelected:Int = 0;
 
 	private var options:Array<Dynamic> = [
-		['Ghost Tapping', PreferencesData.ghostTapping],
-		['Downscroll', PreferencesData.downScroll],
-		['Accuracy-Display', PreferencesData.accuracyDisplay],
-		['Overlay', PreferencesData.overlay],
-		['Check For Updates', PreferencesData.checkForUpdates],
-		['Auto-Play', PreferencesData.autoPlay],
-		['Antialiasing', PreferencesData.antialiasing],
-		['Flashing', PreferencesData.flashing]
+		['Ghost Tapping', 'bool'],
+		['Downscroll', 'bool'],
+		['Accuracy-Display', 'bool'],
+		['Overlay', 'bool'],
+		['Check For Updates', 'bool'],
+		['Auto-Play', 'bool'],
+		['Antialiasing', 'bool'],
+		['Flashing', 'bool']
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
-	private var checkboxArray:Array<CheckboxThingie> = [];
+	private var grpCheckbox:FlxTypedGroup<CheckboxThingie>;
 
 	public function new()
 	{
@@ -35,8 +35,6 @@ class PreferencesSubState extends MusicBeatSubstate
 		DiscordClient.changePresence("Preferences Menu", null);
 		#end
 
-		persistentUpdate = persistentDraw = true;
-
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.screenCenter();
@@ -45,6 +43,9 @@ class PreferencesSubState extends MusicBeatSubstate
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
+		grpCheckbox = new FlxTypedGroup<CheckboxThingie>();
+		add(grpCheckbox);
+
 		for (i in 0...options.length)
 		{
 			var optionText:Alphabet = new Alphabet(0, 70 * i, options[i][0], false, false);
@@ -52,16 +53,17 @@ class PreferencesSubState extends MusicBeatSubstate
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
-			var checkbox:CheckboxThingie = new CheckboxThingie(0, 0, false);
-			checkbox.sprTracker = optionText;
-			checkboxArray.push(checkbox);
-			checkbox.ID = i;
-			add(checkbox);
+			if (options[i][1] == 'bool')
+			{
+				var checkbox:CheckboxThingie = new CheckboxThingie(0, 20, false);
+				checkbox.sprTracker = optionText;
+				checkbox.ID = i;
+				grpCheckbox.add(checkbox);
+			}
 		}
 
 		changeSelection();
 		reloadValues();
-
 
 		#if android
 		addVirtualPad(UP_DOWN, A_B);
@@ -80,17 +82,36 @@ class PreferencesSubState extends MusicBeatSubstate
 
 		if (controls.BACK)
 		{
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			PreferencesData.write();
 			#if android
 			flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 			#else
 			close();
 			#end
+			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 		else if (controls.ACCEPT)
 		{
-			options[curSelected][1] = !options[curSelected][1];
+			switch (options[curSelected][0])
+			{
+				case 'Ghost Tapping':
+					PreferencesData.ghostTapping = !PreferencesData.ghostTapping;
+				case 'Downscroll':
+					PreferencesData.downScroll = !PreferencesData.downScroll;
+				case 'Accuracy-Display':
+					PreferencesData.accuracyDisplay = !PreferencesData.accuracyDisplay;
+				case 'Overlay':
+					PreferencesData.overlay = !PreferencesData.overlay;
+				case 'Check For Updates':
+					PreferencesData.checkForUpdates = !PreferencesData.checkForUpdates;
+				case 'Auto-Play':
+					PreferencesData.autoPlay = !PreferencesData.autoPlay;
+				case 'Antialiasing':
+					PreferencesData.antialiasing = !PreferencesData.antialiasing;
+				case 'Flashing':
+					PreferencesData.antialiasing = !PreferencesData.antialiasing;
+			}
 
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 			reloadValues();
@@ -102,9 +123,10 @@ class PreferencesSubState extends MusicBeatSubstate
 	private function changeSelection(change:Int = 0)
 	{
 		curSelected += change;
+
 		if (curSelected < 0)
 			curSelected = options.length - 1;
-		if (curSelected >= options.length)
+		else if (curSelected >= options.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -124,7 +146,27 @@ class PreferencesSubState extends MusicBeatSubstate
 
 	private function reloadValues()
 	{
-		for (checkbox in checkboxArray)
-			checkbox.daValue = options[checkbox.ID][1];
+		for (checkbox in grpCheckbox.members)
+		{
+			switch (options[checkbox.ID][0])
+			{
+				case 'Ghost Tapping':
+					checkbox.daValue = PreferencesData.ghostTapping;
+				case 'Downscroll':
+					checkbox.daValue = PreferencesData.downScroll;
+				case 'Accuracy-Display':
+					checkbox.daValue = PreferencesData.accuracyDisplay;
+				case 'Overlay':
+					checkbox.daValue = PreferencesData.overlay;
+				case 'Check For Updates':
+					checkbox.daValue = PreferencesData.checkForUpdates;
+				case 'Auto-Play':
+					checkbox.daValue = PreferencesData.autoPlay;
+				case 'Antialiasing':
+					checkbox.daValue = PreferencesData.antialiasing;
+				case 'Flashing':
+					checkbox.daValue = PreferencesData.antialiasing;
+			}
+		}
 	}
 }

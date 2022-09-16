@@ -75,7 +75,7 @@ class FreeplayState extends MusicBeatState
 			add(icon);
 		}
 
-		scoreBG = new FlxSprite(FlxG.width * 6.7, 0).makeGraphic(1, 66, 0xFF000000);
+		scoreBG = new FlxSprite(FlxG.width * 6.7, 0).makeGraphic(1, 77, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
@@ -117,7 +117,7 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.UI_LEFT_P)
 			changeDiff(-1);
-		if (controls.UI_RIGHT_P)
+		else if (controls.UI_RIGHT_P)
 			changeDiff(1);
 
 		if (controls.ACCEPT)
