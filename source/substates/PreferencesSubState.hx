@@ -61,6 +61,12 @@ class PreferencesSubState extends MusicBeatSubstate
 
 		changeSelection();
 		reloadValues();
+
+
+		#if android
+		addVirtualPad(UP_DOWN, A_B);
+		addPadCamera(false);
+		#end
 	}
 
 	override function update(elapsed:Float)
