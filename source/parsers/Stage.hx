@@ -5,7 +5,6 @@ import haxe.Json;
 
 typedef SwagStage =
 {
-	var suffix:String;
 	var zoom:Float;
 	var gf:Array<Float>;
 	var dad:Array<Float>;

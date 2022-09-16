@@ -7,6 +7,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import openfl.Lib;
 import openfl.utils.Assets;
 
 class TitleState extends MusicBeatState
@@ -30,6 +31,20 @@ class TitleState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
+
+		ModCore.reload();
+		PlayerSettings.init();
+		PreferencesData.load();
+		HighScore.load();
+
+		#if FUTURE_DISCORD_RCP
+		DiscordClient.initialize();
+
+		Lib.application.onExit.add(function(exitCode:Int)
+		{
+			DiscordClient.shutdown();
+		});
+		#end
 
 		if (FlxG.save.data.weekUnlocked != null)
 		{

@@ -12,7 +12,7 @@ import polymod.format.ParseRules;
 class ModCore
 {
 	static final API_VER = '1.0.0';
-	static final MOD_DIR = SUtil.getPath() + 'mods';
+	static final MOD_DIR = 'mods';
 
 	public static function reload():Void
 	{
@@ -32,7 +32,7 @@ class ModCore
 			 * root directory of all mods
 			 * Required if you are on desktop and using the SysFileSystem (may be optional on some file systems)
 			 */
-			modRoot: MOD_DIR,
+			modRoot: SUtil.getPath() + MOD_DIR,
 
 			/**
 			 * directory names of one or more mods, relative to modRoot
@@ -44,18 +44,6 @@ class ModCore
 			 * If not provided, Polymod will attempt to determine this automatically.
 			 */
 			framework: OPENFL,
-
-			/**
-			 * any specific settings for your particular Framework
-			 */
-			frameworkParams: {
-				/**
-				 * if you're using Lime/OpenFL AND you're using custom or non-default asset libraries, then you must provide a key=>value store mapping the name of each asset library to a path prefix in your mod structure
-				 */
-				assetLibraryPaths: [
-					"default" => "assets",
-				]
-			},
 
 			/**
 			 * semantic version of your game's Modding API (will generate errors & warnings)
@@ -90,7 +78,7 @@ class ModCore
 
 		trace('Searching for Mods...');
 
-		for (i in Polymod.scan(MOD_DIR, '*.*.*', onError))
+		for (i in Polymod.scan(SUtil.getPath() + MOD_DIR, '*.*.*', onError))
 			daList.push(i.id);
 
 		trace('Found ${daList.length} new mods.');

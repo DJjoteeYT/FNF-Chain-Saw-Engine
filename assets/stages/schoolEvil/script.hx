@@ -1,5 +1,7 @@
 function create()
 {
+	PlayState.isPixelAssets = true;
+
 	var bg:FlxSprite = new FlxSprite(400, 200);
 	bg.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/schoolEvil/images/animatedEvilSchool'),
 		Paths.xml('stages/schoolEvil/images/animatedEvilSchool'));

@@ -9,6 +9,7 @@ import flixel.util.FlxColor;
 import openfl.utils.Assets;
 import parsers.Song;
 import parsers.Week;
+import states.ChartingState;
 import states.PlayState;
 
 class FreeplayState extends MusicBeatState
@@ -127,7 +128,11 @@ class FreeplayState extends MusicBeatState
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 			PlayState.storyWeek = songs[curSelected].week;
-			MusicBeatState.switchState(new PlayState());
+
+			if (FlxG.keys.pressed.SHIFT)
+				MusicBeatState.switchState(new ChartingState());
+			else
+				MusicBeatState.switchState(new PlayState());
 		}
 		else if (controls.BACK)
 			MusicBeatState.switchState(new MainMenuState());

@@ -20,20 +20,9 @@ class HealthIcon extends FlxSprite
 		this.curCharacter = curCharacter;
 		this.isPlayer = isPlayer;
 
-		if (Paths.returnGraphic('characters/' + curCharacter + '/icon') != null)
-		{
-			loadGraphic(Paths.returnGraphic('characters/' + curCharacter + '/icon'), true, 150, 150);
-			animation.add(curCharacter, [0, 1], 0, false, isPlayer);
-			animation.play(curCharacter);
-		}
-		else
-		{
-			loadGraphic(Paths.returnGraphic('characters/bf/icon'), true, 150, 150);
-			animation.add('bf', [0, 1], 0, false, isPlayer);
-			animation.play('bf');
-		}
+		changeIcon(this.curCharacter);
 
-		switch (curCharacter)
+		switch (this.curCharacter)
 		{
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit' | 'gf-pixel':
 				antialiasing = false;
@@ -42,6 +31,22 @@ class HealthIcon extends FlxSprite
 		}
 
 		scrollFactor.set();
+	}
+
+	public function changeIcon(char:String)
+	{
+		if (Paths.returnGraphic('characters/' + char + '/icon') != null)
+		{
+			loadGraphic(Paths.returnGraphic('characters/' + char + '/icon'), true, 150, 150);
+			animation.add(char, [0, 1], 0, false, isPlayer);
+			animation.play(char);
+		}
+		else
+		{
+			loadGraphic(Paths.returnGraphic('characters/bf/icon'), true, 150, 150);
+			animation.add('bf', [0, 1], 0, false, isPlayer);
+			animation.play('bf');
+		}
 	}
 
 	override function update(elapsed:Float)

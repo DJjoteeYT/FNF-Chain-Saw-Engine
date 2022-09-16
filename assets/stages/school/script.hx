@@ -2,8 +2,12 @@ var bgGirls:FlxSprite;
 
 function create()
 {
-	var bgSky = new FlxSprite().loadGraphic(Paths.returnGraphic('stages/school/images/weebSky'));
+	PlayState.isPixelAssets = true;
+
+	var bgSky:FlxSprite = new FlxSprite().loadGraphic(Paths.returnGraphic('stages/school/images/weebSky'));
 	bgSky.scrollFactor.set(0.1, 0.1);
+	bgSky.setGraphicSize(Std.int(bgSky.width * 6));
+	bgSky.updateHitbox();
 	PlayState.instance.add(bgSky);
 
 	var bgSchool:FlxSprite = new FlxSprite(-200, 0).loadGraphic(Paths.returnGraphic('stages/school/images/weebSchool'));
