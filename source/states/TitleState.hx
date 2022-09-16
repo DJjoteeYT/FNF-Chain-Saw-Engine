@@ -69,7 +69,7 @@ class TitleState extends MusicBeatState
 
 		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-		logoBl.antialiasing = true;
+		logoBl.antialiasing = PreferencesData.antialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
@@ -78,7 +78,7 @@ class TitleState extends MusicBeatState
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = true;
+		gfDance.antialiasing = PreferencesData.antialiasing;
 		add(gfDance);
 		add(logoBl);
 
@@ -86,7 +86,7 @@ class TitleState extends MusicBeatState
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
-		titleText.antialiasing = true;
+		titleText.antialiasing = PreferencesData.antialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		add(titleText);
@@ -104,7 +104,7 @@ class TitleState extends MusicBeatState
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = true;
+		ngSpr.antialiasing = PreferencesData.antialiasing;
 
 		FlxG.mouse.visible = false;
 
@@ -144,7 +144,7 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			if (FlxG.save.data.flashing)
+			if (PreferencesData.flashing)
 				titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);

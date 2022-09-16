@@ -69,6 +69,7 @@ class ScriptCore extends FlxBasic
 		setVariable('Paths', Paths);
 		setVariable('CoolUtil', CoolUtil);
 		setVariable('Conductor', Conductor);
+		setVariable('PreferencesData', PreferencesData);
 		setVariable('PlayState', PlayState);
 
 		try

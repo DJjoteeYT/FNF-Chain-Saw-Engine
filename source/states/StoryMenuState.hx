@@ -123,7 +123,7 @@ class StoryMenuState extends MusicBeatState
 			grpWeekText.add(weekThing);
 
 			weekThing.screenCenter(X);
-			weekThing.antialiasing = true;
+			weekThing.antialiasing = PreferencesData.antialiasing;
 
 			if (!weekUnlocked[i])
 			{
@@ -132,7 +132,7 @@ class StoryMenuState extends MusicBeatState
 				lock.animation.addByPrefix('lock', 'lock');
 				lock.animation.play('lock');
 				lock.ID = i;
-				lock.antialiasing = true;
+				lock.antialiasing = PreferencesData.antialiasing;
 				grpLocks.add(lock);
 			}
 		}
@@ -415,7 +415,7 @@ class MenuCharacter extends FlxSprite
 		super(x, y);
 		this.flipped = flipped;
 
-		antialiasing = true;
+		antialiasing = PreferencesData.antialiasing;
 
 		frames = Paths.getSparrowAtlas('campaign_menu_UI_characters');
 
@@ -482,7 +482,7 @@ class MenuItem extends FlxSpriteGroup
 
 		if (flashingInt % fakeFramerate >= Math.floor(fakeFramerate / 2))
 			week.color = 0xFF33ffff;
-		else if (FlxG.save.data.flashing)
+		else if (PreferencesData.flashing)
 			week.color = FlxColor.WHITE;
 	}
 }

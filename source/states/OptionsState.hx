@@ -2,6 +2,10 @@ package states;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.effects.FlxFlicker;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 import substates.ControlsSubState;
 import substates.PreferencesSubState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -30,6 +34,7 @@ class OptionsState extends MusicBeatState
 			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
 			optionText.screenCenter();
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
+			optionText.ID = i;
 			grpOptions.add(optionText);
 		}
 
@@ -55,21 +60,56 @@ class OptionsState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			#if android
-			if (options[curSelected] != 'Exit')
-				removeVirtualPad();
-			#end
-
-			switch (options[curSelected])
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+			grpOptions.forEach(function(spr:FlxSprite)
 			{
-				case 'Preferences':
-					openSubState(new PreferencesSubState());
-				case 'Controls':
-					openSubState(new ControlsSubState());
-				case 'Exit':
-					FlxG.sound.play(Paths.sound('cancelMenu'));
-					MusicBeatState.switchState(new MainMenuState());
-			}
+				if (curSelected != spr.ID)
+				{
+					FlxTween.tween(spr, {alpha: 0}, 1.3, {
+						ease: FlxEase.quadOut,
+						onComplete: function(twn:FlxTween)
+						{
+							spr.kill();
+						}
+					});
+				}
+				else
+				{
+					if (PreferencesData.flashing)
+					{
+						FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+						{
+							goToState();
+						});
+					}
+					else
+					{
+						new FlxTimer().start(1, function(tmr:FlxTimer)
+						{
+							goToState();
+						});
+					}
+				}
+			});
+		}
+	}
+
+	private function goToState()
+	{
+		#if android
+		if (options[curSelected] != 'Exit')
+			removeVirtualPad();
+		#end
+
+		switch (options[curSelected])
+		{
+			case 'Preferences':
+				openSubState(new PreferencesSubState());
+			case 'Controls':
+				openSubState(new ControlsSubState());
+			case 'Exit':
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				MusicBeatState.switchState(new MainMenuState());
 		}
 	}
 

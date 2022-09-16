@@ -103,7 +103,7 @@ class PauseSubState extends MusicBeatSubstate
 		#end
 	}
 
-	private function regenMenu(items:Array<String> = [])
+	private function regenMenu(items:Array<String>)
 	{
 		while (grpMenuShit.members.length > 0)
 		{

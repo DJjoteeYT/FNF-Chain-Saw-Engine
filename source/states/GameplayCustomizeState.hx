@@ -43,7 +43,7 @@ class GameplayCustomizeState extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = true;
+		menuBG.antialiasing = PreferencesData.antialiasing;
 		add(menuBG);
 
 		sick = new FlxSprite().loadGraphic(Paths.image('sick'));

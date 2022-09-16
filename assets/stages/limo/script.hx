@@ -34,7 +34,6 @@ function create()
 	limo.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/limo/images/limoDrive'), Paths.xml('stages/limo/images/limoDrive'));
 	limo.animation.addByPrefix('drive', "Limo stage", 24);
 	limo.animation.play('drive');
-	limo.antialiasing = true;
 
 	fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.returnGraphic('stages/limo/images/fastCarLol'));
 	resetFastCar();

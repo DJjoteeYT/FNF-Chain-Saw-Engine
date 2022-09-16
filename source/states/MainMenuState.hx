@@ -46,7 +46,7 @@ class MainMenuState extends MusicBeatState
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.10;
 		bg.screenCenter();
-		bg.antialiasing = true;
+		bg.antialiasing = PreferencesData.antialiasing;
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -59,7 +59,7 @@ class MainMenuState extends MusicBeatState
 		magenta.scrollFactor.y = 0.10;
 		magenta.screenCenter();
 		magenta.visible = false;
-		magenta.antialiasing = true;
+		magenta.antialiasing = PreferencesData.antialiasing;
 		magenta.color = 0xFFfd719b;
 		add(magenta);
 
@@ -75,7 +75,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.play('idle');
 			menuItem.screenCenter(X);
 			menuItem.scrollFactor.set();
-			menuItem.antialiasing = true;
+			menuItem.antialiasing = PreferencesData.antialiasing;
 			menuItem.ID = i;
 			menuItems.add(menuItem);
 		}
@@ -138,7 +138,7 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				if (FlxG.save.data.flashing)
+				if (PreferencesData.flashing)
 					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 				menuItems.forEach(function(spr:FlxSprite)
@@ -155,7 +155,7 @@ class MainMenuState extends MusicBeatState
 					}
 					else
 					{
-						if (FlxG.save.data.flashing)
+						if (PreferencesData.flashing)
 						{
 							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{

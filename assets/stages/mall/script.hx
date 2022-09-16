@@ -25,7 +25,6 @@ function create()
 	PlayState.instance.add(bgEscalator);
 
 	var tree:FlxSprite = new FlxSprite(370, -250).loadGraphic(Paths.returnGraphic('stages/mall/images/christmasTree'));
-	tree.antialiasing = true;
 	tree.scrollFactor.set(0.40, 0.40);
 	PlayState.instance.add(tree);
 

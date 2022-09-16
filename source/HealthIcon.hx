@@ -38,7 +38,7 @@ class HealthIcon extends FlxSprite
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit' | 'gf-pixel':
 				antialiasing = false;
 			default:
-				antialiasing = true;
+				antialiasing = PreferencesData.antialiasing;
 		}
 
 		scrollFactor.set();

@@ -10,7 +10,6 @@ function create()
 	var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.returnGraphic('stages/stage/images/stagecurtains'));
 	stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
 	stageCurtains.updateHitbox();
-	stageCurtains.antialiasing = true;
 	PlayState.instance.add(stageCurtains);
 
 	if (PlayState.SONG.player2 == 'gf')

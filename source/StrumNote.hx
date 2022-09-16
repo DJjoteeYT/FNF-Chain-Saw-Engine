@@ -81,7 +81,7 @@ class StrumNote extends FlxSprite
 						animation.addByPrefix('confirm', 'right confirm', 24, false);
 				}
 
-				antialiasing = true;
+				antialiasing = PreferencesData.antialiasing;
 				setGraphicSize(Std.int(width * 0.7));
 		}
 
