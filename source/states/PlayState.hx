@@ -453,10 +453,6 @@ class PlayState extends MusicBeatState
 			Conductor.songPosition = 0;
 			Conductor.songPosition -= Conductor.crochet * 5;
 
-			dad.dance();
-			gf.dance();
-			boyfriend.dance();
-
 			doIntro(Conductor.crochet / 1000);
 		}
 	}
@@ -467,6 +463,15 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(startTime, function(tmr:FlxTimer)
 		{
+			if (tmr.loopsLeft % Math.round(gfSpeed * 2) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
+				gf.dance();
+
+			if (tmr.loopsLeft % 2 == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
+				boyfriend.dance();
+
+			if (tmr.loopsLeft % 2 == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
+				dad.dance();
+
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 			introAssets.set('default', ['ready', "set", "go"]);
 			introAssets.set('school', [
@@ -943,8 +948,7 @@ class PlayState extends MusicBeatState
 
 			if (daNote.sustainNote)
 			{
-				if (PreferencesData.downScroll)
-					daNote.flipY = true;
+				daNote.flipY = true;
 
 				// https://github.com/KadeDev/Vs-Zardy/blob/main/source/PlayState.hx line 3083
 				daNote.y -= daNote.height - (0.45 * Conductor.stepCrochet * FlxMath.roundDecimal(PlayState.SONG.speed, 2));
