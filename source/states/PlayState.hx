@@ -297,6 +297,10 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 
+		#if android
+		addAndroidControls();
+		#end
+
 		if (Assets.exists(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')))
 			scriptArray.push(new Script(Paths.hx('songs/' + SONG.song.toLowerCase() + '/script')));
 
@@ -426,6 +430,10 @@ class PlayState extends MusicBeatState
 		var ret:Dynamic = callScripts('startCountdown', []);
 		if (ret != Script.Function_Stop)
 		{
+			#if android
+			androidControls.visible = true;
+			#end
+
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 
@@ -729,7 +737,7 @@ class PlayState extends MusicBeatState
 
 		super.closeSubState();
 
-		// Paths.clearUnusedMemory();
+		Paths.clearUnusedMemory();
 	}
 
 	private function resyncVocals():Void
@@ -759,7 +767,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = "Score: " + score;
 		scoreTxt.screenCenter(X);
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 			pause();
 
 		if (FlxG.keys.justPressed.SEVEN)
@@ -999,6 +1007,10 @@ class PlayState extends MusicBeatState
 		seenCutscene = false;
 		canPause = false;
 		FlxG.sound.music.volume = vocals.volume = 0;
+
+		#if android
+		androidControls.visible = false;
+		#end
 
 		var ret:Dynamic = callScripts('endSong', []);
 		if (ret != Script.Function_Stop)
