@@ -12,7 +12,14 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class OptionsState extends MusicBeatState
 {
-	private final options:Array<String> = ['Preferences', 'Controls', 'Exit'];
+	private final options:Array<String> = [
+		'Preferences',
+		'Controls',
+		#if android
+		'Android Controls',
+		#end
+		'Exit'
+	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var curSelected:Int = 0;
 
@@ -107,6 +114,10 @@ class OptionsState extends MusicBeatState
 				openSubState(new PreferencesSubState());
 			case 'Controls':
 				openSubState(new ControlsSubState());
+			#if android
+			case 'Android Controls':
+				openSubState(new android.AndroidControlsSubState());
+			#end
 			case 'Exit':
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
