@@ -98,7 +98,7 @@ class Character extends FlxSprite
 	{
 		if (animation.curAnim != null)
 		{
-			if(specialAnim && animation.curAnim.finished)
+			if (specialAnim && animation.curAnim.finished)
 			{
 				specialAnim = false;
 				dance();

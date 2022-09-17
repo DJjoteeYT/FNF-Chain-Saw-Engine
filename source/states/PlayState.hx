@@ -532,7 +532,7 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.play();
 
-		if(paused)
+		if (paused)
 		{
 			FlxG.sound.music.pause();
 			vocals.pause();
@@ -688,8 +688,8 @@ class PlayState extends MusicBeatState
 				+ CoolUtil.difficultyString(storyDifficulty)
 				+ ") "
 				+ "\nScore: "
-				+ score, iconRPC, true,
-				FlxG.sound.music.length
+				+ score,
+				iconRPC, true, FlxG.sound.music.length
 				- Conductor.songPosition);
 			#end
 		}
@@ -776,11 +776,11 @@ class PlayState extends MusicBeatState
 
 		if (!inCutscene && !endingSong)
 		{
-			//if (controls.RESET && startedCountdown)
-			//{
-				//health = 0;
-				//trace("RESET = True");
-			//}
+			// if (controls.RESET && startedCountdown)
+			// {
+			// health = 0;
+			// trace("RESET = True");
+			// }
 
 			if (health <= 0 && !practiceMode)
 				gameOver();
@@ -845,7 +845,8 @@ class PlayState extends MusicBeatState
 
 			#if FUTURE_DISCORD_RCP
 			// Game Over doesn't get his own variable because it's only used here
-			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score, iconRPC);
+			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + CoolUtil.difficultyString(storyDifficulty) + ") " + "\nScore: " + score,
+				iconRPC);
 			#end
 		}
 	}
@@ -1019,7 +1020,8 @@ class PlayState extends MusicBeatState
 					FlxTransitionableState.skipNextTransIn = FlxTransitionableState.skipNextTransOut = true;
 					prevCamFollow = camFollow;
 
-					PlayState.SONG = Song.loadJson(HighScore.formatSong(PlayState.storyPlaylist[0].toLowerCase(), storyDifficulty), PlayState.storyPlaylist[0]);
+					PlayState.SONG = Song.loadJson(HighScore.formatSong(PlayState.storyPlaylist[0].toLowerCase(), storyDifficulty),
+						PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
 					MusicBeatState.switchState(new PlayState());
 				}
@@ -1250,7 +1252,11 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (boyfriend.animation.curAnim != null && boyfriend.holdTimer > 0.001 * boyfriend.singDuration * Conductor.stepCrochet && releaseArray.contains(true) && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+		if (boyfriend.animation.curAnim != null
+			&& boyfriend.holdTimer > 0.001 * boyfriend.singDuration * Conductor.stepCrochet
+			&& releaseArray.contains(true)
+			&& boyfriend.animation.curAnim.name.startsWith('sing')
+			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 			boyfriend.dance();
 
 		playerStrums.forEach(function(spr:StrumNote)
@@ -1400,8 +1406,8 @@ class PlayState extends MusicBeatState
 			+ CoolUtil.difficultyString(storyDifficulty)
 			+ ") "
 			+ "\nScore: "
-			+ score, iconRPC, true,
-			FlxG.sound.music.length
+			+ score, iconRPC,
+			true, FlxG.sound.music.length
 			- Conductor.songPosition);
 		#end
 	}
@@ -1426,10 +1432,16 @@ class PlayState extends MusicBeatState
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
 		iconP2.updateHitbox();
 
-		if (curBeat % Math.round(gfSpeed * 2) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
+		if (curBeat % Math.round(gfSpeed * 2) == 0
+			&& gf.animation.curAnim != null
+			&& !gf.animation.curAnim.name.startsWith("sing")
+			&& !gf.stunned)
 			gf.dance();
 
-		if (curBeat % 2 == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
+		if (curBeat % 2 == 0
+			&& boyfriend.animation.curAnim != null
+			&& !boyfriend.animation.curAnim.name.startsWith('sing')
+			&& !boyfriend.stunned)
 			boyfriend.dance();
 
 		if (curBeat % 2 == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
