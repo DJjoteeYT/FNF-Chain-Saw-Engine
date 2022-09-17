@@ -115,7 +115,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if (isStoryMode)
-			detailsText = "Story Mode: Week " + storyWeek;
+			detailsText = "Story Mode: " + Week.weeksList[storyWeek];
 		else
 			detailsText = "Freeplay";
 
@@ -168,7 +168,7 @@ class PlayState extends MusicBeatState
 				zoom: 0.9,
 				gf: [400, 130],
 				dad: [100, 100],
-				boyfriend: [770, 450],
+				boyfriend: [770, 100],
 				camFollowDad: [150, -100],
 				camFollowBoyfriend: [-100, -100]
 			};
@@ -1059,12 +1059,13 @@ class PlayState extends MusicBeatState
 		if (!practiceMode)
 			score += addedScore;
 
-		var rating:FlxSprite = new FlxSprite((FlxG.width * 0.55) - 40, 0);
+		var rating:FlxSprite = new FlxSprite(0, 0);
 		if (!PlayState.isPixelAssets)
 			rating.loadGraphic(Paths.image('ui/default/' + daRating));
 		else
 			rating.loadGraphic(Paths.image('ui/pixel/' + daRating));
 		rating.screenCenter();
+		rating.x = (FlxG.width * 0.55) - 40;
 		rating.y -= 60;
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
@@ -1079,12 +1080,13 @@ class PlayState extends MusicBeatState
 		rating.cameras = [camHUD];
 		add(rating);
 
-		var comboSpr:FlxSprite = new FlxSprite(FlxG.width * 0.55, 0);
+		var comboSpr:FlxSprite = new FlxSprite(0, 0);
 		if (!PlayState.isPixelAssets)
 			comboSpr.loadGraphic(Paths.image('ui/default/combo'));
 		else
 			comboSpr.loadGraphic(Paths.image('ui/pixel/combo'));
 		comboSpr.screenCenter();
+		comboSpr.x = FlxG.width * 0.55;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
