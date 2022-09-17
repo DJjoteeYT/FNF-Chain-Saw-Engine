@@ -1116,7 +1116,7 @@ class PlayState extends MusicBeatState
 			else
 				numScore.loadGraphic(Paths.image('ui/pixel/num' + Std.int(i)));
 			numScore.screenCenter();
-			numScore.x = coolText.x + (43 * daLoop) - 90;
+			numScore.x = (FlxG.width * 0.55) + (43 * daLoop) - 90;
 			numScore.y += 80;
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
