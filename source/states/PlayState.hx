@@ -168,7 +168,7 @@ class PlayState extends MusicBeatState
 				zoom: 0.9,
 				gf: [400, 130],
 				dad: [100, 100],
-				boyfriend: [770, 450],
+				boyfriend: [770, 100],
 				camFollowDad: [150, -100],
 				camFollowBoyfriend: [-100, -100]
 			};
@@ -1283,13 +1283,13 @@ class PlayState extends MusicBeatState
 			switch (Math.abs(direction) % 4)
 			{
 				case 0:
-					boyfriend.playAnim('singLEFTmiss', true);
+					boyfriend.playAnim('singRIGHTmiss', true);
 				case 1:
 					boyfriend.playAnim('singDOWNmiss', true);
 				case 2:
 					boyfriend.playAnim('singUPmiss', true);
 				case 3:
-					boyfriend.playAnim('singRIGHTmiss', true);
+					boyfriend.playAnim('singLEFTmiss', true);
 			}
 
 			vocals.volume = 0;
@@ -1314,13 +1314,13 @@ class PlayState extends MusicBeatState
 			switch (Math.abs(note.noteData) % 4)
 			{
 				case 0:
-					boyfriend.playAnim('singLEFT', true);
+					boyfriend.playAnim('singRIGHT', true);
 				case 1:
 					boyfriend.playAnim('singDOWN', true);
 				case 2:
 					boyfriend.playAnim('singUP', true);
 				case 3:
-					boyfriend.playAnim('singRIGHT', true);
+					boyfriend.playAnim('singLEFT', true);
 			}
 
 			playerStrums.forEach(function(spr:StrumNote)
