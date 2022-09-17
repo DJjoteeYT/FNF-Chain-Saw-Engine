@@ -1,5 +1,8 @@
 package;
 
+#if cpp
+import cpp.vm.Gc;
+#end
 import haxe.Timer;
 import flixel.FlxG;
 import openfl.Lib;
@@ -11,10 +14,17 @@ import openfl.system.System;
 /**
  * Credits: Yoshubs.
  */
+#if windows
+@:headerCode("
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <psapi.h>
+")
+#end
 class Overlay extends TextField
 {
 	private var times:Array<Float> = [];
-	private var memPeak:UInt = 0;
+	private var memPeak:Float = 0;
 
 	public function new(x:Float, y:Float, color:Int)
 	{
@@ -35,7 +45,8 @@ class Overlay extends TextField
 			while (times[0] < now - 1)
 				times.shift();
 
-			var mem = System.totalMemory;
+			var mem:Float = #if windows obtainMemory() #elseif cpp Gc.memInfo64(3) #else System.totalMemory.toFloat() #end;
+
 			if (mem > memPeak)
 				memPeak = mem;
 
@@ -46,9 +57,8 @@ class Overlay extends TextField
 
 	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-	public static function getInterval(num:UInt):String
+	public static function getInterval(size:Float):String
 	{
-		var size:Float = num;
 		var data = 0;
 
 		while (size > 1024 && data < intervalArray.length - 1)
@@ -58,6 +68,21 @@ class Overlay extends TextField
 		}
 
 		size = Math.round(size * 100) / 100;
-		return size + " " + intervalArray[data];
+		return size + ' ' + intervalArray[data];
 	}
+
+	#if windows
+	@:functionCode("
+		auto memhandle = GetCurrentProcess();
+		PROCESS_MEMORY_COUNTERS pmc;
+		if (GetProcessMemoryInfo(memhandle, &pmc, sizeof(pmc)))
+			return(pmc.WorkingSetSize);
+		else
+			return 0;
+	")
+	function obtainMemory():Dynamic
+	{
+		return 0;
+	}
+	#end
 }
