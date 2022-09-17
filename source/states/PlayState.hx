@@ -723,6 +723,8 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		FlxG.camera.followLerp = CoolUtil.camLerpShit(0.04);
+
 		super.update(elapsed);
 
 		callScripts('update', [elapsed]);
