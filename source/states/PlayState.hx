@@ -827,7 +827,7 @@ class PlayState extends MusicBeatState
 	}
 
 	/**
-	 * Jigsaw: GameOver!
+	 * John Kramer: GameOver!
 	 * Adam: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!
 	 */
 	private function gameOver()
@@ -1060,7 +1060,7 @@ class PlayState extends MusicBeatState
 		if (!practiceMode)
 			score += addedScore;
 
-		var rating:FlxSprite = new FlxSprite(-40, -60);
+		var rating:FlxSprite = new FlxSprite((FlxG.width * 0.55) - 40, -60);
 		if (!PlayState.isPixelAssets)
 			rating.loadGraphic(Paths.image('ui/default/' + daRating));
 		else
@@ -1079,7 +1079,7 @@ class PlayState extends MusicBeatState
 		rating.cameras = [camHUD];
 		add(rating);
 
-		var comboSpr:FlxSprite = new FlxSprite();
+		var comboSpr:FlxSprite = new FlxSprite(FlxG.width * 0.55, 0);
 		if (!PlayState.isPixelAssets)
 			comboSpr.loadGraphic(Paths.image('ui/default/combo'));
 		else
@@ -1112,7 +1112,7 @@ class PlayState extends MusicBeatState
 			else
 				numScore.loadGraphic(Paths.image('ui/pixel/num' + Std.int(i)));
 			numScore.screenCenter();
-			numScore.x = (43 * daLoop) - 90;
+			numScore.x = (FlxG.width * 0.55) + (43 * daLoop) - 90;
 			numScore.y += 80;
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
