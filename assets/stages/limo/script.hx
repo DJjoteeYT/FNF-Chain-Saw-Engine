@@ -5,6 +5,8 @@ var fastCarCanDrive:Bool = true;
 
 function create()
 {
+	PlayState.isPixelAssets = false;
+
 	var skyBG:FlxSprite = new FlxSprite(-120, -50).loadGraphic(Paths.returnGraphic('stages/limo/images/limoSunset'));
 	skyBG.scrollFactor.set(0.1, 0.1);
 	PlayState.instance.add(skyBG);
@@ -34,6 +36,7 @@ function create()
 	limo.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/limo/images/limoDrive'), Paths.xml('stages/limo/images/limoDrive'));
 	limo.animation.addByPrefix('drive', "Limo stage", 24);
 	limo.animation.play('drive');
+	PlayState.instance.add(limo);
 
 	fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.returnGraphic('stages/limo/images/fastCarLol'));
 	resetFastCar();

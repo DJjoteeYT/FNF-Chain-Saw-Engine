@@ -2,6 +2,8 @@ function camearaFollow(character:String)
 {
 	if (character == 'dad')
 		FlxTween.tween(FlxG.camera, {zoom: 1.3}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
+	else
+		FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
 }
 
 function beatHit(curBeat:Int)

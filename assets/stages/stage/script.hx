@@ -1,5 +1,7 @@
 function create()
 {
+	PlayState.isPixelAssets = false;
+
 	PlayState.instance.add(new FlxSprite(-600, -200).loadGraphic(Paths.returnGraphic('stages/stage/images/stageback')));
 
 	var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.returnGraphic('stages/stage/images/stagefront'));

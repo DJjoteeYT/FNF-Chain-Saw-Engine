@@ -201,21 +201,27 @@ class FlxRuntimeShader extends FlxShader
 	{
 		_glslVersion = glslVersion;
 
-		if (!Assets.exists(fragmentSource))
-		{
-			trace('Loading default fragment source...');
-			glFragmentSource = processFragmentSource(DEFAULT_FRAGMENT_SOURCE);
-		}
-		else
+		if (Assets.exists(fragmentSource))
 		{
 			trace('Loading fragment source from argument...');
 			glFragmentSource = processFragmentSource(Assets.getText(fragmentSource));
 		}
-
-		if (!Assets.exists(vertexSource))
-			glVertexSource = processVertexSource(DEFAULT_VERTEX_SOURCE);
 		else
+		{
+			trace('Loading default fragment source...');
+			glFragmentSource = processFragmentSource(DEFAULT_FRAGMENT_SOURCE);
+		}
+
+		if (Assets.exists(vertexSource))
+		{
+			trace('Loading vertex source from argument...');
 			glVertexSource = processVertexSource(Assets.getText(vertexSource));
+		}
+		else
+		{
+			trace('Loading vertex fragment source...');
+			glVertexSource = processVertexSource(DEFAULT_VERTEX_SOURCE);
+		}
 
 		@:privateAccess
 		{
@@ -227,7 +233,7 @@ class FlxRuntimeShader extends FlxShader
 
 		super();
 	}
-	
+
 	/**
 	 * Replace the `#pragma header` and `#pragma body` with the fragment shader header and body.
 	 */

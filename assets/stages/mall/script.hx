@@ -4,6 +4,8 @@ var santa:FlxSprite;
 
 function create()
 {
+	PlayState.isPixelAssets = false;
+
 	var bg:FlxSprite = new FlxSprite(-1000, -500).loadGraphic(Paths.returnGraphic('stages/mall/images/bgWalls'));
 	bg.scrollFactor.set(0.2, 0.2);
 	bg.setGraphicSize(Std.int(bg.width * 0.8));

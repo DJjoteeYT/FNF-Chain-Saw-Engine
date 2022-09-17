@@ -1,6 +1,7 @@
 package;
 
 import polymod.Polymod;
+import polymod.Polymod.ModMetadata;
 import polymod.Polymod.PolymodError;
 import polymod.backends.PolymodAssets.PolymodAssetType;
 import polymod.format.ParseRules;
@@ -18,16 +19,16 @@ class ModCore
 	{
 		#if FUTURE_POLYMOD
 		trace('Reloading Polymod...');
-		loadMods();
+		loadMods(getMods());
 		#else
 		trace("Polymod is not supported on your Platform!")
 		#end
 	}
 
 	#if FUTURE_POLYMOD
-	public static function loadMods():Void
+	public static function loadMods(folders:Array<String>):Void
 	{
-		var loadedModlist = Polymod.init({
+		var loadedModlist:Array<ModMetadata> = Polymod.init({
 			/**
 			 * root directory of all mods
 			 */
@@ -36,7 +37,7 @@ class ModCore
 			/**
 			 * directory names of one or more mods, relative to modRoot
 			 */
-			dirs: getMods(),
+			dirs: folders,
 
 			/**
 			 * the Haxe framework you're using (OpenFL, HEAPS, Kha, NME, etc..).
@@ -65,7 +66,7 @@ class ModCore
 			ignoredFiles: Polymod.getDefaultIgnoreList(),
 		});
 
-		trace('Loading Successful, ${loadedModlist.length} / ${getMods().length} new mods.');
+		trace('Loading Successful, ${loadedModlist.length} / ${folders.length} new mods.');
 
 		for (mod in loadedModlist)
 			trace('Name: ${mod.title}, [${mod.id}]');

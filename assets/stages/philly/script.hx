@@ -11,6 +11,8 @@ var trainSound:FlxSound;
 
 function create()
 {
+	PlayState.isPixelAssets = false;
+
 	var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.returnGraphic('stages/philly/images/sky'));
 	bg.scrollFactor.set(0.1, 0.1);
 	PlayState.instance.add(bg);
@@ -23,13 +25,13 @@ function create()
 
 	phillyCityLights = new FlxSpriteGroup();
 	phillyCityLights.scrollFactor.set(0.3, 0.3);
-	phillyCityLights.setGraphicSize(Std.int(phillyCityLights.width * 0.85));
-	phillyCityLights.updateHitbox();
 	PlayState.instance.add(phillyCityLights);
 
 	for (i in 0...5)
 	{
 		var light:FlxSprite = new FlxSprite(city.x).loadGraphic(Paths.returnGraphic('stages/philly/images/win' + i));
+		light.setGraphicSize(Std.int(light.width * 0.85));
+		light.updateHitbox();
 		light.visible = false;
 		phillyCityLights.add(light);
 	}

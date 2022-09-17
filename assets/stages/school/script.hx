@@ -1,3 +1,4 @@
+var widShit:Int;
 var bgGirls:FlxSprite;
 
 function create()
@@ -5,35 +6,38 @@ function create()
 	PlayState.isPixelAssets = true;
 
 	var bgSky:FlxSprite = new FlxSprite().loadGraphic(Paths.returnGraphic('stages/school/images/weebSky'));
+
+	widShit = Std.int(bgSky.width * 6);
+
 	bgSky.scrollFactor.set(0.1, 0.1);
-	bgSky.setGraphicSize(Std.int(bgSky.width * 6));
+	bgSky.setGraphicSize(widShit);
 	bgSky.updateHitbox();
 	PlayState.instance.add(bgSky);
 
 	var bgSchool:FlxSprite = new FlxSprite(-200, 0).loadGraphic(Paths.returnGraphic('stages/school/images/weebSchool'));
 	bgSchool.scrollFactor.set(0.6, 0.90);
-	bgSchool.setGraphicSize(Std.int(bgSchool.width * 6));
+	bgSchool.setGraphicSize(widShit);
 	bgSchool.updateHitbox();
 	PlayState.instance.add(bgSchool);
 
-	var bgStreet:FlxSprite = new FlxSprite(-200, 0).loadGraphic(Paths.returnGraphic('stages/school/images/weebSchool'));
+	var bgStreet:FlxSprite = new FlxSprite(-200, 0).loadGraphic(Paths.returnGraphic('stages/school/images/weebStreet'));
 	bgStreet.scrollFactor.set(0.95, 0.95);
-	bgStreet.setGraphicSize(Std.int(bgSchool.width * 6));
+	bgStreet.setGraphicSize(widShit);
 	bgStreet.updateHitbox();
 	PlayState.instance.add(bgStreet);
 
 	var fgTrees:FlxSprite = new FlxSprite(-50, 130).loadGraphic(Paths.returnGraphic('stages/school/images/weebTreesBack'));
 	fgTrees.scrollFactor.set(0.9, 0.9);
-	fgTrees.setGraphicSize(Std.int(fgTrees.width * 6 * 0.8));
+	fgTrees.setGraphicSize(Std.int(widShit * 0.8));
 	fgTrees.updateHitbox();
 	PlayState.instance.add(fgTrees);
 
 	var bgTrees:FlxSprite = new FlxSprite(-580, -800);
-	bgTrees.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/school/images/weebTrees'), Paths.xml('stages/school/images/weebTrees'));
+	bgTrees.frames = FlxAtlasFrames.fromSpriteSheetPacker(Paths.returnGraphic('stages/school/images/weebTrees'), Paths.txt('stages/school/images/weebTrees'));
 	bgTrees.animation.add('treeLoop', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 12);
 	bgTrees.animation.play('treeLoop');
 	bgTrees.scrollFactor.set(0.85, 0.85);
-	bgTrees.setGraphicSize(Std.int(bgTrees.width * 6 * 1.4));
+	bgTrees.setGraphicSize(Std.int(widShit * 1.4));
 	bgTrees.updateHitbox();
 	PlayState.instance.add(bgTrees);
 
@@ -42,7 +46,7 @@ function create()
 	treeLeaves.animation.addByPrefix('leaves', 'PETALS ALL', 24, true);
 	treeLeaves.animation.play('leaves');
 	treeLeaves.scrollFactor.set(0.85, 0.85);
-	treeLeaves.setGraphicSize(Std.int(treeLeaves.width * 6));
+	treeLeaves.setGraphicSize(widShit);
 	treeLeaves.updateHitbox();
 	PlayState.instance.add(treeLeaves);
 

@@ -1,5 +1,7 @@
 function create()
 {
+	PlayState.isPixelAssets = false;
+
 	var bg:FlxSprite = new FlxSprite(-400, -500).loadGraphic(Paths.returnGraphic('stages/mallEvil/images/evilBG'));
 	bg.scrollFactor.set(0.2, 0.2);
 	bg.setGraphicSize(Std.int(bg.width * 0.8));
