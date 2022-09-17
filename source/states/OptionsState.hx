@@ -119,7 +119,6 @@ class OptionsState extends MusicBeatState
 				openSubState(new android.AndroidControlsSubState());
 			#end
 			case 'Exit':
-				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
 		}
 	}

@@ -144,6 +144,10 @@ class MusicBeatState extends FlxState
 				FlxTransitionableState.skipNextTransOut = false;
 			});
 		}
+		else
+		{
+			FlxTransitionableState.skipNextTransOut = false;
+		}
 	}
 
 	override function update(elapsed:Float)

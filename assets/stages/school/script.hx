@@ -33,7 +33,6 @@ function create()
 	bgTrees.animation.add('treeLoop', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 12);
 	bgTrees.animation.play('treeLoop');
 	bgTrees.scrollFactor.set(0.85, 0.85);
-	bgTrees.scale.set(6 * 1.4, 6 * 1.4);
 	bgTrees.setGraphicSize(Std.int(bgTrees.width * 6 * 1.4));
 	bgTrees.updateHitbox();
 	PlayState.instance.add(bgTrees);
@@ -49,7 +48,6 @@ function create()
 
 	bgGirls = new FlxSprite(-100, 190);
 	bgGirls.frames = FlxAtlasFrames.fromSparrow(Paths.returnGraphic('stages/school/images/bgFreaks'), Paths.xml('stages/school/images/bgFreaks'));
-
 	if (PlayState.SONG.song.toLowerCase() == 'roses')
 	{
 		bgGirls.animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
@@ -60,7 +58,7 @@ function create()
 		bgGirls.animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
 		bgGirls.animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
 	}
-
+	bgGirls.animation.play('danceLeft');
 	bgGirls.scrollFactor.set(0.9, 0.9);
 	bgGirls.setGraphicSize(Std.int(bgGirls.width * 6));
 	bgGirls.updateHitbox();

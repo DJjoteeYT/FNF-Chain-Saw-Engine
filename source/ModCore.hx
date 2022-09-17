@@ -30,7 +30,6 @@ class ModCore
 		var loadedModlist = Polymod.init({
 			/**
 			 * root directory of all mods
-			 * Required if you are on desktop and using the SysFileSystem (may be optional on some file systems)
 			 */
 			modRoot: SUtil.getPath() + MOD_DIR,
 
@@ -70,6 +69,26 @@ class ModCore
 
 		for (mod in loadedModlist)
 			trace('Name: ${mod.title}, [${mod.id}]');
+
+		var fileList = Polymod.listModFiles("IMAGE");
+		trace('Installed mods added / replaced ${fileList.length} images');
+		for (item in fileList)
+			trace(' * [$item]');
+
+		var fileList = Polymod.listModFiles("TEXT");
+		trace('Installed mods added / replaced ${fileList.length} text files');
+		for (item in fileList)
+			trace(' * [$item]');
+
+		var fileList = Polymod.listModFiles("MUSIC");
+		trace('Installed mods added / replaced ${fileList.length} songs');
+		for (item in fileList)
+			trace(' * [$item]');
+
+		var fileList = Polymod.listModFiles("SOUNDS");
+		trace('Installed mods added / replaced ${fileList.length} sounds');
+		for (item in fileList)
+			trace(' * [$item]');
 	}
 
 	public static function getMods():Array<String>
@@ -98,11 +117,11 @@ class ModCore
 		switch (error.severity)
 		{
 			case NOTICE:
-				trace(error.message, null);
+				trace(error.message);
 			case WARNING:
-				trace(error.message, null);
+				trace(error.message);
 			case ERROR:
-				trace(error.message, null);
+				trace(error.message);
 		}
 	}
 	#end
