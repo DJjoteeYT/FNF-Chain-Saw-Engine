@@ -982,6 +982,7 @@ class PlayState extends MusicBeatState
 
 	private function endSong():Void
 	{
+		deathCounter = 0;
 		seenCutscene = false;
 		canPause = false;
 		FlxG.sound.music.volume = vocals.volume = 0;
