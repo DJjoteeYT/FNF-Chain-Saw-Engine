@@ -73,22 +73,22 @@ class ModCore
 		var fileList = Polymod.listModFiles("IMAGE");
 		trace('Installed mods added / replaced ${fileList.length} images');
 		for (item in fileList)
-			trace(' * [$item]');
+			trace('* [$item]');
 
 		var fileList = Polymod.listModFiles("TEXT");
 		trace('Installed mods added / replaced ${fileList.length} text files');
 		for (item in fileList)
-			trace(' * [$item]');
+			trace('* [$item]');
 
 		var fileList = Polymod.listModFiles("MUSIC");
 		trace('Installed mods added / replaced ${fileList.length} songs');
 		for (item in fileList)
-			trace(' * [$item]');
+			trace('* [$item]');
 
 		var fileList = Polymod.listModFiles("SOUNDS");
 		trace('Installed mods added / replaced ${fileList.length} sounds');
 		for (item in fileList)
-			trace(' * [$item]');
+			trace('* [$item]');
 	}
 
 	public static function getMods():Array<String>

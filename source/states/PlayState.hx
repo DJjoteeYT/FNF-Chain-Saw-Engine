@@ -30,8 +30,8 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	public static var campaignScore:Int = 0;
 	public static var instance:PlayState = null;
+	public static var campaignScore:Int = 0;
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
 	public static var isPixelAssets:Bool = false;

@@ -68,6 +68,7 @@ class ScriptCore extends FlxBasic
 		setVariable('FlxTrail', FlxTrail);
 		setVariable('FlxRuntimeShader', FlxRuntimeShader);
 
+		setVariable('Assets', Assets);
 		setVariable('BitmapFilter', BitmapFilter);
 		setVariable('ShaderFilter', ShaderFilter);
 
