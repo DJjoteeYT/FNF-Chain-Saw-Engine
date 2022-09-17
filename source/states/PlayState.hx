@@ -168,7 +168,7 @@ class PlayState extends MusicBeatState
 				zoom: 0.9,
 				gf: [400, 130],
 				dad: [100, 100],
-				boyfriend: [770, 100],
+				boyfriend: [770, 450],
 				camFollowDad: [150, -100],
 				camFollowBoyfriend: [-100, -100]
 			};
