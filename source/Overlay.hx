@@ -1,6 +1,6 @@
 package;
 
-#if cpp
+#if (cpp && !windows)
 import cpp.vm.Gc;
 #end
 import haxe.Timer;
