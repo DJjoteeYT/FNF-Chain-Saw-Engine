@@ -8,7 +8,8 @@ function create()
 	bg.animation.addByPrefix('idle', 'background 2', 24);
 	bg.animation.play('idle');
 	bg.scrollFactor.set(0.8, 0.9);
-	bg.scale.set(6, 6);
+	bg.setGraphicSize(Std.int(bg.width * 6));
+	bg.updateHitbox();
 	PlayState.instance.add(bg);
 
 	PlayState.instance.add(new FlxTrail(PlayState.instance.dad, null, 4, 24, 0.3, 0.069));
