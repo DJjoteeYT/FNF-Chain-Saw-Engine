@@ -14,17 +14,17 @@ class PreferencesSubState extends MusicBeatSubstate
 	private var curSelected:Int = 0;
 
 	private var options:Array<Dynamic> = [
-		['Ghost Tapping', 'bool'],
-		['Downscroll', 'bool'],
-		['Accuracy-Display', 'bool'],
-		['Overlay', 'bool'],
-		['Check For Updates', 'bool'],
-		['Auto-Play', 'bool'],
-		['Antialiasing', 'bool'],
-		['Flashing', 'bool']
+		['Ghost Tapping', 'ghostTapping', 'bool', true],
+		['Downscroll', 'downScroll', 'bool', false],
+		['Accuracy-Display', 'accuracyDisplay', 'bool', true],
+		['Overlay', 'overlay', 'bool', false],
+		['Check For Updates', 'checkForUpdates', 'bool', true],
+		['Antialiasing', 'antialiasing', 'bool', true],
+		['Flashing', 'flashing', 'bool', true]
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
+	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var grpCheckbox:FlxTypedGroup<CheckboxThingie>;
 
 	public function new()
@@ -43,6 +43,9 @@ class PreferencesSubState extends MusicBeatSubstate
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
+		grpTexts = new FlxTypedGroup<Alphabet>();
+		add(grpTexts);
+
 		grpCheckbox = new FlxTypedGroup<CheckboxThingie>();
 		add(grpCheckbox);
 
@@ -53,12 +56,19 @@ class PreferencesSubState extends MusicBeatSubstate
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
-			if (options[i][1] == 'bool')
+			if (options[i][2] == 'bool')
 			{
-				var checkbox:CheckboxThingie = new CheckboxThingie(0, 20, false);
+				var checkbox:CheckboxThingie = new CheckboxThingie(0, 0, false);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				grpCheckbox.add(checkbox);
+			}
+			else
+			{
+				var valueText:AttachedAlphabet = new AttachedAlphabet(getValue(options[i][1]), optionText.width + 80);
+				valueText.sprTracker = optionText;
+				valueText.ID = i;
+				grpTexts.add(valueText);
 			}
 		}
 
@@ -91,25 +101,7 @@ class PreferencesSubState extends MusicBeatSubstate
 		}
 		else if (controls.ACCEPT)
 		{
-			switch (options[curSelected][0])
-			{
-				case 'Ghost Tapping':
-					PreferencesData.ghostTapping = !PreferencesData.ghostTapping;
-				case 'Downscroll':
-					PreferencesData.downScroll = !PreferencesData.downScroll;
-				case 'Accuracy-Display':
-					PreferencesData.accuracyDisplay = !PreferencesData.accuracyDisplay;
-				case 'Overlay':
-					PreferencesData.overlay = !PreferencesData.overlay;
-				case 'Check For Updates':
-					PreferencesData.checkForUpdates = !PreferencesData.checkForUpdates;
-				case 'Auto-Play':
-					PreferencesData.autoPlay = !PreferencesData.autoPlay;
-				case 'Antialiasing':
-					PreferencesData.antialiasing = !PreferencesData.antialiasing;
-				case 'Flashing':
-					PreferencesData.antialiasing = !PreferencesData.antialiasing;
-			}
+			setValue(options[curSelected][1], (getValue(options[curSelected][1]) == true) ? false : true);
 
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 			reloadValues();
@@ -145,26 +137,12 @@ class PreferencesSubState extends MusicBeatSubstate
 	private function reloadValues()
 	{
 		for (checkbox in grpCheckbox.members)
-		{
-			switch (options[checkbox.ID][0])
-			{
-				case 'Ghost Tapping':
-					checkbox.daValue = PreferencesData.ghostTapping;
-				case 'Downscroll':
-					checkbox.daValue = PreferencesData.downScroll;
-				case 'Accuracy-Display':
-					checkbox.daValue = PreferencesData.accuracyDisplay;
-				case 'Overlay':
-					checkbox.daValue = PreferencesData.overlay;
-				case 'Check For Updates':
-					checkbox.daValue = PreferencesData.checkForUpdates;
-				case 'Auto-Play':
-					checkbox.daValue = PreferencesData.autoPlay;
-				case 'Antialiasing':
-					checkbox.daValue = PreferencesData.antialiasing;
-				case 'Flashing':
-					checkbox.daValue = PreferencesData.antialiasing;
-			}
-		}
+			checkbox.daValue = getValue(options[checkbox.ID][1]);
 	}
+
+	public function getValue(variable:String):Dynamic
+		return Reflect.getProperty(PreferencesData, variable);
+
+	public function setValue(variable:String, value:Dynamic)
+		Reflect.setProperty(PreferencesData, variable, value);
 }

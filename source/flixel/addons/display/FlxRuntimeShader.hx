@@ -25,11 +25,6 @@ import openfl.utils.Assets;
  */
 class FlxRuntimeShader extends FlxShader
 {
-	#if FLX_DRAW_QUADS
-	// We need to add stuff from FlxGraphicsShader too!
-	#else
-	// Only stuff from openfl.display.Shader is needed
-	#end
 	// These variables got copied from openfl.display.GraphicsShader
 	// and from flixel.graphics.tile.FlxGraphicsShader,
 	// and probably won't change ever.
@@ -184,23 +179,14 @@ class FlxRuntimeShader extends FlxShader
 	";
 	#end
 
-	static final PRAGMA_HEADER:String = "#pragma header";
-	static final PRAGMA_BODY:String = "#pragma body";
-	static final PRAGMA_PRECISION:String = "#pragma precision";
-	static final PRAGMA_VERSION:String = "#pragma version";
-
-	private var _glslVersion:Int;
-
 	/**
 	 * Constructs a GLSL shader.
 	 * @param fragmentSource The fragment shader source.
 	 * @param vertexSource The vertex shader source.
 	 * Note you also need to `initialize()` the shader MANUALLY! It can't be done automatically.
 	 */
-	public function new(fragmentSource:String = null, vertexSource:String = null, glslVersion:Int = 120):Void
+	public function new(fragmentSource:String = null, vertexSource:String = null):Void
 	{
-		_glslVersion = glslVersion;
-
 		if (fragmentSource != null)
 		{
 			trace('Loading fragment source from argument...');
@@ -227,8 +213,6 @@ class FlxRuntimeShader extends FlxShader
 		{
 			// This tells the shader that the glVertexSource/glFragmentSource have been updated.
 			__glSourceDirty = true;
-			// This tells the shader that the shader properties are NOT reflected on this class automatically.
-			__isGenerated = false;
 		}
 
 		super();
@@ -239,8 +223,8 @@ class FlxRuntimeShader extends FlxShader
 	 */
 	function processFragmentSource(input:String):String
 	{
-		var result = StringTools.replace(input, PRAGMA_HEADER, BASE_FRAGMENT_HEADER);
-		result = StringTools.replace(result, PRAGMA_BODY, BASE_FRAGMENT_BODY);
+		var result = StringTools.replace(input, "#pragma header", BASE_FRAGMENT_HEADER);
+		result = StringTools.replace(result, "#pragma body", BASE_FRAGMENT_BODY);
 		return result;
 	}
 
@@ -249,23 +233,9 @@ class FlxRuntimeShader extends FlxShader
 	 */
 	function processVertexSource(input:String):String
 	{
-		var result = StringTools.replace(input, PRAGMA_HEADER, BASE_VERTEX_HEADER);
-		result = StringTools.replace(result, PRAGMA_BODY, BASE_VERTEX_BODY);
+		var result = StringTools.replace(input, "#pragma header", BASE_VERTEX_HEADER);
+		result = StringTools.replace(result, "#pragma body", BASE_VERTEX_BODY);
 		return result;
-	}
-
-	function buildPrecisionHeaders():String
-	{
-		return "#ifdef GL_ES
-				"
-			+ (precisionHint == FULL ? "#ifdef GL_FRAGMENT_PRECISION_HIGH
-					precision highp float;
-				#else
-					precision mediump float;
-				#endif" : "precision lowp float;")
-			+ "
-				#endif
-				";
 	}
 
 	/**
@@ -283,90 +253,123 @@ class FlxRuntimeShader extends FlxShader
 			__paramBool = new Array();
 			__paramFloat = new Array();
 			__paramInt = new Array();
-
 			__processGLData(glVertexSource, "attribute");
 			__processGLData(glVertexSource, "uniform");
 			__processGLData(glFragmentSource, "uniform");
 		}
 
-		@:privateAccess
 		if (__context != null && program == null)
 		{
+        	@:privateAccess
 			var gl = __context.gl;
 
-			var precisionHeaders = buildPrecisionHeaders();
-			var versionHeader = '#version ${_glslVersion}\n';
+			#if android
+			var prefix = "#version 300 es\n";
+			#else
+			var prefix = "#version 120\n";
+			#end
 
-			var vertex = StringTools.replace(glVertexSource, PRAGMA_PRECISION, precisionHeaders);
-			vertex = StringTools.replace(vertex, PRAGMA_VERSION, versionHeader);
-			var fragment = StringTools.replace(glFragmentSource, PRAGMA_PRECISION, precisionHeaders);
-			fragment = StringTools.replace(fragment, PRAGMA_VERSION, versionHeader);
+			#if (js && html5)
+			prefix += (precisionHint == FULL ? "precision mediump float;\n" : "precision lowp float;\n");
+			#else
+			prefix += "#ifdef GL_ES\n"
+			+ (precisionHint == FULL ? "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+			+ "precision highp float;\n"
+			+ "#else\n"
+			+ "precision mediump float;\n"
+			+ "#endif\n" : "precision lowp float;\n")
+			+ "#endif\n\n";
+			#end
+
+			#if android
+			prefix += 'out vec4 output_FragColor;\n';
+			var vertex = prefix + glVertexSource.replace("attribute", "in").replace("varying", "out").replace("texture2D", "texture").replace("gl_FragColor", "output_FragColor");
+			var fragment = prefix + glFragmentSource.replace("varying", "in").replace("texture2D", "texture").replace("gl_FragColor", "output_FragColor");
+			#else
+			var vertex = prefix + glVertexSource;
+			var fragment = prefix + glFragmentSource;
+			#end
 
 			var id = vertex + fragment;
 
+			@:privateAccess
 			if (__context.__programs.exists(id))
-			{
-				// Use the existing program if it has been compiled.
+			{   
+				@:privateAccess
 				program = __context.__programs.get(id);
 			}
 			else
 			{
-				// Build the program.
 				program = __context.createProgram(GLSL);
+
+				@:privateAccess
 				program.__glProgram = __createGLProgram(vertex, fragment);
+
+				@:privateAccess
 				__context.__programs.set(id, program);
 			}
 
 			if (program != null)
 			{
+				@:privateAccess
 				glProgram = program.__glProgram;
-
-				// Map attributes for each type.
 
 				for (input in __inputBitmapData)
 				{
+					@:privateAccess
 					if (input.__isUniform)
 					{
+						@:privateAccess
 						input.index = gl.getUniformLocation(glProgram, input.name);
 					}
 					else
 					{
+						@:privateAccess
 						input.index = gl.getAttribLocation(glProgram, input.name);
 					}
 				}
 
 				for (parameter in __paramBool)
 				{
+					@:privateAccess
 					if (parameter.__isUniform)
 					{
+						@:privateAccess
 						parameter.index = gl.getUniformLocation(glProgram, parameter.name);
 					}
 					else
 					{
+						@:privateAccess
 						parameter.index = gl.getAttribLocation(glProgram, parameter.name);
 					}
 				}
 
 				for (parameter in __paramFloat)
 				{
+					@:privateAccess
 					if (parameter.__isUniform)
 					{
+						@:privateAccess
 						parameter.index = gl.getUniformLocation(glProgram, parameter.name);
 					}
 					else
 					{
+						@:privateAccess
 						parameter.index = gl.getAttribLocation(glProgram, parameter.name);
 					}
 				}
 
 				for (parameter in __paramInt)
 				{
+					@:privateAccess
 					if (parameter.__isUniform)
 					{
+						@:privateAccess
 						parameter.index = gl.getUniformLocation(glProgram, parameter.name);
 					}
 					else
 					{
+						@:privateAccess
 						parameter.index = gl.getAttribLocation(glProgram, parameter.name);
 					}
 				}
@@ -380,9 +383,8 @@ class FlxRuntimeShader extends FlxShader
 	{
 		// Reflect.hasField(this, name) is REALLY expensive so we use a cache.
 		if (__fieldList == null)
-		{
 			__fieldList = Reflect.fields(this).concat(Type.getInstanceFields(Type.getClass(this)));
-		}
+
 		return __fieldList.indexOf(name) != -1;
 	}
 
@@ -652,6 +654,22 @@ class FlxRuntimeShader extends FlxShader
 	}
 
 	/**
+	 * Modify a bitmap data parameter of the shader.
+	 * @param name The name of the parameter to modify.
+	 * @param value The new value to use.
+	 */
+	public function setBitmapData(name:String, value:openfl.display.BitmapData):Void
+	{
+		var prop:ShaderInput<openfl.display.BitmapData> = Reflect.field(this.data, name);
+		if (prop == null)
+		{
+			trace('[WARN] Shader sampler2D property ${name} not found.');
+			return;
+		}
+		prop.input = value;
+	}
+
+	/**
 	 * Retrieve a float parameter of the shader.
 	 * @param name The name of the parameter to retrieve.
 	 */
@@ -739,6 +757,22 @@ class FlxRuntimeShader extends FlxShader
 			return null;
 		}
 		return prop.value;
+	}
+
+	/**
+	 * Retrieve a bitmap data parameter of the shader.
+	 * @param name The name of the parameter to retrieve.
+	 * @return The value of the parameter.
+	 */
+	public function getBitmapData(name:String):Null<openfl.display.BitmapData>
+	{
+		var prop:ShaderInput<openfl.display.BitmapData> = Reflect.field(this.data, name);
+		if (prop == null)
+		{
+			trace('[WARN] Shader sampler2D property ${name} not found.');
+			return null;
+		}
+		return prop.input;
 	}
 
 	public function toString():String
