@@ -1293,7 +1293,7 @@ class PlayState extends MusicBeatState
 
 			vocals.volume = 0;
 
-			callScripts('destroy', [direction]);
+			callScripts('noteMiss', [direction]);
 		}
 	}
 
