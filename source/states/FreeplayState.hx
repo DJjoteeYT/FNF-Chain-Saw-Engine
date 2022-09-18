@@ -106,7 +106,7 @@ class FreeplayState extends MusicBeatState
 		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.4);
 		bg.color = FlxColor.interpolate(bg.color, songs[curSelected].color, CoolUtil.camLerpShit(0.045));
 
-		scoreText.text = "PERSONAL BEST: " + Math.round(lerpScore);
+		scoreText.text = "PERSONAL BEST:" + Math.round(lerpScore);
 		positionHighScore();
 
 		if (controls.UI_UP_P)

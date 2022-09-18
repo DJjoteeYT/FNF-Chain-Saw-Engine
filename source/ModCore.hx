@@ -46,6 +46,8 @@ class ModCore
 		'mkv' => VIDEO
 	];
 
+	public static var localTrackedMods:Array<ModMetadata> = [];
+
 	public static function reload():Void
 	{
 		#if FUTURE_POLYMOD
@@ -73,8 +75,12 @@ class ModCore
 		trace('Loading Successful, ${loadedModlist.length} / ${folders.length} new mods.');
 
 		for (mod in loadedModlist)
+		{
+			localTrackedMods.push(mod);
 			trace('Name: ${mod.title}, [${mod.id}]');
+		}
 
+		#if debug
 		var fileList = Polymod.listModFiles('IMAGE');
 		trace('Installed mods added / replaced ${fileList.length} images');
 		for (item in fileList)
@@ -94,6 +100,7 @@ class ModCore
 		trace('Installed mods added / replaced ${fileList.length} sounds');
 		for (item in fileList)
 			trace('* [$item]');
+		#end
 	}
 
 	public static function getMods():Array<String>

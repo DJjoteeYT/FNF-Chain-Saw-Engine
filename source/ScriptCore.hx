@@ -1,11 +1,22 @@
 package;
 
+#if android
+import android.Hardware;
+import android.Permissions;
+import android.os.Build;
+import android.os.Environment;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
+import flixel.text.FlxText;
+import flixel.math.FlxRect;
 import flixel.addons.effects.FlxTrail;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxRuntimeShader;
+import flixel.effects.particles.FlxEmitter;
+import flixel.effects.particles.FlxParticle;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
@@ -13,6 +24,8 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.system.FlxSound;
 import flixel.util.FlxTimer;
+import haxe.Http;
+import haxe.Json;
 import hscript.Interp;
 import hscript.Parser;
 import openfl.Lib;
@@ -46,7 +59,6 @@ class ScriptCore extends FlxBasic
 
 		setVariable('Function_Stop', Function_Stop);
 		setVariable('Function_Continue', Function_Continue);
-
 		setVariable('Math', Math);
 		setVariable('Reflect', Reflect);
 		setVariable('Std', Std);
@@ -54,12 +66,15 @@ class ScriptCore extends FlxBasic
 		setVariable('Sys', Sys);
 		setVariable('Date', Date);
 		setVariable('DateTools', DateTools);
-
+		setVariable('Http', Http);
+		setVariable('Json', Json);
 		setVariable('FlxG', FlxG);
 		setVariable('FlxSprite', FlxSprite);
 		setVariable('FlxCamera', FlxCamera);
 		setVariable('FlxTimer', FlxTimer);
 		setVariable('FlxTween', FlxTween);
+		setVariable('FlxText', FlxText);
+		setVariable('FlxRect', FlxRect);
 		setVariable('FlxEase', FlxEase);
 		setVariable('FlxMath', FlxMath);
 		setVariable('FlxAtlasFrames', FlxAtlasFrames);
@@ -67,17 +82,30 @@ class ScriptCore extends FlxBasic
 		setVariable('FlxSpriteGroup', FlxSpriteGroup);
 		setVariable('FlxTrail', FlxTrail);
 		setVariable('FlxRuntimeShader', FlxRuntimeShader);
-
+		setVariable('FlxBackdrop', FlxBackdrop);
+		setVariable('FlxEmitter', FlxEmitter);
+		setVariable('FlxParticle', FlxParticle);
 		setVariable('Lib', Lib);
 		setVariable('Assets', Assets);
 		setVariable('BitmapFilter', BitmapFilter);
 		setVariable('ShaderFilter', ShaderFilter);
-
+		setVariable('Alphabet', Alphabet);
+		#if FUTURE_DISCORD_RCP
+		setVariable('DiscordClient', DiscordClient);
+		#end
+		setVariable('Note', Note);
 		setVariable('Paths', Paths);
 		setVariable('CoolUtil', CoolUtil);
 		setVariable('Conductor', Conductor);
 		setVariable('PreferencesData', PreferencesData);
 		setVariable('PlayState', PlayState);
+
+		#if android
+		setVariable('Hardware', Hardware);
+		setVariable('Permissions', Permissions);
+		setVariable('Build', Build);
+		setVariable('Environment', Environment);
+		#end
 
 		try
 		{

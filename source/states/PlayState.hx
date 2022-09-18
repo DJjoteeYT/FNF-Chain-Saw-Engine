@@ -242,7 +242,7 @@ class PlayState extends MusicBeatState
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
-		scoreTxt = new FlxText(0, healthBarBG.y + 40, 0, "", 20);
+		scoreTxt = new FlxText(0, healthBarBG.y + 40, 0, "Score:" + score, 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
@@ -725,7 +725,7 @@ class PlayState extends MusicBeatState
 
 		callScripts('update', [elapsed]);
 
-		scoreTxt.text = "Score: " + score;
+		scoreTxt.text = "Score:" + score;
 		scoreTxt.screenCenter(X);
 
 		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
@@ -1006,14 +1006,13 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-
-					MusicBeatState.switchState(new StoryMenuState());
-
 					StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
 					if (SONG.validScore)
 						HighScore.saveWeekScore(Week.weeksList[storyWeek], campaignScore, storyDifficulty);
+
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					MusicBeatState.switchState(new StoryMenuState());
 				}
 				else
 				{
@@ -1228,22 +1227,16 @@ class PlayState extends MusicBeatState
 
 			if (possibleNotes.length > 0)
 			{
-				if (!PreferencesData.ghostTapping)
-				{
-					for (i in 0...controlArray.length)
-						if (controlArray[i] && !ignoreList.contains(i))
-							noteMiss(controlArray[i], i);
-				}
+				for (i in 0...controlArray.length)
+					if (!PreferencesData.ghostTapping && (controlArray[i] && !ignoreList.contains(i)))
+						badNoteHit();
 
 				for (possibleNote in possibleNotes)
 					if (controlArray[possibleNote.noteData])
 						goodNoteHit(possibleNote);
 			}
 			else if (!PreferencesData.ghostTapping)
-			{
-				for (i in 0...controlArray.length)
-					noteMiss(controlArray[i], i);
-			}
+				badNoteHit();
 		}
 
 		if (boyfriend.animation.curAnim != null
@@ -1263,9 +1256,9 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	private function noteMiss(statement:Bool = false, direction:Int = 0)
+	private function noteMiss(direction:Int = 0)
 	{
-		if (statement && !boyfriend.stunned)
+		if (!boyfriend.stunned)
 		{
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
@@ -1299,7 +1292,21 @@ class PlayState extends MusicBeatState
 			}
 
 			vocals.volume = 0;
+
+			callScripts('destroy', [direction]);
 		}
+	}
+
+	private function badNoteHit()
+	{
+		if (controls.NOTE_LEFT_P)
+			noteMiss(0);
+		if (controls.NOTE_DOWN_P)
+			noteMiss(1);
+		if (controls.NOTE_UP_P)
+			noteMiss(2);
+		if (controls.NOTE_RIGHT_P)
+			noteMiss(3);
 	}
 
 	private function goodNoteHit(note:Note):Void
@@ -1340,6 +1347,8 @@ class PlayState extends MusicBeatState
 			if (SONG.needsVoices)
 				vocals.volume = 1;
 
+			callScripts('goodNoteHit', [note]);
+
 			if (!note.sustainNote)
 				destroyNote(note);
 		}
@@ -1374,6 +1383,8 @@ class PlayState extends MusicBeatState
 
 		if (SONG.needsVoices)
 			vocals.volume = 1;
+
+		callScripts('opponentNoteHit', [note]);
 
 		if (!note.sustainNote)
 			destroyNote(note);
@@ -1449,6 +1460,8 @@ class PlayState extends MusicBeatState
 		defaultPlayerStrumY = [];
 		defaultOpponentStrumX = [];
 		defaultOpponentStrumY = [];
+
+		callScripts('destroy', []);
 
 		super.destroy();
 	}
