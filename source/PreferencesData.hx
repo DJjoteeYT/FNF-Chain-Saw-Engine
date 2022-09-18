@@ -35,7 +35,7 @@ class PreferencesData
 		'reset' => [R, NONE],
 		'volume_mute' => [ZERO, NONE],
 		'volume_up' => [NUMPADPLUS, PLUS],
-		'volume_down' => [NUMPADMINUS, MINUS],
+		'volume_down' => [NUMPADMINUS, MINUS]
 	];
 
 	public static final defaultKeys:Map<String, Array<FlxKey>> = [
@@ -53,7 +53,7 @@ class PreferencesData
 		'reset' => [R, NONE],
 		'volume_mute' => [ZERO, NONE],
 		'volume_up' => [NUMPADPLUS, PLUS],
-		'volume_down' => [NUMPADMINUS, MINUS],
+		'volume_down' => [NUMPADMINUS, MINUS]
 	];
 
 	public static function write()

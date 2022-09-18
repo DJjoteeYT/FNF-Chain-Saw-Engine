@@ -204,6 +204,7 @@ class FlxRuntimeShader extends FlxShader
 		if (Assets.exists(fragmentSource))
 		{
 			trace('Loading fragment source from argument...');
+			trace(Assets.getText(fragmentSource));
 			glFragmentSource = processFragmentSource(Assets.getText(fragmentSource));
 		}
 		else
@@ -215,6 +216,7 @@ class FlxRuntimeShader extends FlxShader
 		if (Assets.exists(vertexSource))
 		{
 			trace('Loading vertex source from argument...');
+			trace(Assets.getText(vertexSource));
 			glVertexSource = processVertexSource(Assets.getText(vertexSource));
 		}
 		else

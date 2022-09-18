@@ -12,8 +12,39 @@ import polymod.format.ParseRules;
  */
 class ModCore
 {
-	static final API_VER = '1.0.0';
-	static final MOD_DIR = 'mods';
+	private static final API_VER = '1.0.0';
+	private static final MOD_DIR = 'mods';
+
+	private static final modExtensions:Map<String, PolymodAssetType> = [
+		'mp3' => AUDIO_GENERIC,
+		'ogg' => AUDIO_GENERIC,
+		'wav' => AUDIO_GENERIC,
+		'jpg' => IMAGE,
+		'png' => IMAGE,
+		'gif' => IMAGE,
+		'tga' => IMAGE,
+		'bmp' => IMAGE,
+		'tif' => IMAGE,
+		'tiff' => IMAGE,
+		'txt' => TEXT,
+		'xml' => TEXT,
+		'json' => TEXT,
+		'csv' => TEXT,
+		'tsv' => TEXT,
+		'mpf' => TEXT,
+		'tsx' => TEXT,
+		'tmx' => TEXT,
+		'vdf' => TEXT,
+		'frag' => TEXT,
+		'vert' => TEXT,
+		'ttf' => FONT,
+		'otf' => FONT,
+		'webm' => VIDEO,
+		'mp4' => VIDEO,
+		'mov' => VIDEO,
+		'avi' => VIDEO,
+		'mkv' => VIDEO
+	];
 
 	public static function reload():Void
 	{
@@ -29,41 +60,14 @@ class ModCore
 	public static function loadMods(folders:Array<String>):Void
 	{
 		var loadedModlist:Array<ModMetadata> = Polymod.init({
-			/**
-			 * root directory of all mods
-			 */
 			modRoot: SUtil.getPath() + MOD_DIR,
-
-			/**
-			 * directory names of one or more mods, relative to modRoot
-			 */
 			dirs: folders,
-
-			/**
-			 * the Haxe framework you're using (OpenFL, HEAPS, Kha, NME, etc..).
-			 * If not provided, Polymod will attempt to determine this automatically.
-			 */
 			framework: OPENFL,
-
-			/**
-			 * semantic version of your game's Modding API (will generate errors & warnings)
-			 */
 			apiVersion: API_VER,
-
-			/**
-			 * callback for any errors generated during mod initialization
-			 */
 			errorCallback: onError,
-
-			/**
-			 * parsing rules for various data formats
-			 */
 			parseRules: getParseRules(),
-
-			/**
-			 * list of filenames to ignore in mods
-			 */
-			ignoredFiles: Polymod.getDefaultIgnoreList(),
+			extensionMap: modExtensions,
+			ignoredFiles: Polymod.getDefaultIgnoreList()
 		});
 
 		trace('Loading Successful, ${loadedModlist.length} / ${folders.length} new mods.');
@@ -71,22 +75,22 @@ class ModCore
 		for (mod in loadedModlist)
 			trace('Name: ${mod.title}, [${mod.id}]');
 
-		var fileList = Polymod.listModFiles("IMAGE");
+		var fileList = Polymod.listModFiles('IMAGE');
 		trace('Installed mods added / replaced ${fileList.length} images');
 		for (item in fileList)
 			trace('* [$item]');
 
-		var fileList = Polymod.listModFiles("TEXT");
+		var fileList = Polymod.listModFiles('TEXT');
 		trace('Installed mods added / replaced ${fileList.length} text files');
 		for (item in fileList)
 			trace('* [$item]');
 
-		var fileList = Polymod.listModFiles("MUSIC");
+		var fileList = Polymod.listModFiles('MUSIC');
 		trace('Installed mods added / replaced ${fileList.length} songs');
 		for (item in fileList)
 			trace('* [$item]');
 
-		var fileList = Polymod.listModFiles("SOUNDS");
+		var fileList = Polymod.listModFiles('SOUNDS');
 		trace('Installed mods added / replaced ${fileList.length} sounds');
 		for (item in fileList)
 			trace('* [$item]');

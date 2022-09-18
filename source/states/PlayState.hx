@@ -776,11 +776,11 @@ class PlayState extends MusicBeatState
 
 		if (!inCutscene && !endingSong)
 		{
-			// if (controls.RESET && startedCountdown)
-			// {
-			// health = 0;
-			// trace("RESET = True");
-			// }
+			if (controls.RESET && startedCountdown)
+			{
+				health = 0;
+				trace("RESET = True");
+			}
 
 			if (health <= 0 && !practiceMode)
 				gameOver();
@@ -1171,12 +1171,6 @@ class PlayState extends MusicBeatState
 			controls.NOTE_UP_P,
 			controls.NOTE_RIGHT_P
 		];
-		var releaseArray:Array<Bool> = [
-			controls.NOTE_LEFT_R,
-			controls.NOTE_DOWN_R,
-			controls.NOTE_UP_R,
-			controls.NOTE_RIGHT_R
-		];
 
 		if (holdingArray.contains(true) && generatedMusic)
 		{
@@ -1254,7 +1248,7 @@ class PlayState extends MusicBeatState
 
 		if (boyfriend.animation.curAnim != null
 			&& boyfriend.holdTimer > 0.001 * boyfriend.singDuration * Conductor.stepCrochet
-			&& releaseArray.contains(true)
+			&& !holdingArray.contains(true)
 			&& boyfriend.animation.curAnim.name.startsWith('sing')
 			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 			boyfriend.dance();
@@ -1264,7 +1258,7 @@ class PlayState extends MusicBeatState
 			if (controlArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
 				spr.playAnim('pressed');
 
-			if (releaseArray[spr.ID])
+			if (!holdingArray[spr.ID])
 				spr.playAnim('static');
 		});
 	}
