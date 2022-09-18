@@ -7,6 +7,9 @@ import openfl.display.BitmapData;
 import openfl.media.Sound;
 import openfl.system.System;
 import openfl.utils.Assets;
+#if FUTURE_POLYMOD
+import polymod.Polymod;
+#end
 
 using StringTools;
 
@@ -37,6 +40,9 @@ class Paths
 			}
 		}
 
+		#if FUTURE_POLYMOD
+		Polymod.clearCache();
+		#end
 		System.gc();
 	}
 

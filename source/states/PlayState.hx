@@ -166,7 +166,7 @@ class PlayState extends MusicBeatState
 		{
 			stageFile = {
 				zoom: 0.9,
-				gf: [400, 130],
+				gf: [400, 100],
 				dad: [100, 100],
 				boyfriend: [770, 100],
 				camFollowDad: [150, -100],

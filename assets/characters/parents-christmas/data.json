@@ -10,7 +10,7 @@
 	"animations":[
 		{
 			"animation": "idle",
-			"prefix": "",
+			"prefix": "Parent Christmas Idle",
 			"framerate": 24,
 			"indices": [],
 			"flipX": false,

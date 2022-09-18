@@ -3,7 +3,7 @@ function endSong()
 	if (PlayState.SONG.song.toLowerCase() == 'eggnog')
 	{
 		var blackShit:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
-			-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
+			-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, 0xFF000000);
 		blackShit.scrollFactor.set();
 		PlayState.instance.add(blackShit);
 		PlayState.instance.camHUD.visible = false;
