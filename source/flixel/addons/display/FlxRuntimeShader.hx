@@ -222,21 +222,13 @@ class FlxRuntimeShader extends FlxShader
 	 * Replace the `#pragma header` and `#pragma body` with the fragment shader header and body.
 	 */
 	function processFragmentSource(input:String):String
-	{
-		var result = StringTools.replace(input, "#pragma header", BASE_FRAGMENT_HEADER);
-		result = StringTools.replace(result, "#pragma body", BASE_FRAGMENT_BODY);
-		return result;
-	}
+		return input.replace("#pragma header", BASE_FRAGMENT_HEADER).replace("#pragma body", BASE_FRAGMENT_BODY);
 
 	/**
 	 * Replace the `#pragma header` and `#pragma body` with the vertex shader header and body.
 	 */
 	function processVertexSource(input:String):String
-	{
-		var result = StringTools.replace(input, "#pragma header", BASE_VERTEX_HEADER);
-		result = StringTools.replace(result, "#pragma body", BASE_VERTEX_BODY);
-		return result;
-	}
+		return input.replace("#pragma header", BASE_VERTEX_HEADER).replace(result, "#pragma body", BASE_VERTEX_BODY);
 
 	/**
 	 * The parent function that initializes the shader.
@@ -283,8 +275,8 @@ class FlxRuntimeShader extends FlxShader
 
 			#if android
 			prefix += 'out vec4 output_FragColor;\n';
-			var vertex = prefix + StringTools.replace(glVertexSource, "attribute", "in").replace("varying", "out").replace("texture2D", "texture").replace("gl_FragColor", "output_FragColor");
-			var fragment = prefix + StringTools.replace(glFragmentSource, "varying", "in").replace("texture2D", "texture").replace("gl_FragColor", "output_FragColor");
+			var vertex = prefix + glVertexSource.replace("attribute", "in").replace("varying", "out").replace("texture2D", "texture").replace("gl_FragColor", "output_FragColor");
+			var fragment = prefix + glFragmentSource.replace("varying", "in").replace("texture2D", "texture").replace("gl_FragColor", "output_FragColor");
 			#else
 			var vertex = prefix + glVertexSource;
 			var fragment = prefix + glFragmentSource;
