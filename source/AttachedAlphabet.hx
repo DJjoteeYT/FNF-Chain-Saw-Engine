@@ -11,7 +11,6 @@ class AttachedAlphabet extends Alphabet
 	public var offsetX:Float = 0;
 	public var offsetY:Float = 0;
 	public var sprTracker:FlxSprite;
-	public var isAlt:Bool = false;
 
 	public function new(text:String = "", ?offsetX:Float = 0, ?offsetY:Float = 0, ?bold = false)
 	{
