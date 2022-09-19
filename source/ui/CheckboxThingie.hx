@@ -32,7 +32,7 @@ class CheckboxThingie extends FlxSprite
 		}
 
 		if (sprTracker != null)
-			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y);
+			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y + 20);
 	}
 
 	private function set_daValue(state:Bool)

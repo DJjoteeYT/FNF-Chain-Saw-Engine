@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
+import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -30,12 +31,19 @@ class TitleState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		curWacky = FlxG.random.getObject(getIntroTextShit());
-
 		ModCore.reload();
+
+		FlxG.game.focusLostFramerate = 60;
+		FlxG.sound.muteKeys = [FlxKey.ZERO];
+		FlxG.sound.volumeDownKeys = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
+		FlxG.sound.volumeUpKeys = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
+		FlxG.keys.preventDefaultKeys = [TAB];
+
 		PlayerSettings.init();
 		PreferencesData.load();
 		HighScore.load();
+
+		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		#if FUTURE_DISCORD_RCP
 		DiscordClient.initialize();
@@ -45,15 +53,6 @@ class TitleState extends MusicBeatState
 			DiscordClient.shutdown();
 		});
 		#end
-
-		if (FlxG.save.data.weekUnlocked != null)
-		{
-			if (StoryMenuState.weekUnlocked.length < 4)
-				StoryMenuState.weekUnlocked.insert(0, true);
-
-			if (!StoryMenuState.weekUnlocked[0])
-				StoryMenuState.weekUnlocked[0] = true;
-		}
 
 		super.create();
 

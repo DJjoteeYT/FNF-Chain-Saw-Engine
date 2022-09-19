@@ -22,16 +22,10 @@ class Conductor
 	public static var songPosition:Float = 0;
 	public static var lastSongPos:Float = 0;
 	public static var offset:Float = 0;
-
 	public static var safeFrames:Int = 10;
 	public static var safeZoneOffset:Float = Math.floor((safeFrames / 60) * 1000);
 	public static var timeScale:Float = Conductor.safeZoneOffset / 166;
-
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
-
-	public function new()
-	{
-	}
 
 	public static function recalculateTimings()
 	{

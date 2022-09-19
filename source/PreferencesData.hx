@@ -172,10 +172,9 @@ class PreferencesData
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>
 	{
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
-		var i:Int = 0;
-		var len:Int = copiedArray.length;
 
-		while (i < len)
+		var i:Int = 0;
+		while (i < copiedArray.length)
 		{
 			if (copiedArray[i] == NONE)
 			{
@@ -183,7 +182,6 @@ class PreferencesData
 				--i;
 			}
 			i++;
-			len = copiedArray.length;
 		}
 
 		return copiedArray;

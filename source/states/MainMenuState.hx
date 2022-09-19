@@ -95,84 +95,86 @@ class MainMenuState extends MusicBeatState
 		changeItem();
 
 		#if android
+		#if FUTURE_POLYMOD
+		addVirtualPad(UP_DOWN, A_B_C);
+		#else
 		addVirtualPad(UP_DOWN, A_B);
+		#end
 		virtualPad.y -= 46;
 		#end
 
 		super.create();
 	}
 
-	private var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.8)
 			FlxG.sound.music.volume += 0.5 * elapsed;
 
-		if (!selectedSomethin)
+		if (controls.UI_UP_P)
 		{
-			if (controls.UI_UP_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-1);
-			}
-			else if (controls.UI_DOWN_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(1);
-			}
-			else if (FlxG.mouse.wheel != 0)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-FlxG.mouse.wheel);
-			}
+			FlxG.sound.play(Paths.sound('scrollMenu'));
+			changeItem(-1);
+		}
+		else if (controls.UI_DOWN_P)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'));
+			changeItem(1);
+		}
+		else if (FlxG.mouse.wheel != 0)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'));
+			changeItem(-FlxG.mouse.wheel);
+		}
 
-			if (controls.BACK)
-			{
-				selectedSomethin = true;
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new TitleState());
-			}
-			else if (controls.ACCEPT)
-			{
-				selectedSomethin = true;
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+		if (controls.BACK)
+		{
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			MusicBeatState.switchState(new TitleState());
+		}
+		else if (controls.ACCEPT)
+		{
+			FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				if (PreferencesData.flashing)
-					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+			if (PreferencesData.flashing)
+				FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
-				menuItems.forEach(function(spr:FlxSprite)
+			menuItems.forEach(function(spr:FlxSprite)
+			{
+				if (curSelected != spr.ID)
 				{
-					if (curSelected != spr.ID)
+					FlxTween.tween(spr, {alpha: 0}, 1.3, {
+						ease: FlxEase.quadOut,
+						onComplete: function(twn:FlxTween)
+						{
+							spr.kill();
+						}
+					});
+				}
+				else
+				{
+					if (PreferencesData.flashing)
 					{
-						FlxTween.tween(spr, {alpha: 0}, 1.3, {
-							ease: FlxEase.quadOut,
-							onComplete: function(twn:FlxTween)
-							{
-								spr.kill();
-							}
+						FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+						{
+							goToState();
 						});
 					}
 					else
 					{
-						if (PreferencesData.flashing)
+						new FlxTimer().start(1, function(tmr:FlxTimer)
 						{
-							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
-							{
-								goToState();
-							});
-						}
-						else
-						{
-							new FlxTimer().start(1, function(tmr:FlxTimer)
-							{
-								goToState();
-							});
-						}
+							goToState();
+						});
 					}
-				});
-			}
+				}
+			});
 		}
+		#if FUTURE_POLYMOD
+		else if (FlxG.keys.justPressed.SEVEN #if android || virtualPad.buttonC.justPressed #end)
+			MusicBeatState.switchState(new ModsMenuState());
+		#end
 
 		super.update(elapsed);
 

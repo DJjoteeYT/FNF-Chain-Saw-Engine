@@ -1,10 +1,13 @@
 package;
 
+import flixel.FlxG;
+#if FUTURE_POLYMOD
 import polymod.Polymod;
 import polymod.Polymod.ModMetadata;
 import polymod.Polymod.PolymodError;
 import polymod.backends.PolymodAssets.PolymodAssetType;
 import polymod.format.ParseRules;
+#end
 
 /**
  * Class based from Kade Engine.
@@ -46,7 +49,7 @@ class ModCore
 		'mkv' => VIDEO
 	];
 
-	public static var localTrackedMods:Array<ModMetadata> = [];
+	public static var trackedMods:Array<ModMetadata> = [];
 
 	public static function reload():Void
 	{
@@ -54,7 +57,7 @@ class ModCore
 		trace('Reloading Polymod...');
 		loadMods(getMods());
 		#else
-		trace("Polymod is not supported on your Platform!")
+		trace("Polymod reloading is not supported on your Platform!")
 		#end
 	}
 
@@ -75,10 +78,7 @@ class ModCore
 		trace('Loading Successful, ${loadedModlist.length} / ${folders.length} new mods.');
 
 		for (mod in loadedModlist)
-		{
-			localTrackedMods.push(mod);
 			trace('Name: ${mod.title}, [${mod.id}]');
-		}
 
 		#if debug
 		var fileList = Polymod.listModFiles('IMAGE');
@@ -105,12 +105,21 @@ class ModCore
 
 	public static function getMods():Array<String>
 	{
+		trackedMods = [];
+
 		var daList:Array<String> = [];
+
+		if (FlxG.save.data.disabledMods == null)
+			FlxG.save.data.disabledMods = [];
 
 		trace('Searching for Mods...');
 
 		for (i in Polymod.scan(SUtil.getPath() + MOD_DIR, '*.*.*', onError))
-			daList.push(i.id);
+		{
+			trackedMods.push(i);
+			if (!FlxG.save.data.disabledMods.contains(i.id))
+				daList.push(i.id);
+		}
 
 		trace('Found ${daList.length} new mods.');
 
