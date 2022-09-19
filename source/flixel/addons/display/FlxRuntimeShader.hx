@@ -144,7 +144,8 @@ class FlxRuntimeShader extends FlxShader
 	#else
 	static final DEFAULT_FRAGMENT_SOURCE:String = "
 		#pragma header
-		void main(void) {
+		void main(void)
+		{
 			#pragma body
 		}
 	";
@@ -175,7 +176,8 @@ class FlxRuntimeShader extends FlxShader
 	#else
 	static final DEFAULT_VERTEX_SOURCE:String = "
 		#pragma header
-		void main(void) {
+		void main(void)
+		{
 			#pragma body
 		}
 	";
