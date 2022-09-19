@@ -230,7 +230,7 @@ class FlxRuntimeShader extends FlxShader
 	 * Replace the `#pragma header` and `#pragma body` with the vertex shader header and body.
 	 */
 	function processVertexSource(input:String):String
-		return input.replace("#pragma header", BASE_VERTEX_HEADER).replace(result, "#pragma body", BASE_VERTEX_BODY);
+		return input.replace("#pragma header", BASE_VERTEX_HEADER).replace("#pragma body", BASE_VERTEX_BODY);
 
 	/**
 	 * The parent function that initializes the shader.
