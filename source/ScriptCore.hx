@@ -33,6 +33,8 @@ import openfl.utils.Assets;
 import openfl.filters.BitmapFilter;
 import openfl.filters.ShaderFilter;
 import states.PlayState;
+import openfl.display.BitmapData;
+import openfl.media.Sound;
 
 using StringTools;
 
@@ -60,6 +62,8 @@ class ScriptCore extends FlxBasic
 		setVariable('Function_Stop', Function_Stop);
 		setVariable('Function_Continue', Function_Continue);
 		setVariable('Math', Math);
+                setVariable('Sound', Sound);
+                setVariable('BitmapData', BitmapData);
 		setVariable('Reflect', Reflect);
 		setVariable('Std', Std);
 		setVariable('StringTools', StringTools);
