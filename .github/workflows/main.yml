@@ -37,9 +37,9 @@ jobs:
 
       - name: Install Haxelibs
         run: |
-          haxelib --quiet git lime https://github.com/Sirox228/lime
-          haxelib --quiet install openfl 9.1.0
-          haxelib --quiet git flixel https://github.com/Sirox228/flixel
+          haxelib git lime https://github.com/Sirox228/lime
+          haxelib install openfl 9.1.0
+          haxelib git flixel https://github.com/Sirox228/flixel
           haxelib --quiet --never run lime setup
           haxelib --quiet install flixel-ui
           haxelib --quiet install flixel-addons
