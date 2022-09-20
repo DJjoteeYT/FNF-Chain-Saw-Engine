@@ -38,6 +38,7 @@ class PlayState extends MusicBeatState
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
 	public static var practiceMode:Bool = false;
+	public static var autoplayMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
@@ -618,10 +619,7 @@ class PlayState extends MusicBeatState
 	}
 
 	private function sortByShit(Obj1:Note, Obj2:Note):Int
-		return sortNotes(FlxSort.ASCENDING, Obj1, Obj2);
-
-	private function sortNotes(Sort:Int = FlxSort.ASCENDING, Obj1:Note, Obj2:Note):Int
-		return Obj1.strumTime < Obj2.strumTime ? Sort : Obj1.strumTime > Obj2.strumTime ? -Sort : 0;
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 
 	private function generateStaticArrows(player:Int):Void
 	{
@@ -805,7 +803,15 @@ class PlayState extends MusicBeatState
 		});
 
 		if (!inCutscene && !endingSong)
-			keyShit();
+		{
+			if(!autoplayMode)
+				keyShit();
+			else if (boyfriend.animation.curAnim != null
+				&& boyfriend.holdTimer > 0.001 * boyfriend.singDuration * Conductor.stepCrochet
+				&& boyfriend.animation.curAnim.name.startsWith('sing')
+				&& !boyfriend.animation.curAnim.name.endsWith('miss'))
+				boyfriend.dance();
+		}
 	}
 
 	private function pause()
@@ -937,13 +943,24 @@ class PlayState extends MusicBeatState
 		if (!daNote.mustPress && daNote.wasGoodHit)
 			opponentNoteHit(daNote);
 
+		if(daNote.mustPress && autoplayMode)
+		{
+			if(daNote.sustainNote)
+			{
+				if(daNote.canBeHit)
+					goodNoteHit(daNote);
+			}
+			else if(daNote.strumTime <= Conductor.songPosition || (daNote.sustainNote && daNote.canBeHit && daNote.mustPress))
+				goodNoteHit(daNote);
+		}
+
 		var doKill = daNote.y < -daNote.height;
 		if (PreferencesData.downScroll)
 			doKill = daNote.y > FlxG.height;
 
 		if (doKill)
 		{
-			if (daNote.tooLate || !daNote.wasGoodHit)
+			if (daNote.mustPress && !autoplayMode && !endingSong && (daNote.tooLate || !daNote.wasGoodHit))
 			{
 				health -= 0.0475;
 				vocals.volume = 0;
@@ -1057,7 +1074,7 @@ class PlayState extends MusicBeatState
 			addedScore = 200;
 		}
 
-		if (!practiceMode)
+		if (!practiceMode && !autoplayMode)
 			score += addedScore;
 
 		var rating:FlxSprite = new FlxSprite(0, 0);
@@ -1101,10 +1118,14 @@ class PlayState extends MusicBeatState
 		comboSpr.cameras = [camHUD];
 		add(comboSpr);
 
+		var comboSplit:Array<String> = Std.string(combo).split('');
+
 		var seperatedScore:Array<Int> = [];
-		seperatedScore.push(Math.floor(combo / 100));
-		seperatedScore.push(Math.floor((combo - (seperatedScore[0] * 100)) / 10));
-		seperatedScore.push(combo % 10);
+		for(i in 0...comboSplit.length)
+		{
+			var str:String = comboSplit[i];
+			seperatedScore.push(Std.parseInt(str));
+		}
 
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
@@ -1128,8 +1149,7 @@ class PlayState extends MusicBeatState
 
 			numScore.updateHitbox();
 			numScore.cameras = [camHUD];
-			if (combo >= 10 || combo == 0)
-				add(numScore);
+			add(numScore);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 				onComplete: function(tween:FlxTween)
@@ -1157,9 +1177,6 @@ class PlayState extends MusicBeatState
 
 		curSection += 1;
 	}
-
-	public function NearlyEquals(value1:Float, value2:Float, unimportantDifference:Float = 10):Bool
-		return Math.abs(FlxMath.roundDecimal(value1, 1) - FlxMath.roundDecimal(value2, 1)) < unimportantDifference;
 
 	private function keyShit():Void
 	{
@@ -1428,12 +1445,7 @@ class PlayState extends MusicBeatState
 		callScripts('beatHit', [curBeat]);
 
 		if (generatedMusic)
-		{
-			notes.members.sort(function(note1:Note, note2:Note)
-			{
-				return sortNotes(FlxSort.DESCENDING, note1, note2);
-			});
-		}
+			notes.sort(FlxSort.byY, PreferencesData.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP1.updateHitbox();

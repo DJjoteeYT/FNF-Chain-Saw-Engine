@@ -4,43 +4,31 @@ import flixel.FlxG;
 
 class HighScore
 {
-	public static var songScores:Map<String, Int> = new Map();
-	public static var weekScores:Map<String, Int> = new Map();
+	public static var songScores:Map<String, Int> = [];
+	public static var weekScores:Map<String, Int> = [];
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
 	{
 		var daSong:String = formatSong(song, diff);
-
-		if (!FlxG.save.data.botplay)
+		if (songScores.exists(daSong))
 		{
-			if (songScores.exists(daSong))
-			{
-				if (songScores.get(daSong) < score)
-					setScore(daSong, score);
-			}
-			else
+			if (songScores.get(daSong) < score)
 				setScore(daSong, score);
 		}
 		else
-			trace('BotPlay detected. Score saving is disabled.');
+			setScore(daSong, score);
 	}
 
 	public static function saveWeekScore(week:String, score:Int = 0, ?diff:Int = 0):Void
 	{
-		if (!FlxG.save.data.botplay)
+		var daWeek:String = formatSong(week, diff);
+		if (weekScores.exists(daWeek))
 		{
-			var daWeek:String = formatSong(week, diff);
-
-			if (weekScores.exists(daWeek))
-			{
-				if (weekScores.get(daWeek) < score)
-					setScore(daWeek, score);
-			}
-			else
+			if (weekScores.get(daWeek) < score)
 				setScore(daWeek, score);
 		}
 		else
-			trace('BotPlay detected. Score saving is disabled.');
+			setScore(daWeek, score);
 	}
 
 	public static function formatSong(song:String, diff:Int):String

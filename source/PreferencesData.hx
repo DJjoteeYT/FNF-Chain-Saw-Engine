@@ -16,7 +16,6 @@ class PreferencesData
 	public static var framerate:Int = 60;
 	public static var safeFrames:Int = 10;
 	public static var checkForUpdates:Bool = true;
-	public static var autoPlay:Bool = true;
 	public static var antialiasing:Bool = true;
 	public static var flashing:Bool = true;
 
@@ -66,7 +65,6 @@ class PreferencesData
 		FlxG.save.data.framerate = framerate;
 		FlxG.save.data.safeFrames = safeFrames;
 		FlxG.save.data.checkForUpdates = checkForUpdates;
-		FlxG.save.data.autoPlay = autoPlay;
 		FlxG.save.data.antialiasing = antialiasing;
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.flush();
@@ -130,9 +128,6 @@ class PreferencesData
 
 		if (FlxG.save.data.checkForUpdates != null)
 			checkForUpdates = FlxG.save.data.checkForUpdates;
-
-		if (FlxG.save.data.autoPlay != null)
-			autoPlay = FlxG.save.data.autoPlay;
 
 		if (FlxG.save.data.antialiasing != null)
 			antialiasing = FlxG.save.data.antialiasing;
