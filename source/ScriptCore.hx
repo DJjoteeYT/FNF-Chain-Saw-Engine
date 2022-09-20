@@ -63,7 +63,6 @@ class ScriptCore extends FlxBasic
 		setVariable('Function_Continue', Function_Continue);
 		setVariable('Math', Math);
                 setVariable('Sound', Sound);
-                setVariable('FT', FT); // cool thing for debugging, if you have an error in big hscript file
                 setVariable('BitmapData', BitmapData);
 		setVariable('Reflect', Reflect);
 		setVariable('Std', Std);
