@@ -43,7 +43,7 @@ class FT {
 		File.saveContent(fp, thingToSave + "\n");
 		
 		if (alert) {
-			Lib.application.window.alert(var_name + ' = ' + thingToSave, 'File Tracer');
+			Lib.application.window.alert(logName + ' ' + thingToSave, 'File Tracer');
 		}
 	}
 	
