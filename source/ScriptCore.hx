@@ -23,23 +23,21 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.system.FlxSound;
-import flixel.util.FlxTimer;
-import flixel.util.FlxColor;
-import flixel.graphics.FlxGraphic;
 import flixel.system.FlxAssets.FlxShader;
-import sys.io.File;
-import sys.FileSystem;
+import flixel.util.FlxTimer;
 import haxe.Http;
 import haxe.Json;
 import hscript.Interp;
 import hscript.Parser;
 import openfl.Lib;
-import openfl.utils.Assets;
+import openfl.display.BitmapData;
 import openfl.filters.BitmapFilter;
 import openfl.filters.ShaderFilter;
-import states.PlayState;
-import openfl.display.BitmapData;
 import openfl.media.Sound;
+import openfl.utils.Assets;
+import states.PlayState;
+import sys.io.File;
+import sys.FileSystem;
 
 using StringTools;
 
@@ -67,13 +65,9 @@ class ScriptCore extends FlxBasic
 		setVariable('Function_Stop', Function_Stop);
 		setVariable('Function_Continue', Function_Continue);
 		setVariable('Math', Math);
-                setVariable('Sound', Sound);
-                setVariable('BitmapData', BitmapData);
 		setVariable('Reflect', Reflect);
-                setVariable('FlxGraphic', FlxGraphic);
                 setVariable('File', File);
                 setVariable('FileSystem', FileSystem);
-                setVariable('FlxShader', FlxShader); // (theShaderGod) i must check if this works
                 setVariable('Type', Type);
 		setVariable('Std', Std);
 		setVariable('StringTools', StringTools);
@@ -99,9 +93,13 @@ class ScriptCore extends FlxBasic
 		setVariable('FlxBackdrop', FlxBackdrop);
 		setVariable('FlxEmitter', FlxEmitter);
 		setVariable('FlxParticle', FlxParticle);
+                setVariable('FlxGraphic', FlxGraphic);
+                setVariable('FlxShader', FlxShader); // (theShaderGod) i must check if this works
 		setVariable('Lib', Lib);
 		setVariable('Assets', Assets);
 		setVariable('BitmapFilter', BitmapFilter);
+                setVariable('BitmapData', BitmapData);
+                setVariable('Sound', Sound);
 		setVariable('ShaderFilter', ShaderFilter);
 		setVariable('Alphabet', Alphabet);
 		#if FUTURE_DISCORD_RCP
