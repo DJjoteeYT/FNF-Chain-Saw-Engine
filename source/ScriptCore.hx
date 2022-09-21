@@ -17,6 +17,7 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxRuntimeShader;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
