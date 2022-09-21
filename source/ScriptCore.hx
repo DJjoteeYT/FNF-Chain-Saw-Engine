@@ -24,6 +24,11 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.system.FlxSound;
 import flixel.util.FlxTimer;
+import flixel.util.FlxColor;
+import flixel.graphics.FlxGraphic;
+import flixel.system.FlxAssets.FlxShader;
+import sys.io.File;
+import sys.FileSystem;
 import haxe.Http;
 import haxe.Json;
 import hscript.Interp;
@@ -65,6 +70,12 @@ class ScriptCore extends FlxBasic
                 setVariable('Sound', Sound);
                 setVariable('BitmapData', BitmapData);
 		setVariable('Reflect', Reflect);
+                setVariable('FlxGraphic', FlxGraphic);
+                setVariable('FlxColor', FlxColor);
+                setVariable('File', File);
+                setVariable('FileSystem', FileSystem);
+                setVariable('FlxShader', FlxShader); // (theShaderGod) i must check if this works
+                setVariable('Type', Type);
 		setVariable('Std', Std);
 		setVariable('StringTools', StringTools);
 		setVariable('Sys', Sys);
