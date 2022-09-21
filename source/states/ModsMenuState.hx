@@ -90,7 +90,7 @@ class ModsMenuState extends MusicBeatState
 				FlxG.save.flush();
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				changeSelection();
-				changedSomething = true;
+				changedSomething = !changedSomething;
 			}
 			else
 			{
@@ -98,7 +98,7 @@ class ModsMenuState extends MusicBeatState
 				FlxG.save.flush();
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				changeSelection();
-				changedSomething = true;
+				changedSomething = !changedSomething;
 			}
 		}
 
@@ -147,7 +147,7 @@ class ModIcon extends FlxSprite
 		super();
 
 		loadGraphic(BitmapData.fromBytes(bytes));
-		setGraphicSize(120, 120);
+		setGraphicSize(150, 150);
 		updateHitbox();
 		scrollFactor.set();
 	}
