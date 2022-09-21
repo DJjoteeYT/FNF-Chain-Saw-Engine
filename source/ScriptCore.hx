@@ -71,7 +71,6 @@ class ScriptCore extends FlxBasic
                 setVariable('BitmapData', BitmapData);
 		setVariable('Reflect', Reflect);
                 setVariable('FlxGraphic', FlxGraphic);
-                setVariable('FlxColor', FlxColor);
                 setVariable('File', File);
                 setVariable('FileSystem', FileSystem);
                 setVariable('FlxShader', FlxShader); // (theShaderGod) i must check if this works
